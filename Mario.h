@@ -81,6 +81,7 @@
 #pragma endregion
 
 #define GROUND_Y 160.0f
+#define MARIO_DECELERATION 0.0002f
 
 
 
