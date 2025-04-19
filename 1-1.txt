@@ -4,6 +4,7 @@ mario.txt
 coin.txt
 land1.txt
 brick.txt
+decorations.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -11,8 +12,10 @@ brick.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	10	10
+0	120	10
 
-#Platform
-5	90	20	16	15	0	51000	52000	53000	20
-5	0	100	16	16	10	20001	20001	20001	0
+#Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
+5 	0	180	47	16	32	51000	52000	53000	6
+
+#Sprite:
+6	16	160	60000	# Big bush

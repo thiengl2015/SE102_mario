@@ -1,0 +1,6 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+
+# Big bush
+60000	3	8	131	175	30
+
