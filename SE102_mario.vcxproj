@@ -176,6 +176,16 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="1-1.txt" />
+    <Text Include="brick.txt" />
+    <Text Include="coin.txt" />
+    <Text Include="goomba.txt" />
+    <Text Include="land1.txt" />
+    <Text Include="mario-sample.txt" />
+    <Text Include="mario.txt" />
+    <Text Include="turtle.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets" Condition="Exists('packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets')" />

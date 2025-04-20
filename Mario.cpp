@@ -15,6 +15,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (nx == 1 && vx < 0) 
+	{
+		vx = 0; 
+		ax = MARIO_ACCEL_RUN_X; 
+	}
+	else if (nx == -1 && vx > 0)
+	{
+		vx = 0; 
+		ax = -MARIO_ACCEL_RUN_X; 
+	}
+	else if (nx == 1 && vx > -0.2f && vx <= 0.00003f)
+	{
+		nx = -1;
+		vx = 0;
+		ax = -MARIO_ACCEL_RUN_X;
+	}
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -31,16 +47,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (vx < 0)
 			{
 				vx = 0;
-				nx = 1;
 			}
 		}
 		else if (vx < 0)
 		{
 			vx += MARIO_DECELERATION * dt;
-			if (vx > -0.05f)
+			if (vx > 0)
 			{
 				vx = 0;
-				nx = -1;
 			}
 		}
 	}

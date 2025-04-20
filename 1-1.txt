@@ -4,6 +4,7 @@ mario.txt
 coin.txt
 land1.txt
 brick.txt
+goomba.txt
 decorations.txt
 #
 [OBJECTS]
@@ -13,6 +14,8 @@ decorations.txt
 
 # MARIO
 0	120	10
+#Goomba
+2	300	10
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5 	0	180	47	16	32	51000	52000	53000	6
