@@ -105,6 +105,9 @@
     <ClInclude Include="GameObject.h">
       <Filter>object</Filter>
     </ClInclude>
+    <ClInclude Include="turle.h">
+      <Filter>object\enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
