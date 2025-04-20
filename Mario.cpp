@@ -15,22 +15,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (nx == 1 && vx < 0) 
-	{
-		vx = 0; 
-		ax = MARIO_ACCEL_RUN_X; 
-	}
-	else if (nx == -1 && vx > 0)
-	{
-		vx = 0; 
-		ax = -MARIO_ACCEL_RUN_X; 
-	}
-	else if (nx == 1 && vx > -0.2f && vx <= 0.00003f)
-	{
-		nx = -1;
-		vx = 0;
-		ax = -MARIO_ACCEL_RUN_X;
-	}
+	
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -191,7 +176,8 @@ int CMario::GetAniIdSmall()
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 			}
 
-	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
+	if (aniId == -1)
+		aniId = (nx > 0) ? ID_ANI_MARIO_SMALL_IDLE_RIGHT : ID_ANI_MARIO_SMALL_IDLE_LEFT;
 
 	return aniId;
 }
@@ -253,7 +239,8 @@ int CMario::GetAniIdBig()
 					aniId = ID_ANI_MARIO_WALKING_LEFT;
 			}
 
-	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+	if (aniId == -1)
+		aniId = (nx > 0) ? ID_ANI_MARIO_IDLE_RIGHT : ID_ANI_MARIO_IDLE_LEFT;
 
 	return aniId;
 }
