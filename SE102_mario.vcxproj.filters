@@ -131,9 +131,6 @@
     <ClCompile Include="SampleKeyEventHandler.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scence.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>

@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "SimpleSpriteObject.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -139,6 +140,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
+
 
 	case OBJECT_TYPE_PORTAL:
 	{

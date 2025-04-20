@@ -23,7 +23,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
+	if (ax == 0)
+	{
+		if (vx > 0)
+		{
+			vx -= MARIO_DECELERATION * dt;
+			if (vx < 0)
+			{
+				vx = 0;
+				nx = 1;
+			}
+		}
+		else if (vx < 0)
+		{
+			vx += MARIO_DECELERATION * dt;
+			if (vx > -0.05f)
+			{
+				vx = 0;
+				nx = -1;
+			}
+		}
+	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -310,7 +330,6 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
-		vx = 0.0f;
 		break;
 
 	case MARIO_STATE_DIE:
