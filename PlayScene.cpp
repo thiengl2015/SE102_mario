@@ -9,7 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
-#include "SimpleSpriteObject.h"
+#include "Decorations.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -138,6 +138,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			sprite_begin, sprite_middle, sprite_end, width 
 		);
 
+		break;
+	}
+
+	case OBJECT_TYPE_DECORATION:
+	{
+		int spriteId = atoi(tokens[3].c_str());
+		obj = new CDecoration(x, y, spriteId);
 		break;
 	}
 

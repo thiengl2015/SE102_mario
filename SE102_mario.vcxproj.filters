@@ -105,6 +105,12 @@
     <ClInclude Include="GameObject.h">
       <Filter>object</Filter>
     </ClInclude>
+	<ClInclude Include="turle.h">
+		<Filter>object\enemy</Filter>
+	</ClInclude>
+	<ClInclude Include="Decorations.h">
+		<Filter>Header Files</Filter>
+	</ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
