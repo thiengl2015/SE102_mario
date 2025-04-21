@@ -29,8 +29,10 @@ turtle.txt
 2	300	10
 
 #Turtle
-7	400	10	7000
+7	400	9	7000
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5 	0	180	47	16	32	51000	52000	53000	6
+
+
 
