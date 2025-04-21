@@ -1,0 +1,4 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+90000	135	102	184	151	30	#block pink
+90001	168	70	225	151	30	#block blue
