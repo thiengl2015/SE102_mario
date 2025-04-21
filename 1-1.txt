@@ -6,12 +6,12 @@ land1.txt
 brick.txt
 goomba.txt
 decorations.txt
+turtle.txt 
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
-
 
 #Sprite:
 6	40	140	60000	# Big bush 1.1
@@ -28,5 +28,9 @@ decorations.txt
 #Goomba
 2	300	10
 
+#Turtle
+7	400	10	7000
+
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5 	0	180	47	16	32	51000	52000	53000	6
+
