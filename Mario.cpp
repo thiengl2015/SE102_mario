@@ -7,6 +7,8 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "turle.h"
+
 
 #include "Collision.h"
 
@@ -71,6 +73,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CTurtle*>(e->obj))
+		OnCollisionWithTurtle(e);
+
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -118,6 +123,63 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
+
+void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
+{
+	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+
+	if (e->ny < 0) 
+	{
+		if (!turtle->IsShellState())
+		{
+			turtle->StartShell();
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (!turtle->IsBeingHeld())
+		{
+			turtle->KickShell(nx);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else 
+	{
+		if (turtle->IsShellState())
+		{
+			if (turtle->getvx() != 0)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+			else
+			{
+				turtle->KickShell(nx);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+		}
+		else if (untouchable == 0)
+		{
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	}
+}
+
 
 //
 // Get animation ID for small Mario
