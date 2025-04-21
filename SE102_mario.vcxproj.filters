@@ -111,6 +111,9 @@
     <ClInclude Include="Decorations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
@@ -170,9 +173,12 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="turtle.cpp">
-      <Filter>object\enemy</Filter>
-    </ClCompile>
+	  <ClCompile Include="turtle.cpp">
+		  <Filter>object\enemy</Filter>
+	  </ClCompile>
+	  <ClCompile Include="Block.cpp">
+		  <Filter>Header Files\scene</Filter>
+	  </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
