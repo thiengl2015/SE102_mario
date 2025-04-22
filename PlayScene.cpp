@@ -12,6 +12,7 @@
 #include "Decorations.h"
 #include "turle.h"
 #include "Block.h"
+#include "FullBlock.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -164,6 +165,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float h = (float)atof(tokens[4].c_str());
 		int spriteId = atoi(tokens[5].c_str());
 		obj = new CHalfSolidBlock(x, y, w, h, spriteId);
+		break;
+	}
+	case OBJECT_TYPE_BLOCKING:
+	{
+		float w = (float)atof(tokens[3].c_str());
+		float h = (float)atof(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CFullBlock(x, y, w, h, spriteId);
 		break;
 	}
 

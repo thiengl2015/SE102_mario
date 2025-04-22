@@ -8,6 +8,7 @@ goomba.txt
 decorations.txt
 turtle.txt 
 standing.txt
+fullblock.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -19,15 +20,41 @@ standing.txt
 6	40	140	60000	# Big bush 1.1
 6	105	148	60001	# Big bush 1.2	
 
-6	170	164	70000	#Small bush 1
-6	186	164	70000	#Small bush 1
-6	202	164	70000	#Small bush 1
+6	167	164	70000	#Small bush 1
+6	183	164	70000	#Small bush 1
+6	199	164	70000	#Small bush 1
 
-6	155	55	80000	#Cloud 1
+6	152	55	80000	#Cloud 1
+6	350	30	80001	#Mini Cloud 1
+
+6	670	35	80001	#Mini Cloud 2
+
+6	695	148	70000	#Small bush 2
+6	710	148	70000	#Small bush 2
+6	726	148	70000	#Small bush 2
+6	742	148	70000	#Small bush 2
+6	758	148	70000	#Small bush 2
+6	774	148	70000	#Small bush 2
+
+6	900	125	60002	# Big bush 2
+6	995	132	60003	# Big bush 2
+
+6	1064	148	70000	#Small bush 3
+6	1080	148	70000	#Small bush 3
+
+6	780	60	80002	#Big cloud 1
 
 #Block:	(type	x	y	width	height	id)
-7	275	149	48	50	90000	#Block pink 1
-7	315	133	48	82	90001	#Block blue 1
+7	267	149	48	50	90000	#2 block
+7	307	133	48	82	90001	#2 block
+
+7	447	148	80	48	90002	#4 block
+7	503	132	62	80	90003	#4 block
+7	556	116	62	112	90004	#4 block
+7	572	156	96	32	90005	#4 block
+
+#Full Block:
+8	372	148	30	48	100000	#Pipe 1
 
 # MARIO
 0	120	10
@@ -38,7 +65,8 @@ standing.txt
 3	400	9	7000
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
-5 	0	180	47	16	32	51000	52000	53000	6
+5 	0	180	47	16	14	51000	51000	51000	6
+8	866	172	462	32	52000	
 
 
 
