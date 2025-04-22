@@ -19,30 +19,26 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
+	if (ax == 0)
+	{
+		if (vx > 0)
+		{
+			SetState(MARIO_STATE_WALKING_RIGHT);
+			vx -= MARIO_DECELERATION * dt;
+			if (vx < 0) vx = 0;
+		}
+		else if (vx < 0)
+		{
+			SetState(MARIO_STATE_WALKING_LEFT);
+			vx += MARIO_DECELERATION * dt;
+			if (vx > 0) vx = 0;
+		}
+	}
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
-	}
-	if (ax == 0)
-	{
-		if (vx > 0)
-		{
-			vx -= MARIO_DECELERATION * dt;
-			if (vx < 0)
-			{
-				vx = 0;
-			}
-		}
-		else if (vx < 0)
-		{
-			vx += MARIO_DECELERATION * dt;
-			if (vx > 0)
-			{
-				vx = 0;
-			}
-		}
 	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
