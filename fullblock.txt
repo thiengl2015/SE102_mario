@@ -1,0 +1,4 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#PIPE
+100000	4	27	37	76	30

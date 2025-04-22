@@ -1,4 +1,9 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
-90000	135	102	184	151	30	#block pink
-90001	168	70	225	151	30	#block blue
+90000	135	102	184	151	30	#2 block: pink
+90001	168	70	225	151	30	#2 block: blue
+
+90002	235	102	314	149	30	#4 block: green 1
+90003	299	70	362	149	30	#4 block: pink
+90004	347	38	418	149	30	#4 block: white
+90005	347	118	450	149	30	#4 block: green 2

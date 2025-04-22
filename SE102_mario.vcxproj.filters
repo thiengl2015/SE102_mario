@@ -60,9 +60,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>object\items</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>object\items</Filter>
     </ClInclude>
@@ -114,6 +111,12 @@
     <ClInclude Include="Block.h">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FullBlock.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
@@ -152,9 +155,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Header Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>object\items</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>object\items</Filter>
     </ClCompile>
@@ -173,12 +173,18 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>object</Filter>
     </ClCompile>
-	  <ClCompile Include="turtle.cpp">
-		  <Filter>object\enemy</Filter>
-	  </ClCompile>
-	  <ClCompile Include="Block.cpp">
-		  <Filter>Header Files\scene</Filter>
-	  </ClCompile>
+    <ClCompile Include="turtle.cpp">
+      <Filter>object\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Header Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Header Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FullBlock.cpp">
+      <Filter>Header Files\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
