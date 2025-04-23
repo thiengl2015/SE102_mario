@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Mario.h"
 
 #define TURTLE_GRAVITY 0.002f
 #define TURTLE_WALKING_SPEED 0.05f
@@ -10,7 +11,7 @@
 
 #define ID_ANI_TURTLE_WALKING_RIGHT 5200
 #define ID_ANI_TURTLE_WALKING_LEFT 5201
-#define ID_ANI_TURTLE_SLEEP 5202
+#define ID_ANI_TURTLE_SHELL 5202
 
 #define TURTLE_STATE_WALKING 100
 #define TURTLE_STATE_SHELL 300
@@ -23,35 +24,26 @@
 class CTurtle : public CGameObject
 {
 protected:
-	float ax;
-	float ay;
-
-	ULONGLONG shell_start;
-	bool isRed;
+	float ax, ay;
+	int walkingDirection;
 	bool isBeingHeld;
-	bool isReviving;
-	int walkingDirection; // huong
-
+	ULONGLONG shell_start;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObject);
 	virtual void Render();
-
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return 1; }
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CTurtle(float x, float y, bool isRed = false);
+	CTurtle(float x, float y);
 	virtual void SetState(int state);
-
+	bool checkMario();
 	void StartShell();
 	void KickShell(int dir);
-	void StartReviving();
-	void SetBeingHeld(bool held);
-	bool IsBeingHeld();
 	bool IsShellState();
-
+	bool IsBeingHeld();
 	float getvx() { return vx; }
 }; 
