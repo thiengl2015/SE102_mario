@@ -20,3 +20,4 @@ height	240
 20	textures\misc.png
 30	textures\world-1-1.png
 31	textures\world-1-1-1.png
+32	textures\black-1.png
