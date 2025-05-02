@@ -15,6 +15,7 @@
 #include "FullBlock.h"
 
 #include "SampleKeyEventHandler.h"
+#define MAX_CAM_X 2610
 
 using namespace std;
 
@@ -280,17 +281,27 @@ void CPlayScene::Update(DWORD dt)
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
-	// Update camera to follow mario
 	float cx, cy;
-	player->GetPosition(cx, cy);
+	player->GetPosition(cx, cy); 
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	else if (cx > MAX_CAM_X) cx = MAX_CAM_X;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+
+	float current_cx, current_cy;
+	game->GetCamPos(current_cx, current_cy);
+
+	float target_cy = (cy < -150) ? cy : 0.0f;
+
+	float smoothing = 0.1f; 
+	float new_cy = current_cy + (target_cy - current_cy) * smoothing;
+
+	game->SetCamPos(cx, new_cy);
+
 
 	PurgeDeletedObjects();
 }
@@ -347,7 +358,7 @@ void CPlayScene::PurgeDeletedObjects()
 	}
 
 	// NOTE: remove_if will swap all deleted items to the end of the vector
-	// then simply trim the vector, this is much more efficient than deleting individual items
+	// then simply trim the vector, this is much more efficient than	deleting individual items
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());

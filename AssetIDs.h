@@ -9,6 +9,7 @@
 #define ID_TEX_MISC 20
 #define ID_TEX_WORLD11 30
 #define ID_TEX_WORLD111 31
+#define ID_TEX_BLACK_1 32
 
 
 #define OBJECT_TYPE_MARIO	0
