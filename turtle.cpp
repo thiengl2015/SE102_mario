@@ -2,7 +2,7 @@
 #include "debug.h" // optional: for debugging output
 #include "Platform.h" // để kiểm tra mặt đất
 #include "Mario.h"
-
+#include "Block.h"
 CTurtle::CTurtle(float x, float y) : CGameObject(x, y)
 {
     this->ax = 0;
@@ -10,6 +10,7 @@ CTurtle::CTurtle(float x, float y) : CGameObject(x, y)
     shell_start = -1;
     this->walkingDirection = -1;
     this->isBeingHeld = false;
+    edgeSensor = new CEdgeSensor(x, y);
     SetState(TURTLE_STATE_WALKING);
 }
 
@@ -67,18 +68,27 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     vx += ax * dt;
     vy += ay * dt;
 
-    for (auto obj : *coObjects)
+    //for (auto obj : *coObjects)
+    //{
+    //    CMario* mario = dynamic_cast<CMario*>(obj);
+    //    if (mario)
+    //    {
+    //        if (abs(mario->getX() - this->x) > 200)
+    //        {
+    //            isDeleted = true;
+    //            return;
+    //        }
+    //    }
+    //}
+    edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y);
+
+    if (edgeSensor->GetY() < y || edgeSensor->GetVy() > 0)
     {
-        /*CMario* mario = dynamic_cast<CMario*>(obj);
-        if (mario)
-        {
-            if (abs(mario->getX() - this->x) > 200)
-            {
-                isDeleted = true;
-                return;
-            }
-        }*/
+        walkingDirection = -walkingDirection;
+        vx = walkingDirection * TURTLE_WALKING_SPEED;
     }
+
+    // Cập nhật trạng thái shell nếu cần
     if (state == TURTLE_STATE_SHELL)
     {
         if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)

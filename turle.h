@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "EdgeSensor.h"
 
 #define TURTLE_GRAVITY 0.002f
 #define TURTLE_WALKING_SPEED 0.05f
@@ -36,6 +37,8 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	CEdgeSensor* edgeSensor;
+	bool sensorHasFallen;
 
 public:
 	CTurtle(float x, float y);

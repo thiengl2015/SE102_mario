@@ -117,6 +117,12 @@
     <ClInclude Include="FullBlock.h">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
+    <ClInclude Include="EdgeSensor.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoomba.h">
+      <Filter>object\enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
@@ -185,6 +191,9 @@
     <ClCompile Include="FullBlock.cpp">
       <Filter>Header Files\scene</Filter>
     </ClCompile>
+    <ClCompile Include="RedGoomba.cpp">
+      <Filter>object\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
@@ -209,6 +218,9 @@
       <Filter>Resource Files\txt</Filter>
     </Text>
     <Text Include="turtle.txt">
+      <Filter>Resource Files\txt</Filter>
+    </Text>
+    <Text Include="redgoomba.txt">
       <Filter>Resource Files\txt</Filter>
     </Text>
   </ItemGroup>
