@@ -117,6 +117,8 @@
     <ClInclude Include="FullBlock.h">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
+    <ClInclude Include="PipeTeleport.h">
+      <Filter>object</Filter>
     <ClInclude Include="EdgeSensor.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -191,6 +193,8 @@
     <ClCompile Include="FullBlock.cpp">
       <Filter>Header Files\scene</Filter>
     </ClCompile>
+    <ClCompile Include="PipeTeleport.cpp">
+      <Filter>object</Filter>
     <ClCompile Include="RedGoomba.cpp">
       <Filter>object\enemy</Filter>
     </ClCompile>

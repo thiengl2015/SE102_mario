@@ -33,6 +33,7 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_ENTER_PIPE 2000
 
 #pragma region ANIMATION_ID
 
@@ -59,6 +60,8 @@
 
 #define ID_ANI_MARIO_DIE 999
 
+#define ID_ANI_MARIO_ENTER_PIPE 850
+
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
 #define ID_ANI_MARIO_SMALL_IDLE_LEFT 1102
@@ -82,8 +85,6 @@
 
 #define GROUND_Y 160.0f
 #define MARIO_DECELERATION 0.0002f
-
-
 
 
 #define	MARIO_LEVEL_SMALL	1
@@ -154,6 +155,14 @@ public:
 
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+
+	//Pipe
+	void StartPipeTeleport(float destX, float destY);
+
+	bool isEnteringPipe = false;
+	float pipe_dest_x = 0, pipe_dest_y = 0;
+	ULONGLONG pipe_start_time = 0;
+	bool IsEnteringPipe() const { return isEnteringPipe; }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
