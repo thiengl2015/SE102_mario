@@ -30,7 +30,6 @@ public:
 	void Render();
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	void RenderBoundingBox();
 
 	int IsDirectionColliable(float nx, float ny);
 };

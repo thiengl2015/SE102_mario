@@ -117,6 +117,9 @@
     <ClInclude Include="FullBlock.h">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
+    <ClInclude Include="PipeTeleport.h">
+      <Filter>object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Textures.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="FullBlock.cpp">
       <Filter>Header Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PipeTeleport.cpp">
+      <Filter>object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

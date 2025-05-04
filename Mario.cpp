@@ -8,6 +8,7 @@
 #include "Coin.h"
 #include "Portal.h"
 #include "turle.h"
+#include "PipeTeleport.h"
 
 
 #include "Collision.h"
@@ -40,7 +41,45 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	if (isEnteringPipe && GetTickCount64() - pipe_start_time > 2500)
+	{
+		SetPosition(pipe_dest_x, pipe_dest_y);
+		isEnteringPipe = false;
+		vy = 0.005f;
+
+		float camX = pipe_dest_x - CGame::GetInstance()->GetBackBufferWidth() / 2;
+		float camY = pipe_dest_y - CGame::GetInstance()->GetBackBufferHeight() / 2;
+		if (camY < 0) camY = 0;
+		CGame::GetInstance()->SetCamPos(camX, camY);
+	}
+
+	if (isEnteringPipe)
+	{
+		vx = 0;
+		vy = 0.0009f;  
+
+		if (GetTickCount64() - pipe_start_time > 1500)
+		{
+			SetPosition(pipe_dest_x, pipe_dest_y);
+			isEnteringPipe = false;
+			vy = 0.5f;
+
+			float camX = pipe_dest_x - CGame::GetInstance()->GetBackBufferWidth() / 2;
+			float camY = pipe_dest_y - 16 - CGame::GetInstance()->GetBackBufferHeight() / 2;
+			if (camY < 0) camY = 0;
+			CGame::GetInstance()->SetCamPos(camX, camY);
+		}
+
+		y += vy * dt;
+		return;
+	}
+
+
+
+
+
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -71,7 +110,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CTurtle*>(e->obj))
 		OnCollisionWithTurtle(e);
-
+	else if (dynamic_cast<CPipeTeleport*>(e->obj))
+		((CPipeTeleport*)e->obj)->OnCollisionWith(this);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -307,7 +347,9 @@ void CMario::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
-	if (state == MARIO_STATE_DIE)
+	if (isEnteringPipe)
+		aniId = ID_ANI_MARIO_ENTER_PIPE;
+	else if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
 	else if (level == MARIO_LEVEL_BIG)
 		aniId = GetAniIdBig();
@@ -316,10 +358,10 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
-	
+
 	DebugOutTitle(L"Coins: %d", coin);
 }
+
 
 void CMario::SetState(int state)
 {
@@ -395,7 +437,13 @@ void CMario::SetState(int state)
 		vx = 0;
 		ax = 0;
 		break;
+	case MARIO_STATE_ENTER_PIPE:
+		vx = 0;
+		vy = 0.05f; 
+		break;
+
 	}
+
 
 	CGameObject::SetState(state);
 }
@@ -438,3 +486,11 @@ void CMario::SetLevel(int l)
 	level = l;
 }
 
+void CMario::StartPipeTeleport(float destX, float destY)
+{
+	SetState(MARIO_STATE_ENTER_PIPE);
+	pipe_dest_x = destX;
+	pipe_dest_y = destY;
+	pipe_start_time = GetTickCount64();
+	isEnteringPipe = true;
+}

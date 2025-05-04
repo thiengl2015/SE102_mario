@@ -13,6 +13,7 @@
 #include "turle.h"
 #include "Block.h"
 #include "FullBlock.h"
+#include "PipeTeleport.h"
 
 #include "SampleKeyEventHandler.h"
 #define MAX_CAM_X 2610
@@ -176,7 +177,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CFullBlock(x, y, w, h, spriteId);
 		break;
 	}
-
+	case OBJECT_TYPE_PIPE_TELEPORT:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		float targetX = (float)atof(tokens[5].c_str());
+		float targetY = (float)atof(tokens[6].c_str());
+		obj = new CPipeTeleport(x, y, width, height, targetX, targetY);
+		obj->SetObjectType(OBJECT_TYPE_PIPE_TELEPORT);
+		break;
+	}
 	break;
 
 
@@ -295,12 +305,20 @@ void CPlayScene::Update(DWORD dt)
 	float current_cx, current_cy;
 	game->GetCamPos(current_cx, current_cy);
 
-	float target_cy = (cy < -150) ? cy : 0.0f;
+	if (((CMario*)player)->IsEnteringPipe())
+	{
+		cy = current_cy; 
+	}
+	else
+	{
+		if (cy < -150)
+			current_cy += (cy - current_cy) * 0.1f;
+		else
+			current_cy += (0.0f - current_cy) * 0.1f;
+	}
 
-	float smoothing = 0.1f; 
-	float new_cy = current_cy + (target_cy - current_cy) * smoothing;
+	game->SetCamPos(cx, current_cy);
 
-	game->SetCamPos(cx, new_cy);
 
 
 	PurgeDeletedObjects();
