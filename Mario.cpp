@@ -9,7 +9,7 @@
 #include "Portal.h"
 #include "turle.h"
 #include "PipeTeleport.h"
-
+#include "RedGoomba.h"
 
 #include "Collision.h"
 
@@ -112,6 +112,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithTurtle(e);
 	else if (dynamic_cast<CPipeTeleport*>(e->obj))
 		((CPipeTeleport*)e->obj)->OnCollisionWith(this);
+	else if (dynamic_cast<CRedGoomba*>(e->obj))
+	{
+		OnCollisionWithRedGoomba(e);
+	}
+
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -158,6 +163,42 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithRedGoomba(LPCOLLISIONEVENT e)
+{
+	CRedGoomba* redgoomba = dynamic_cast<CRedGoomba*>(e->obj);
+	if (e->ny < 0)
+	{
+		if (redgoomba->GetState() == RED_GOOMBA_STATE_WINGED)
+		{
+			redgoomba->SetState(RED_GOOMBA_STATE_WALKING);
+		}
+		else if (redgoomba->GetState() == RED_GOOMBA_STATE_WALKING)
+		{
+			redgoomba->SetState(RED_GOOMBA_STATE_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else
+	{
+		if (untouchable == 0)
+		{
+			if (redgoomba->GetState() != RED_GOOMBA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
 }
 
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)

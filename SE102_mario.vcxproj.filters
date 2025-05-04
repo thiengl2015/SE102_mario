@@ -119,6 +119,11 @@
     </ClInclude>
     <ClInclude Include="PipeTeleport.h">
       <Filter>object</Filter>
+    <ClInclude Include="EdgeSensor.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoomba.h">
+      <Filter>object\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +195,8 @@
     </ClCompile>
     <ClCompile Include="PipeTeleport.cpp">
       <Filter>object</Filter>
+    <ClCompile Include="RedGoomba.cpp">
+      <Filter>object\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +222,9 @@
       <Filter>Resource Files\txt</Filter>
     </Text>
     <Text Include="turtle.txt">
+      <Filter>Resource Files\txt</Filter>
+    </Text>
+    <Text Include="redgoomba.txt">
       <Filter>Resource Files\txt</Filter>
     </Text>
   </ItemGroup>
