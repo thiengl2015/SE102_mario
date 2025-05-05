@@ -126,14 +126,14 @@ fullblock.txt
 8	2388	155	30	32	100001	#Pipe 4
 
 # MARIO
-0	2324	-300
+0	530	30
 
 #Goomba
 2	175	10	
 999999	950	30
 
 #Turtle
-3	600	50	7000
+3	600	30	7000
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5 	8	180	16	16	40	51000	52000	53000	6
