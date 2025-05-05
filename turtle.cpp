@@ -68,25 +68,14 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     vx += ax * dt;
     vy += ay * dt;
 
-    //for (auto obj : *coObjects)
-    //{
-    //    CMario* mario = dynamic_cast<CMario*>(obj);
-    //    if (mario)
-    //    {
-    //        if (abs(mario->getX() - this->x) > 200)
-    //        {
-    //            isDeleted = true;
-    //            return;
-    //        }
-    //    }
-    //}
-    edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y);
 
-    if (edgeSensor->GetY() < y || edgeSensor->GetVy() > 0)
-    {
-        walkingDirection = -walkingDirection;
+    edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
+
+    if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
+        walkingDirection = -walkingDirection; // Đảo hướng di chuyển
         vx = walkingDirection * TURTLE_WALKING_SPEED;
     }
+
 
     // Cập nhật trạng thái shell nếu cần
     if (state == TURTLE_STATE_SHELL)

@@ -13,4 +13,6 @@ public:
     void GetBoundingBox(float& l, float& t, float& r, float& b) override;
     int IsBlocking() override;
     int IsDirectionColliable(float nx, float ny) override;
+    float getWidth() { return width; }
+    float getX() { return x; }
 };
