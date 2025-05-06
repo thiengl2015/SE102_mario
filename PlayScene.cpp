@@ -313,10 +313,18 @@ void CPlayScene::Update(DWORD dt)
 	}
 	else
 	{
-		if (cy < -150)
+		if (cy > 200.0f)
+		{
+			current_cy = 387.0f;
+		}
+		else if (cy < -150)
+		{
 			current_cy += (cy - current_cy) * 0.1f;
+		}
 		else
+		{
 			current_cy += (0.0f - current_cy) * 0.1f;
+		}
 	}
 
 	game->SetCamPos(cx, current_cy);

@@ -13,7 +13,7 @@
 
 #include "Collision.h"
 
-void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -36,7 +36,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -58,29 +58,45 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (isEnteringPipe)
 	{
 		vx = 0;
-		vy = 0.0009f;  
+		ax = 0;
+		ay = 0;
+
+		vy = pipe_is_going_up ? -0.01f : 0.01f;
 
 		if (GetTickCount64() - pipe_start_time > 1500)
 		{
-			SetPosition(pipe_dest_x, pipe_dest_y);
 			isEnteringPipe = false;
-			vy = 0.5f;
+			isExitingPipe = true;
+			pipe_exit_start_time = GetTickCount64();
 
-			float camX = pipe_dest_x - CGame::GetInstance()->GetBackBufferWidth() / 2;
-			float camY = pipe_dest_y - 16 - CGame::GetInstance()->GetBackBufferHeight() / 2;
-			if (camY < 0) camY = 0;
-			CGame::GetInstance()->SetCamPos(camX, camY);
+			SetPosition(pipe_dest_x, pipe_dest_y + (pipe_is_going_up ? 16 : -16));
+			vy = pipe_is_going_up ? -0.001f : 0.001f;
+
+			return;
 		}
 
 		y += vy * dt;
 		return;
 	}
 
+	if (isExitingPipe)
+	{
+		vx = 0;
+		ay = 0;
+		vy = pipe_is_going_up ? -0.015f : 0.015f;
 
+		if (GetTickCount64() - pipe_exit_start_time > 1500)
+		{
+			isExitingPipe = false;
+			vy = 0;
+			ay = MARIO_GRAVITY;
+		}
 
-
-
+		y += vy * dt;
+		return;
+	}
 }
+
 
 void CMario::OnNoCollision(DWORD dt)
 {
@@ -388,7 +404,7 @@ void CMario::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
-	if (isEnteringPipe)
+	if (isEnteringPipe || isExitingPipe)
 		aniId = ID_ANI_MARIO_ENTER_PIPE;
 	else if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
@@ -527,11 +543,19 @@ void CMario::SetLevel(int l)
 	level = l;
 }
 
-void CMario::StartPipeTeleport(float destX, float destY)
+void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
 {
 	SetState(MARIO_STATE_ENTER_PIPE);
+
 	pipe_dest_x = destX;
 	pipe_dest_y = destY;
 	pipe_start_time = GetTickCount64();
 	isEnteringPipe = true;
+	isExitingPipe = false;
+	pipe_is_going_up = goingUp;
+
+	float pipeWidth = 30.0f;
+	float marioWidth = MARIO_BIG_BBOX_WIDTH;
+
+	this->x = destX + (pipeWidth - marioWidth) / 2.0f;
 }
