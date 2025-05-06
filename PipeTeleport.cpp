@@ -16,7 +16,7 @@ void CPipeTeleport::OnCollisionWith(CMario* mario)
     if (!isTriggered)
     {
         isTriggered = true;
-        mario->StartPipeTeleport(targetX, targetY);
+        mario->StartPipeTeleport(targetX, targetY, targetY < y); 
     }
 }
 

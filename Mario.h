@@ -157,14 +157,20 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	//Pipe
-	void StartPipeTeleport(float destX, float destY);
+	void StartPipeTeleport(float destX, float destY, bool goingup);
 
 	bool isEnteringPipe = false;
 	float pipe_dest_x = 0, pipe_dest_y = 0;
 	ULONGLONG pipe_start_time = 0;
 	bool IsEnteringPipe() const { return isEnteringPipe; }
 
+	bool pipe_is_going_up = false;
+	bool isExitingPipe = false;
+	ULONGLONG pipe_exit_start_time = 0;
+
+	
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 	int getX() { return x; }
+	int getY() { return y; }
 };
