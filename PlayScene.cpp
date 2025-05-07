@@ -15,7 +15,7 @@
 #include "FullBlock.h"
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
-
+#include "Flower.h"
 #include "SampleKeyEventHandler.h"
 #define MAX_CAM_X 2610
 
@@ -128,6 +128,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
+	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -390,4 +391,8 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+void CPlayScene::AddObject(LPGAMEOBJECT obj)
+{
+	objects.push_back(obj); // Thêm đối tượng mới vào danh sách đối tượng của cảnh
 }

@@ -73,6 +73,12 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>Object\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -165,6 +171,12 @@
     <ClInclude Include="AssetIDs.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -195,6 +207,12 @@
       <Filter>texFiles</Filter>
     </Text>
     <Text Include="turtle.txt">
+      <Filter>texFiles</Filter>
+    </Text>
+    <Text Include="flower.txt">
+      <Filter>texFiles</Filter>
+    </Text>
+    <Text Include="bullet.txt">
       <Filter>texFiles</Filter>
     </Text>
   </ItemGroup>

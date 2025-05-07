@@ -138,11 +138,13 @@
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Decorations.h" />
     <ClInclude Include="EdgeSensor.h" />
+    <ClInclude Include="Flower.h" />
     <ClInclude Include="FullBlock.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -168,9 +170,11 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Flower.cpp" />
     <ClCompile Include="FullBlock.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -192,7 +196,9 @@
   <ItemGroup>
     <Text Include="1-1.txt" />
     <Text Include="brick.txt" />
+    <Text Include="bullet.txt" />
     <Text Include="coin.txt" />
+    <Text Include="flower.txt" />
     <Text Include="goomba.txt" />
     <Text Include="land1.txt" />
     <Text Include="mario-sample.txt" />

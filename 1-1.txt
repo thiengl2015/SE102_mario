@@ -5,6 +5,9 @@ coin.txt
 land1.txt
 brick.txt
 goomba.txt
+redgoomba.txt
+flower.txt
+bullet.txt
 decorations.txt
 turtle.txt 
 standing.txt
@@ -126,13 +129,16 @@ fullblock.txt
 6	1500	485	80005	#Black
 
 # MARIO
-0	2320	-300
+0	620	30
 
 #Goomba
 2	175	10
+12	900	30
 
 #Turtle
 3	600	30	7000
+#FLower
+13333	700	30
 
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
