@@ -15,7 +15,6 @@
 #include "FullBlock.h"
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
-
 #include "SampleKeyEventHandler.h"
 #define MAX_CAM_X 2610
 
@@ -124,7 +123,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
+	case OBJECT_TYPE_BRICK:
+	{
+		int brickType = 0, spawnType = 0, itemSpriteId = -1, pointSpriteId = 20100;
+		if (tokens.size() > 3) brickType = atoi(tokens[3].c_str());
+		if (tokens.size() > 4) spawnType = atoi(tokens[4].c_str());
+		if (tokens.size() > 5) itemSpriteId = atoi(tokens[5].c_str());
+		if (tokens.size() > 6) pointSpriteId = atoi(tokens[6].c_str());
+
+		obj = new CBrick(x, y, brickType, spawnType, itemSpriteId, pointSpriteId);
+		break;
+	}
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
@@ -294,7 +303,7 @@ void CPlayScene::Update(DWORD dt)
 	if (player == NULL) return;
 
 	float cx, cy;
-	player->GetPosition(cx, cy); 
+	player->GetPosition(cx, cy);
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
@@ -309,7 +318,7 @@ void CPlayScene::Update(DWORD dt)
 
 	if (((CMario*)player)->IsEnteringPipe())
 	{
-		cy = current_cy; 
+		cy = current_cy;
 	}
 	else
 	{
@@ -390,4 +399,8 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+void CPlayScene::AddObject(LPGAMEOBJECT obj)
+{
+	objects.push_back(obj);
 }

@@ -10,6 +10,7 @@
 #include "turle.h"
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
+#include "Brick.h"
 
 #include "Collision.h"
 
@@ -132,6 +133,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithRedGoomba(e);
 	}
+	else if (dynamic_cast<CBrick*>(e->obj))
+		e->obj->OnCollisionWith(e);
 
 }
 
