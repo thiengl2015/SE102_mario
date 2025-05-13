@@ -32,5 +32,5 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBullet::Render()
 {
-  
+
 }
