@@ -11,6 +11,8 @@
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
 #include "PiranhaPlant.h"
+#include "Brick.h"
+
 
 #include "Collision.h"
 
@@ -138,7 +140,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPiranhaPlant(e);
 	}
 
-
+	else if (dynamic_cast<CBrick*>(e->obj))
+		e->obj->OnCollisionWith(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
