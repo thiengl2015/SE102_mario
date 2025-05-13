@@ -5,11 +5,13 @@ coin.txt
 land1.txt
 brick.txt
 goomba.txt
+redgoomba.txt
 decorations.txt
 turtle.txt 
 standing.txt
 fullblock.txt
-#
+piranhaplant.txt
+bullet.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -91,7 +93,7 @@ fullblock.txt
 7	1348	-88	64	40	90011	#1 block
 
 #Full Block:
-8	372	148	30	48	100000	#Pipe 1
+
 
 8	1558	100	16	16	100002	#Clod 1
 8	1574	100	16	16	100002	#Clod 1
@@ -126,13 +128,17 @@ fullblock.txt
 6	1500	485	80005	#Black
 
 # MARIO
-0	2320	-300
+0	450	30
 
 #Goomba
 2	175	10
+15	700	30
 
 #Turtle
 3	600	30	7000
+16	373	133	7000
+8	372	148	30	48	100000	#Pipe 1
+
 
 
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)

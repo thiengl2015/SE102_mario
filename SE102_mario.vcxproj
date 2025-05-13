@@ -138,6 +138,7 @@
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="PipeTeleport.h" />
+    <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
@@ -168,6 +170,7 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="PipeTeleport.cpp" />
+    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -192,11 +196,13 @@
   <ItemGroup>
     <Text Include="1-1.txt" />
     <Text Include="brick.txt" />
+    <Text Include="bulllet.txt" />
     <Text Include="coin.txt" />
     <Text Include="goomba.txt" />
     <Text Include="land1.txt" />
     <Text Include="mario-sample.txt" />
     <Text Include="mario.txt" />
+    <Text Include="piranhaplant.txt" />
     <Text Include="redgoomba.txt" />
     <Text Include="turtle.txt" />
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "turle.h"
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
+#include "PiranhaPlant.h"
 
 #include "Collision.h"
 
@@ -132,6 +133,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithRedGoomba(e);
 	}
+	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
+	{
+		OnCollisionWithPiranhaPlant(e);
+	}
+
 
 }
 
@@ -272,7 +278,29 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 	}
 }
+void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
+{
+	CPiranhaPlant* piranha = dynamic_cast<CPiranhaPlant*>(e->obj);
 
+
+	if (untouchable == 0)
+	{
+		if (piranha->GetState() == PIRANHA_PLANT_STATE_FIRE ) 
+		{
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	}
+
+}
 
 //
 // Get animation ID for small Mario

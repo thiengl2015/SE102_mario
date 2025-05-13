@@ -121,6 +121,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithRedGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -171,6 +172,5 @@ public:
 	
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	int getX() { return x; }
-	int getY() { return y; }
+
 };

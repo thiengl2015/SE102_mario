@@ -15,6 +15,8 @@
 #include "FullBlock.h"
 #include "PipeTeleport.h"
 #include "RedGoomba.h"
+#include "PiranhaPlant.h"
+#include "Bullet.h"
 
 #include "SampleKeyEventHandler.h"
 #define MAX_CAM_X 2610
@@ -128,6 +130,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
+	case OBJECT_TYPE_PIRANHA_PLANT: obj = new CPiranhaPlant(x, y); break;
+	case OBJECT_TYPE_BULLET: obj = new CBullet(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 
