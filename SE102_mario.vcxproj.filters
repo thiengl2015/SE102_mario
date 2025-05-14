@@ -84,6 +84,9 @@
     <ClCompile Include="ItemCoin.cpp">
       <Filter>Object\Items</Filter>
     </ClCompile>
+    <ClCompile Include="ItemMushroom.cpp">
+      <Filter>Object\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -185,6 +188,9 @@
       <Filter>Object\Items</Filter>
     </ClInclude>
     <ClInclude Include="ItemCoin.h">
+      <Filter>Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMushroom.h">
       <Filter>Object\Items</Filter>
     </ClInclude>
   </ItemGroup>

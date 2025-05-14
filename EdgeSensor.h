@@ -8,14 +8,14 @@ public:
     float GetVy() { return vy; }
     float GetY() { return y; }
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override {
-        vy += 0.0f * dt; // cho sensor rơi nhẹ
+        vy += 0.0f * dt; 
         CGameObject::Update(dt, coObjects);
         CCollision::GetInstance()->Process(this, dt, coObjects);
     }
 
     void GetBoundingBox(float& l, float& t, float& r, float& b) override {
         l = x - 3;
-        t = y;              // Phía trên của hitbox nằm ngay tại vị trí y của cảm biến
+        t = y;            
         r = x + 3;
         b = y + 3;
 
@@ -34,7 +34,6 @@ public:
             if (block) {
                 float l, t, r, b;
                 block->GetBoundingBox(l, t, r, b);
-                // Kiểm tra giao nhau giữa hitbox cảm biến và block
                 if (sensorR >= l && sensorL <= r && sensorB >= t && sensorT <= b) {
                     return true;
                 }

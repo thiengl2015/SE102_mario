@@ -43,3 +43,9 @@ CGameObject::~CGameObject()
 {
 
 }
+
+void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	dx = vx * dt;
+	dy = vy * dt;
+}
