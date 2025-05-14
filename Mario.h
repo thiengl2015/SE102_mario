@@ -81,6 +81,9 @@
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1600
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1601
 
+#define ID_ANI_MARIO_TRANSFORM_RIGHT 1700
+#define ID_ANI_MARIO_TRANSFORM_LEFT 1701
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -115,6 +118,9 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin;
+
+	bool isTransforming = false;
+	ULONGLONG transform_start_time = 0;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -169,8 +175,9 @@ public:
 	bool isExitingPipe = false;
 	ULONGLONG pipe_exit_start_time = 0;
 
-	
+
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-
+	void StartTransforming();
+	bool IsTransforming() const { return isTransforming; }
 };

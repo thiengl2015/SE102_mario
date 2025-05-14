@@ -5,6 +5,8 @@
 
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
+#define BRICK_BOUNCE_DURATION 150
+#define BRICK_BOUNCE_HEIGHT 6
 
 enum BrickSpawnType {
     BRICK_SPAWN_NONE = 0,     
@@ -21,6 +23,9 @@ class CBrick : public CGameObject
     int spawnType = 0;
     int itemSpriteId = -1;
     int pointSpriteId = 40001;
+    float bounceOffsetY = 0;
+    bool isBouncing = false;
+    DWORD bounce_start = 0;
 
 public:
     CBrick(float x, float y, int brickType = 0, int spawnType = 0, int itemSpriteId = -1, int pointSpriteId = 40001);

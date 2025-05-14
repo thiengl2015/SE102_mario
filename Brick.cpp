@@ -23,9 +23,30 @@ CBrick::CBrick(float x, float y, int brickType, int spawnType, int itemSpriteId,
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+    if (isBouncing)
+    {
+        DWORD now = GetTickCount64();
+        DWORD elapsed = now - bounce_start;
+
+        if (elapsed < BRICK_BOUNCE_DURATION / 2)
+        {
+            bounceOffsetY = -BRICK_BOUNCE_HEIGHT * (elapsed / (BRICK_BOUNCE_DURATION / 2.0f));
+        }
+        else if (elapsed < BRICK_BOUNCE_DURATION)
+        {
+            bounceOffsetY = -BRICK_BOUNCE_HEIGHT * (1 - (elapsed - BRICK_BOUNCE_DURATION / 2.0f) / (BRICK_BOUNCE_DURATION / 2.0f));
+        }
+        else
+        {
+            bounceOffsetY = 0;
+            isBouncing = false;
+        }
+    }
+
     if (!isUsed)
         CCollision::GetInstance()->Process(this, dt, coObjects);
 }
+
 
 
 void CBrick::Render()
@@ -39,7 +60,8 @@ void CBrick::Render()
         aniId = isUsed ? ID_ANI_BRICK_EMPTY : ID_ANI_BRICK_QUESTION;
     }
 
-    CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+    CAnimations::GetInstance()->Get(aniId)->Render(x, y + bounceOffsetY);
+
 }
 
 
@@ -52,47 +74,37 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 }
 
 
-
 void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (isUsed || brickType != 1) return;
-    if (dynamic_cast<CMario*>(e->src_obj) && e->ny > 0)
+
+    if (dynamic_cast<CMario*>(e->src_obj) &&
+        e->ny > 0 && 
+        e->obj == this)
     {
         isUsed = true;
+
+        if (!isBouncing)
+        {
+            isBouncing = true;
+            bounce_start = GetTickCount64();
+        }
+
         float spawnX = x;
         float spawnY = y - BRICK_BBOX_HEIGHT / 2;
-        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
+        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
         scene->AddObject(new CItemPoint(spawnX, spawnY, pointSpriteId));
+
         switch (spawnType)
         {
         case 1: scene->AddObject(new CItemCoin(spawnX, spawnY)); break;
         case 2:
-        {
-            float spawnX = x;
-            float spawnY = y - BRICK_BBOX_HEIGHT / 2;
-
-            auto mushroom = new CItemMushroom(spawnX, spawnY, itemSpriteId);
-
-            auto& objects = scene->GetObjects();
-            auto it = std::find(objects.begin(), objects.end(), this);
-            if (it != objects.end())
-                objects.insert(it, mushroom); 
-
-            break;
-        }
-
-
-
-            /*
-            case 3:
             {
-                auto leaf = new CItemLeaf(spawnX, y, itemSpriteId); // nếu có
-                leaf->StartMovingUp();
-                scene->AddObject(leaf);
-                break;
+            auto mushroom = new CItemMushroom(spawnX, spawnY, itemSpriteId);
+            scene->AddObject(mushroom);
+            break;
             }
-            */
         }
     }
 }
