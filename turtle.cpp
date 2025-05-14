@@ -43,7 +43,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
     if (!e->obj->IsBlocking()) return;
     if (dynamic_cast<CTurtle*>(e->obj)) return;
 
-    // kiểm tra xem sửa bên mario được không
+
     CMario* mario = dynamic_cast<CMario*>(e->obj);
     if (mario && IsShellState() && vx == 0)
     {
@@ -68,16 +68,6 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     vx += ax * dt;
     vy += ay * dt;
 
-
-    edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
-
-    if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
-        walkingDirection = -walkingDirection; // Đảo hướng di chuyển
-        vx = walkingDirection * TURTLE_WALKING_SPEED;
-    }
-
-
-    // Cập nhật trạng thái shell nếu cần
     if (state == TURTLE_STATE_SHELL)
     {
         if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)
@@ -85,6 +75,19 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             SetState(TURTLE_STATE_REVIVING);
         }
     }
+    if (state == TURTLE_STATE_WALKING)
+    {
+        edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
+
+        if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
+            walkingDirection = -walkingDirection;
+            vx = walkingDirection * TURTLE_WALKING_SPEED;
+        }
+    }
+    
+
+
+
     CGameObject::Update(dt, coObjects); // Cập nhật dx, dy
     CCollision::GetInstance()->Process(this, dt, coObjects);
 

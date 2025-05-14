@@ -73,6 +73,11 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="PiranhaPlant.cpp">
+      <Filter>Object\Enemies\PiranhaPlant</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Enemies\PiranhaPlant</Filter>
     <ClCompile Include="ItemPoint.cpp">
       <Filter>Object\Items</Filter>
     </ClCompile>
@@ -174,6 +179,11 @@
     <ClInclude Include="AssetIDs.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="PiranhaPlant.h">
+      <Filter>Object\Enemies\PiranhaPlant</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Enemies\PiranhaPlant</Filter>
     <ClInclude Include="ItemPoint.h">
       <Filter>Object\Items</Filter>
     </ClInclude>
@@ -215,6 +225,12 @@
     <Text Include="turtle.txt">
       <Filter>texFiles</Filter>
     </Text>
+    <Text Include="piranhaplant.txt">
+      <Filter>texFiles</Filter>
+    </Text>
+    <Text Include="bulllet.txt">
+      <Filter>texFiles</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -237,6 +253,9 @@
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{71241c4b-438e-4336-a3f0-721ab4ef1747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemies\PiranhaPlant">
+      <UniqueIdentifier>{6ec74904-19d3-4d39-95e5-ec084e8a48ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

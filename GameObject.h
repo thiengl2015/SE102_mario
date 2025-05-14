@@ -79,5 +79,6 @@ public:
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 
-
+	float getX() { return x; }
+	float getY() { return y; }
 };
