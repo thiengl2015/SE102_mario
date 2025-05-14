@@ -18,6 +18,8 @@
 #Point
 20100	458	223	469	231	20
 
+#Mushroom
+200000	300	189	315	204	20 #red
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 21000	20000	200	20001	200	20002	200	20003	200

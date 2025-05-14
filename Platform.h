@@ -32,6 +32,9 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 
 	int IsDirectionColliable(float nx, float ny);
+	int IsBlocking() override { return 1; }       
+	int IsCollidable() override { return 1; }      
+
 };
 
 typedef CPlatform* LPPLATFORM;

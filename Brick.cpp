@@ -5,6 +5,7 @@
 #include "PlayScene.h"
 #include "AssetIDs.h"
 #include "ItemCoin.h"
+#include "ItemMushroom.h"
 
 #define ID_ANI_BRICK_QUESTION    21000
 #define ID_ANI_BRICK_EMPTY       22000
@@ -50,6 +51,8 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
     b = t + BRICK_BBOX_HEIGHT;
 }
 
+
+
 void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     if (isUsed || brickType != 1) return;
@@ -57,20 +60,31 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
     {
         isUsed = true;
         float spawnX = x;
-        float spawnY = y - BRICK_BBOX_HEIGHT;
+        float spawnY = y - BRICK_BBOX_HEIGHT / 2;
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
         scene->AddObject(new CItemPoint(spawnX, spawnY, pointSpriteId));
         switch (spawnType)
         {
         case 1: scene->AddObject(new CItemCoin(spawnX, spawnY)); break;
-            /*case 2:
-            {
-                auto mushroom = new CItemMushroom(spawnX, y, itemSpriteId);
-                mushroom->StartMovingUp();
-                scene->AddObject(mushroom);
-                break;
-            }
+        case 2:
+        {
+            float spawnX = x;
+            float spawnY = y - BRICK_BBOX_HEIGHT / 2;
+
+            auto mushroom = new CItemMushroom(spawnX, spawnY, itemSpriteId);
+
+            auto& objects = scene->GetObjects();
+            auto it = std::find(objects.begin(), objects.end(), this);
+            if (it != objects.end())
+                objects.insert(it, mushroom); 
+
+            break;
+        }
+
+
+
+            /*
             case 3:
             {
                 auto leaf = new CItemLeaf(spawnX, y, itemSpriteId); // nếu có
