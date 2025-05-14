@@ -12,6 +12,7 @@
 #include "RedGoomba.h"
 #include "PiranhaPlant.h"
 #include "Brick.h"
+#include "ItemMushroom.h"
 
 
 #include "Collision.h"
@@ -142,6 +143,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	else if (dynamic_cast<CBrick*>(e->obj))
 		e->obj->OnCollisionWith(e);
+	else if (dynamic_cast<CItemMushroom*>(e->obj))
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+		e->obj->Delete();
+		DebugOut(L"[INFO] Mario powered up to BIG!\n");
+	}
+	
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -566,7 +574,6 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 void CMario::SetLevel(int l)
 {
-	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
