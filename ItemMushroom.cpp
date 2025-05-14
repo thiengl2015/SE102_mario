@@ -24,10 +24,10 @@ void CItemMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     switch (movingStep)
     {
-    case 0: 
-        y += dy;
-
-        DebugOut(L"[MUSHROOM] Rising: y = %.2f\n", y);
+    case 0:
+    {
+        vy = -MUSHROOM_RISE_SPEED;
+        y += vy * dt;
 
         if (startY - y >= MUSHROOM_RISE_DISTANCE)
         {
@@ -35,10 +35,9 @@ void CItemMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             vy = 0;
             ay = MUSHROOM_GRAVITY;
             movingStep = 1;
-
-            DebugOut(L"[MUSHROOM] Done Rising → Step 1\n");
         }
         return;
+    }
 
     case 1:
     {
@@ -96,6 +95,7 @@ void CItemMushroom::OnNoCollision(DWORD dt)
 
 void CItemMushroom::Render()
 {
+    if (movingStep == 0) return;
     CSprites::GetInstance()->Get(spriteId)->Draw(x, y);
 }
 

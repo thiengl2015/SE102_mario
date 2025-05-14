@@ -1,4 +1,4 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include "debug.h"
 
 #include "Mario.h"
@@ -13,7 +13,6 @@
 #include "PiranhaPlant.h"
 #include "Brick.h"
 #include "ItemMushroom.h"
-
 
 #include "Collision.h"
 
@@ -99,6 +98,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += vy * dt;
 		return;
 	}
+
+	if (isTransforming)
+	{
+		vx = vy = ax = ay = 0;
+
+		if (GetTickCount64() - transform_start_time > 2000)
+		{
+			isTransforming = false;
+			SetLevel(MARIO_LEVEL_BIG);
+			ay = MARIO_GRAVITY; 
+		}
+		return;
+	}
+
 }
 
 
@@ -116,11 +129,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
-	{
-		vx = 0;
-	}
+	else
+		if (e->nx != 0 && e->obj->IsBlocking())
+		{
+			vx = 0;
+		}
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -145,11 +158,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		e->obj->OnCollisionWith(e);
 	else if (dynamic_cast<CItemMushroom*>(e->obj))
 	{
-		SetLevel(MARIO_LEVEL_BIG);
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			StartTransforming();     
+		}
 		e->obj->Delete();
-		DebugOut(L"[INFO] Mario powered up to BIG!\n");
 	}
-	
+
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -238,7 +253,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
 	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
 
-	if (e->ny < 0) 
+	if (e->ny < 0)
 	{
 		if (!turtle->IsShellState())
 		{
@@ -251,7 +266,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-	else 
+	else
 	{
 		if (turtle->IsShellState())
 		{
@@ -296,7 +311,7 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 
 	if (untouchable == 0)
 	{
-		if (piranha->GetState() == PIRANHA_PLANT_STATE_FIRE ) 
+		if (piranha->GetState() == PIRANHA_PLANT_STATE_FIRE)
 		{
 			if (level > MARIO_LEVEL_SMALL)
 			{
@@ -452,17 +467,24 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	animations->Get(aniId)->Render(x, y);
+	if (isTransforming)
+	{
+		aniId = (nx > 0) ? ID_ANI_MARIO_TRANSFORM_RIGHT : ID_ANI_MARIO_TRANSFORM_LEFT;
+		animations->Get(aniId)->Render(x, y);
+		return;
+	}
 
+	animations->Get(aniId)->Render(x, y);
 
 	DebugOutTitle(L"Coins: %d", coin);
 }
 
 
+
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE) return;
 
 	switch (state)
 	{
@@ -511,7 +533,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -535,18 +557,19 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_ENTER_PIPE:
 		vx = 0;
-		vy = 0.05f; 
+		vy = 0.05f;
 		break;
 
 	}
 
 
 	CGameObject::SetState(state);
+	if (isTransforming) return;
 }
 
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
@@ -555,18 +578,18 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
 		}
-		else 
+		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
 	else
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
@@ -580,6 +603,7 @@ void CMario::SetLevel(int l)
 	}
 	level = l;
 }
+
 
 void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
 {
@@ -596,4 +620,10 @@ void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
 	float marioWidth = MARIO_BIG_BBOX_WIDTH;
 
 	this->x = destX + (pipeWidth - marioWidth) / 2.0f;
+}
+
+void CMario::StartTransforming()
+{
+	isTransforming = true;
+	transform_start_time = GetTickCount64();
 }
