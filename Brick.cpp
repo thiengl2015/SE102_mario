@@ -94,11 +94,10 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
         float spawnY = y - BRICK_BBOX_HEIGHT / 2;
 
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-        scene->AddObject(new CItemPoint(spawnX, spawnY, pointSpriteId));
 
         switch (spawnType)
         {
-        case 1: scene->AddObject(new CItemCoin(spawnX, spawnY)); break;
+        case 1: scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId)); break;
         case 2:
             {
             auto mushroom = new CItemMushroom(spawnX, spawnY, itemSpriteId);
