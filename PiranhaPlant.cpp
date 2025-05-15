@@ -29,12 +29,10 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
     CMario* mario = (CMario*)scene->GetPlayer();
-
+    float marioX, marioY;
+    mario->GetPosition(marioX, marioY);
     if (mario) 
     {
-        float marioX, marioY;
-        mario->GetPosition(marioX, marioY);
-
         float distance = abs(marioX - x); 
 
 
@@ -77,7 +75,7 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
         if (!bullet || bullet->IsDeleted())
         {
-            bullet = new CBullet(x + (nx * BULLET_BBOX_WIDTH), y);
+            bullet = new CBullet(x, y, marioX, marioY);
         }
     }
 
@@ -119,8 +117,7 @@ void CPiranhaPlant::Render()
     LPANIMATION ani = CAnimations::GetInstance()->Get(aniId);
     if (ani) 
         ani->Render(x, y);
-
-    if (bullet && !bullet->IsDeleted()) 
+    if (bullet && !bullet->IsDeleted())
         bullet->Render();
 }
 

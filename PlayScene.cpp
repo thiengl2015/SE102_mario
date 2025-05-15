@@ -142,7 +142,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new CPiranhaPlant(x, y); break;
-	case OBJECT_TYPE_BULLET: obj = new CBullet(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 

@@ -11,7 +11,7 @@ turtle.txt
 standing.txt
 fullblock.txt
 piranhaplant.txt
-bullet.txt
+bulllet.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -138,6 +138,7 @@ bullet.txt
 #Turtle
 3	600	30	7000
 16	373	133	7000
+160	373	131	7000
 8	372	148	30	48	100000	#Pipe 1
 
 

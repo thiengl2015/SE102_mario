@@ -13,6 +13,7 @@
 #include "PiranhaPlant.h"
 #include "Brick.h"
 #include "ItemMushroom.h"
+#include "Bullet.h"
 
 #include "Collision.h"
 
@@ -152,6 +153,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
 	{
 		OnCollisionWithPiranhaPlant(e);
+	}
+	else if (dynamic_cast<CBullet*>(e->obj))
+	{
+		OnCollisionWithBullet(e);
 	}
 
 	else if (dynamic_cast<CBrick*>(e->obj))
@@ -311,7 +316,7 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 
 	if (untouchable == 0)
 	{
-		if (piranha->GetState() == PIRANHA_PLANT_STATE_FIRE)
+		if (piranha->GetState() != PIRANHA_PLANT_STATE_IDLE  )
 		{
 			if (level > MARIO_LEVEL_SMALL)
 			{
@@ -327,6 +332,32 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 	}
 
 }
+void CMario::OnCollisionWithBullet(LPCOLLISIONEVENT e)
+{
+	CBullet* bullet = dynamic_cast<CBullet*>(e->obj);
+
+	if (untouchable == 0) 
+	{
+		if (bullet->IsExist()) 
+		{
+			DebugOut(L">>> Mario bị bắn trúng bởi đạn! >>>\n");
+
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable(); 
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+
+			bullet->SetExist(false); 
+		}
+	}
+}
+
 
 //
 // Get animation ID for small Mario
