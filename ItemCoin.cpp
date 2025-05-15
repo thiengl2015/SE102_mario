@@ -1,20 +1,41 @@
 #include "ItemCoin.h"
 #include "Animations.h"
+#include "PlayScene.h"
+#include "ItemPoint.h"
 
-CItemCoin::CItemCoin(float x, float y) : CGameObject(x, y)
+CItemCoin::CItemCoin(float x, float y, int pointId) : CGameObject(x, y)
 {
-    spawn_time = GetTickCount64();
+    this->pointSpriteId = pointId;
+    this->startY = y;
+    isRising = true;
+    isFalling = false;
 }
 
 void CItemCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    if (GetTickCount64() - spawn_time > ITEM_COIN_LIFETIME)
+    if (isRising)
     {
-        this->Delete();
-        return;
+        y -= RISE_SPEED * dt;
+        if (startY - y >= RISE_DISTANCE)
+        {
+            y = startY - RISE_DISTANCE; 
+            isRising = false;
+            isFalling = true;
+        }
     }
+    else if (isFalling)
+    {
+        y += FALL_SPEED * dt;
+        if (y - (startY - RISE_DISTANCE) >= FALL_DISTANCE)
+        {
+            float pointY = startY - RISE_DISTANCE + FALL_DISTANCE;
+            CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            scene->AddObject(new CItemPoint(x, pointY, pointSpriteId));
 
-    y -= 0.2f * dt; 
+            this->Delete();
+            return;
+        }
+    }
 }
 
 void CItemCoin::Render()
