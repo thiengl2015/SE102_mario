@@ -112,7 +112,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		return;
 	}
-
+	if (y > 230 && x < 2013)
+	{
+		SetState(MARIO_STATE_DIE);
+	}
 }
 
 
@@ -153,10 +156,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
 	{
 		OnCollisionWithPiranhaPlant(e);
-	}
-	else if (dynamic_cast<CBullet*>(e->obj))
-	{
-		OnCollisionWithBullet(e);
 	}
 
 	else if (dynamic_cast<CBrick*>(e->obj))
@@ -313,7 +312,6 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 {
 	CPiranhaPlant* piranha = dynamic_cast<CPiranhaPlant*>(e->obj);
 
-
 	if (untouchable == 0)
 	{
 		if (piranha->GetState() != PIRANHA_PLANT_STATE_IDLE  )
@@ -332,31 +330,7 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 	}
 
 }
-void CMario::OnCollisionWithBullet(LPCOLLISIONEVENT e)
-{
-	CBullet* bullet = dynamic_cast<CBullet*>(e->obj);
 
-	if (untouchable == 0) 
-	{
-		if (bullet->IsExist()) 
-		{
-			DebugOut(L">>> Mario bị bắn trúng bởi đạn! >>>\n");
-
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable(); 
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
-
-			bullet->SetExist(false); 
-		}
-	}
-}
 
 
 //
@@ -585,6 +559,7 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
+		isDead = true;
 		break;
 	case MARIO_STATE_ENTER_PIPE:
 		vx = 0;

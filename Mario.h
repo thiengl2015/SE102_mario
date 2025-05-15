@@ -128,7 +128,6 @@ class CMario : public CGameObject
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithRedGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
-	void OnCollisionWithBullet(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -162,6 +161,8 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	int GetLevel() { return level; }
+	int GetUntouchable() { return untouchable; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	//Pipe
@@ -176,7 +177,8 @@ public:
 	bool isExitingPipe = false;
 	ULONGLONG pipe_exit_start_time = 0;
 
-
+	bool isDead = false;
+	bool IsDead() { return isDead; }
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 	void StartTransforming();

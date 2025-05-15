@@ -21,6 +21,7 @@
 
 #include "SampleKeyEventHandler.h"
 #define MAX_CAM_X 2610
+#define MAX_CAM_Y -2
 
 using namespace std;
 
@@ -339,6 +340,12 @@ void CPlayScene::Update(DWORD dt)
 		{
 			current_cy += (0.0f - current_cy) * 0.1f;
 		}
+	}
+
+	if (((CMario*)player)->IsDead())
+	{	
+			current_cx = cx;
+			current_cy = MAX_CAM_Y;
 	}
 
 	game->SetCamPos(cx, current_cy);

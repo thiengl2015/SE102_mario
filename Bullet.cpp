@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 #include "Game.h"
 #include "Animations.h"
+#include "Mario.h"
 #define BULLET_LIFETIME 2000
 CBullet::CBullet(float x, float y, float targetX, float targetY) : CGameObject(x, y)
 {
@@ -58,8 +59,30 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 void CBullet::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-    if (!e->obj->IsBlocking()) isExist=false;
+    CMario* mario = dynamic_cast<CMario*>(e->obj);
+    if (mario) 
+    {
+        if (mario->GetUntouchable() == 0)
+        {
+            if (IsExist())
+            {
+                DebugOut(L">>> Mario bị bắn trúng bởi đạn! >>>\n");
 
+                if (mario->GetLevel() > MARIO_LEVEL_SMALL)
+                {
+                    mario->SetLevel(MARIO_LEVEL_SMALL);
+                    mario->StartUntouchable();
+                }
+                else 
+                {
+                    DebugOut(L">>> Mario DIE >>> \n");
+                    mario->SetState(MARIO_STATE_DIE);
+                }
+            }
+        }
+        isExist = false;
+        isDeleted = true;
+    }
 }
 
 void CBullet::Render()
