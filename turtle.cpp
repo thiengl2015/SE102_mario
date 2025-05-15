@@ -73,12 +73,6 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)
         {
             SetState(TURTLE_STATE_REVIVING);
-			walkingDirection = -walkingDirection;
-            edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
-            if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
-                walkingDirection = -walkingDirection;
-                vx = walkingDirection * TURTLE_WALKING_SPEED;
-            }
         }
     }
     if (state == TURTLE_STATE_WALKING)
@@ -90,6 +84,17 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             vx = walkingDirection * TURTLE_WALKING_SPEED;
         }
     }
+    if (state == TURTLE_STATE_REVIVING)
+    {
+        edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
+
+        if (!edgeSensor->IsOnHalfSolidBlock(coObjects))
+        {
+            walkingDirection = -walkingDirection;
+            vx = walkingDirection * TURTLE_WALKING_SPEED;
+        }
+    }
+
     
 
 
@@ -117,7 +122,7 @@ void CTurtle::Render()
     }
     else if (state == TURTLE_STATE_REVIVING)
     {
-        aniId = (walkingDirection > 0) ? ID_ANI_TURTLE_WALKING_RIGHT : ID_ANI_TURTLE_WALKING_LEFT;
+        aniId = (walkingDirection > 0) ? ID_ANI_TURTLE_WALKING_LEFT : ID_ANI_TURTLE_WALKING_RIGHT;
     }
 
     CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -144,8 +149,10 @@ void CTurtle::SetState(int state)
         vx = 0;
         break;
     case TURTLE_STATE_REVIVING:
-        vx = 0.05f;
+        if (walkingDirection == 0) walkingDirection = -1; 
+        vx = walkingDirection * TURTLE_WALKING_SPEED;
         break;
+
     }
 }
 
