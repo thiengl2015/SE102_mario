@@ -36,16 +36,18 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
-        switch (pendingSpawnType) {
-        case 2:
+        CMario* mario = (CMario*)scene->GetPlayer();
+
+        if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+        {
             scene->AddObject(new CItemMushroom(spawnX, spawnY, itemSpriteId, pointSpriteId));
-            scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
-            break;
-        case 3:
-            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
-            scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
-            break;
         }
+        else
+        {
+            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
+        }
+        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
+
 
         pendingSpawn = false;
     }

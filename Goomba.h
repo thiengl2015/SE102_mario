@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #define GOOMBA_GRAVITY 0.002f
-#define GOOMBA_WALKING_SPEED 0.05f
+#define GOOMBA_WALKING_SPEED 0.03f
 
 
 #define GOOMBA_BBOX_WIDTH 16
@@ -16,6 +16,7 @@
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
+#define GOOMBA_ACTIVATE_DISTANCE 200
 
 class CGoomba : public CGameObject
 {
@@ -25,7 +26,9 @@ protected:
 	int pointSpriteId; 
 
 	ULONGLONG die_start;
-	float spawmX;
+	float spawmX;	
+	float originalX;
+
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();

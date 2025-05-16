@@ -17,11 +17,11 @@ CRedGoomba::CRedGoomba(float x, float y, int pointIdWinged, int pointIdWalking)
     hasSpawnedWingedPoint = false;
     hasSpawnedWalkingPoint = false;
 
-    spawmX = x - 300;
-    this->jump_start = GetTickCount64();
-    this->isOnPlatform = false;
+    spawmX = x - RED_GOOMBA_ACTIVATE_DISTANCE;
+    originalX = x;
     SetState(RED_GOOMBA_STATE_WINGED);
 }
+
 
 void CRedGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -70,10 +70,17 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     CMario* mario = (CMario*)scene->GetPlayer();
     float marioX, marioY;
     mario->GetPosition(marioX, marioY);
-    if (marioX < spawmX)
+
+    if (marioX < x - RED_GOOMBA_ACTIVATE_DISTANCE)
     {
+        vx = 0;
         return;
     }
+    else if (vx == 0 && (state == RED_GOOMBA_STATE_WALKING || state == RED_GOOMBA_STATE_WINGED))
+    {
+        vx = -RED_GOOMBA_WALK_SPEED;
+    }
+
     vy += ay * dt;
     vx += ax * dt;
 
@@ -92,7 +99,18 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     CGameObject::Update(dt, coObjects);
     CCollision::GetInstance()->Process(this, dt, coObjects);
+
+    float distanceToMario = abs(marioX - x);
+    if (distanceToMario > RED_GOOMBA_ACTIVATE_DISTANCE + 200 && state != RED_GOOMBA_STATE_DIE)
+    {
+        x = originalX;
+        vx = 0;
+        SetState(RED_GOOMBA_STATE_WINGED);
+        return;
+    }
+
 }
+
 
 void CRedGoomba::Render()
 {
