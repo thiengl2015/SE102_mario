@@ -88,6 +88,9 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
+    <ClCompile Include="RacoonMario.cpp">
+      <Filter>Object\Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Core\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="RacoonMario.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ public:
     }
 
     void GetBoundingBox(float& l, float& t, float& r, float& b) override {
-        l = t = r = b = 0; // không có bounding box
+        l = t = r = b = 0;
     }
 
     int IsCollidable() override { return 0; }
