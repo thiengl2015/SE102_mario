@@ -67,9 +67,6 @@
     <ClCompile Include="RedGoomba.cpp">
       <Filter>Object\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="RacoonMario.cpp">
-      <Filter>Object\Mario</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="Brick.cpp">
       <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="RacoonMario.cpp">
+      <Filter>Object\Mario</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,9 +174,6 @@
     <ClInclude Include="Decorations.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="RacoonMario.h">
-      <Filter>Object\Mario</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
@@ -206,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="RacoonMario.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

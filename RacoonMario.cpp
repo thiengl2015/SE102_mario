@@ -73,6 +73,8 @@ void CMarioRaccoon::Render()
 	animations->Get(aniId)->Render(x, y);
 }
 
+
+
 void CMarioRaccoon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (IsSitting())

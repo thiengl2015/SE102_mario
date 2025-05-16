@@ -2,8 +2,8 @@
 #include "GameObject.h"
 #include "AssetIDs.h"
 
-#define MUSHROOM_WIDTH 16
-#define MUSHROOM_HEIGHT 16
+#define MUSHROOM_WIDTH 14
+#define MUSHROOM_HEIGHT 14
 #define MUSHROOM_RISE_DISTANCE 16
 #define MUSHROOM_SPEED 0.03f
 #define MUSHROOM_GRAVITY 0.001f
