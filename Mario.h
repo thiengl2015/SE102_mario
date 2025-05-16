@@ -108,6 +108,7 @@
 
 class CMario : public CGameObject
 {
+protected:
 	BOOLEAN isSitting;
 	float maxVx;
 	float ax;				// acceleration on x 
@@ -183,4 +184,10 @@ public:
 
 	void StartTransforming();
 	bool IsTransforming() const { return isTransforming; }
+	int GetDirection() const { return nx; }
+
+	bool IsSitting() const { return isSitting; }
+	bool IsOnPlatform() const { return isOnPlatform; }
+	float GetAx() const { return ax; }
+
 };
