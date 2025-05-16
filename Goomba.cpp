@@ -1,11 +1,15 @@
 #include "Goomba.h"
 #include "PlayScene.h"
 #include "ItemPoint.h"
+#include "Mario.h"
+#include "Game.h"
+#include "PlayScene.h"
 
 CGoomba::CGoomba(float x, float y, int pointSpriteId) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
+	spawmX = x - 400;
 	die_start = -1;
 	this->pointSpriteId = pointSpriteId; 
 	SetState(GOOMBA_STATE_WALKING);
@@ -52,6 +56,14 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	CMario* mario = (CMario*)scene->GetPlayer();
+	float marioX, marioY;
+	mario->GetPosition(marioX, marioY);
+	if (marioX < spawmX)
+	{
+		return;
+	}
 	vy += ay * dt;
 	vx += ax * dt;
 

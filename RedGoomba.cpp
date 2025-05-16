@@ -17,6 +17,9 @@ CRedGoomba::CRedGoomba(float x, float y, int pointIdWinged, int pointIdWalking)
     hasSpawnedWingedPoint = false;
     hasSpawnedWalkingPoint = false;
 
+    spawmX = x - 300;
+    this->jump_start = GetTickCount64();
+    this->isOnPlatform = false;
     SetState(RED_GOOMBA_STATE_WINGED);
 }
 
@@ -67,7 +70,7 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     CMario* mario = (CMario*)scene->GetPlayer();
     float marioX, marioY;
     mario->GetPosition(marioX, marioY);
-    if (marioX < 700)
+    if (marioX < spawmX)
     {
         return;
     }
