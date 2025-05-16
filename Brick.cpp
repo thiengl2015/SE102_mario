@@ -37,11 +37,11 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
         switch (pendingSpawnType) {
         case 2:
-            scene->AddObject(new CItemMushroom(spawnX, spawnY));
+            scene->AddObject(new CItemMushroom(spawnX, spawnY, itemSpriteId, pointSpriteId));
             scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
             break;
         case 3:
-            scene->AddObject(new CItemLeaf(spawnX, spawnY));
+            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
             scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
             break;
         }

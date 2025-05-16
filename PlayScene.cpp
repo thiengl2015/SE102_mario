@@ -18,7 +18,6 @@
 #include "PiranhaPlant.h"
 #include "Bullet.h"
 #include "RacoonMario.h"
-#include "ItemMushroom.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -129,7 +128,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
+	case OBJECT_TYPE_GOOMBA:
+	{
+		if (tokens.size() < 4) return; 
+		int pointSpriteId = atoi(tokens[3].c_str());
+		obj = new CGoomba(x, y, pointSpriteId);
+		break;
+	}
 	case OBJECT_TYPE_BRICK:
 	{
 		if (tokens.size() < 9) {
@@ -149,10 +154,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
-	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
+	case OBJECT_TYPE_TURTLE:
+	{
+		if (tokens.size() < 5) return;
+		int pointIdStomp = atoi(tokens[3].c_str());
+		int pointIdKick = atoi(tokens[4].c_str());
+		obj = new CTurtle(x, y, pointIdStomp, pointIdKick);
+		break;
+	}
+	case OBJECT_TYPE_REDGOOMBA:
+	{
+		if (tokens.size() < 5) return;
+		int pointIdWinged = atoi(tokens[3].c_str());
+		int pointIdWalking = atoi(tokens[4].c_str());
+		obj = new CRedGoomba(x, y, pointIdWinged, pointIdWalking);
+		break;
+	}
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new CPiranhaPlant(x, y); break;
-	case OBJECT_TYPE_ITEM_MUSHROOM: obj = new CItemMushroom(x, y); break;
+
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -214,6 +233,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetObjectType(OBJECT_TYPE_PIPE_TELEPORT);
 		break;
 	}
+
 	break;
 
 

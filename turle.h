@@ -41,9 +41,13 @@ protected:
     virtual void OnCollisionWith(LPCOLLISIONEVENT e); // Xử lý khi có va chạm
     CEdgeSensor* edgeSensor; // Cảm biến để phát hiện mép
     bool sensorHasFallen; // Kiểm tra cảm biến có bị rơi không
+    int pointIdStomp;
+    int pointIdKick;
+    bool hasSpawnedPointOnStomp = false;
+    bool hasSpawnedPointOnKick = false;
 
 public:
-    CTurtle(float x, float y); // Hàm khởi tạo rùa
+    CTurtle(float x, float y, int pointIdStomp, int pointIdKick);
     virtual void SetState(int state); // Thiết lập trạng thái
     bool checkMario(); // Kiểm tra tương tác với Mario
     void StartShell(); // Đặt rùa vào trạng thái vỏ

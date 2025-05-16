@@ -24,9 +24,12 @@ protected:
     float ay = 0;
     float riseDistance = 0;
     float swayDirection = 1; // Điều hướng lắc lư
+    int pointSpriteId;
+	int spriteId;
+    bool isCollected = false; 
 
 public:
-    CItemLeaf(float x, float y);
+    CItemLeaf(float x, float y, int spriteId, int pointSpriteId);
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
