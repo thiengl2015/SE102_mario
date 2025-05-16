@@ -125,6 +125,9 @@ point.txt
 8	2316	68	16	16	100002	#Clod 4 up
 8	2332	68	16	16	100002	#Clod 4 up
 
+#Blocker Wall
+10	0	0
+
 #Teleport place
 6	1500	485	80005	#Black
 

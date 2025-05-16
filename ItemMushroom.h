@@ -35,5 +35,7 @@ public:
     int IsBlocking() override { return 0; }
     int IsCollidable() override { return true; }
     virtual void SetState(int state);
+    int GetType() override { return TYPE_MUSHROOM; }
+
 };
 

@@ -101,13 +101,15 @@
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
+#define MARIO_TRANSFORM_DURATION 1000
+
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-
-#define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_TRANSFORM_FREEZE_TIME 500
+#define MARIO_UNTOUCHABLE_TIME 1000
 
 #define ID_ANI_MARIO_RACCOON_IDLE_RIGHT   2000
 #define ID_ANI_MARIO_RACCOON_IDLE_LEFT    2001
@@ -218,5 +220,6 @@ public:
 
 	float GetX() const { return x; }
 	void SetVY(float vy) { this->vy = vy; }
-
+	void OnAttacked();
+	int GetType() override { return TYPE_MARIO; }
 };

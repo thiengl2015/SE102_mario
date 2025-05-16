@@ -4,6 +4,8 @@
 #include "ItemPoint.h"
 #include "Mario.h"
 #include "PlayScene.h"
+#include "BlockerWall.h"
+
 
 CItemMushroom::CItemMushroom(float x, float y, int spriteId, int pointSpriteId)
     : CGameObject(x, y), pointSpriteId(pointSpriteId)
@@ -51,13 +53,19 @@ void CItemMushroom::Render()
 
 void CItemMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+    if (e->obj->GetType() == TYPE_BLOCKERWALL)
+    {
+        this->Delete();
+        return;
+    }
+
     if (e->nx != 0)
-        vx = -vx; 
+        vx = -vx;
     if (e->ny != 0)
         vy = 0;
+
     if (dynamic_cast<CMario*>(e->obj)) {
         CMario* mario = dynamic_cast<CMario*>(e->obj);
-
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
         scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId));
 
@@ -66,10 +74,9 @@ void CItemMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
         }
 
         this->Delete();
-        return;
     }
-
 }
+
 
 void CItemMushroom::OnNoCollision(DWORD dt)
 {

@@ -39,4 +39,6 @@ protected:
 public: 	
 	CGoomba(float x, float y, int pointSpriteId);
 	virtual void SetState(int state);
+	int GetType() override { return TYPE_GOOMBA; }
+
 };
