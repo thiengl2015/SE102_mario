@@ -15,6 +15,7 @@
 #include "Brick.h"
 #include "ItemMushroom.h"
 #include "Bullet.h"
+#include "ItemLeaf.h"
 
 #include "Collision.h"
 
@@ -108,11 +109,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (GetTickCount64() - transform_start_time > 2000)
 		{
 			isTransforming = false;
-			SetLevel(MARIO_LEVEL_BIG);
-			ay = MARIO_GRAVITY; 
+			ay = MARIO_GRAVITY;
+
+			if (nextLevel != -1)
+			{
+				SetLevel(nextLevel);
+				nextLevel = -1;
+			}
 		}
 		return;
 	}
+
 	if (y > 230 && x < 2013)
 	{
 		SetState(MARIO_STATE_DIE);
@@ -165,10 +172,19 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (level == MARIO_LEVEL_SMALL)
 		{
-			StartTransforming();     
+			StartTransforming(MARIO_LEVEL_BIG);
 		}
 		e->obj->Delete();
 	}
+	else if (dynamic_cast<CItemLeaf*>(e->obj))
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			StartTransforming(MARIO_LEVEL_RACCOON);
+		}
+		e->obj->Delete();
+	}
+
 
 }
 
@@ -315,7 +331,7 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 
 	if (untouchable == 0)
 	{
-		if (piranha->GetState() != PIRANHA_PLANT_STATE_IDLE  )
+		if (piranha->GetState() != PIRANHA_PLANT_STATE_IDLE)
 		{
 			if (level > MARIO_LEVEL_SMALL)
 			{
@@ -472,11 +488,17 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
+	else if (level == MARIO_LEVEL_RACCOON)
+		aniId = GetAniIdRaccoon(); 
 
 	if (isTransforming)
 	{
-		aniId = (nx > 0) ? ID_ANI_MARIO_TRANSFORM_RIGHT : ID_ANI_MARIO_TRANSFORM_LEFT;
-		animations->Get(aniId)->Render(x, y);
+		if (nextLevel == MARIO_LEVEL_BIG)
+			aniId = (nx > 0) ? ID_ANI_MARIO_TRANSFORM_RIGHT : ID_ANI_MARIO_TRANSFORM_LEFT;
+		else if (nextLevel == MARIO_LEVEL_RACCOON)
+			aniId = ID_ANI_MARIO_TRANSFORM_TO_RACCOON;
+
+		animations->Get(aniId)->Render(x, y - 8.0f);
 		return;
 	}
 
@@ -485,6 +507,48 @@ void CMario::Render()
 	DebugOutTitle(L"Coins: %d", coin);
 }
 
+int CMario::GetAniIdRaccoon()
+{
+	int aniId = -1;
+	if (!isOnPlatform)
+	{
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
+			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
+		else
+			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT;
+	}
+	else if (isSitting)
+	{
+		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_SIT_RIGHT : ID_ANI_MARIO_RACCOON_SIT_LEFT;
+	}
+	else if (vx == 0)
+	{
+		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_IDLE_LEFT;
+	}
+	else if (vx > 0)
+	{
+		if (ax < 0)
+			aniId = ID_ANI_MARIO_RACCOON_BRACE_RIGHT;
+		else if (ax == MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
+		else if (ax == MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT;
+	}
+	else
+	{
+		if (ax > 0)
+			aniId = ID_ANI_MARIO_RACCOON_BRACE_LEFT;
+		else if (ax == -MARIO_ACCEL_RUN_X)
+			aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
+		else if (ax == -MARIO_ACCEL_WALK_X)
+			aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
+	}
+
+	if (aniId == -1)
+		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_IDLE_LEFT;
+
+	return aniId;
+}
 
 
 void CMario::SetState(int state)
@@ -608,8 +672,14 @@ void CMario::SetLevel(int l)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
+	else if (this->level == MARIO_LEVEL_BIG && l == MARIO_LEVEL_RACCOON)
+	{
+		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) / 2; 
+	}
+
 	level = l;
 }
+
 
 
 void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
@@ -629,19 +699,9 @@ void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
 	this->x = destX + (pipeWidth - marioWidth) / 2.0f;
 }
 
-void CMario::StartTransforming()
+void CMario::StartTransforming(int targetLevel)
 {
-	CItemMushroom* mushroom = nullptr;
-	CPlayScene* s = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-	for (auto obj : s->GetObjects())
-	{
-		mushroom = dynamic_cast<CItemMushroom*>(obj);
-		if (mushroom) break;
-	}
-	if (mushroom->GetState() == MUSHROOM_STATE_FULL)
-	{
-		isTransforming = true;
-		transform_start_time = GetTickCount64();
-	}
-
+	isTransforming = true;
+	transform_start_time = GetTickCount64();
+	nextLevel = targetLevel;
 }

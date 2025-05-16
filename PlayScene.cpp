@@ -124,7 +124,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMarioRaccoon(x, y);
+		obj = new CMario(x, y);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
@@ -132,15 +132,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_BRICK:
 	{
-		int brickType = 0, spawnType = 0, itemSpriteId = -1, pointSpriteId = 20100;
-		if (tokens.size() > 3) brickType = atoi(tokens[3].c_str());
-		if (tokens.size() > 4) spawnType = atoi(tokens[4].c_str());
-		if (tokens.size() > 5) itemSpriteId = atoi(tokens[5].c_str());
-		if (tokens.size() > 6) pointSpriteId = atoi(tokens[6].c_str());
+		if (tokens.size() < 9) {
+			return;
+		}
 
-		obj = new CBrick(x, y, brickType, spawnType, itemSpriteId, pointSpriteId);
+		int brickType = atoi(tokens[3].c_str());
+		int spawnType = atoi(tokens[4].c_str());
+		int itemSpriteId = atoi(tokens[5].c_str());
+		int pointSpriteId = atoi(tokens[6].c_str());
+		float width = (float)atof(tokens[7].c_str());
+		float height = (float)atof(tokens[8].c_str());
+
+		obj = new CBrick(x, y, width, height, brickType, spawnType, itemSpriteId, pointSpriteId);
 		break;
 	}
+
+
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;

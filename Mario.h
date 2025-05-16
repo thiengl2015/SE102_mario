@@ -83,6 +83,8 @@
 
 #define ID_ANI_MARIO_TRANSFORM_RIGHT 1700
 #define ID_ANI_MARIO_TRANSFORM_LEFT 1701
+#define ID_ANI_MARIO_TRANSFORM_TO_RACCOON  1702
+
 
 #pragma endregion
 
@@ -92,6 +94,7 @@
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
+#define MARIO_LEVEL_RACCOON 3
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -106,6 +109,26 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 
+#define ID_ANI_MARIO_RACCOON_IDLE_RIGHT   2000
+#define ID_ANI_MARIO_RACCOON_IDLE_LEFT    2001
+#define ID_ANI_MARIO_RACCOON_WALKING_RIGHT 2002
+#define ID_ANI_MARIO_RACCOON_WALKING_LEFT  2003
+#define ID_ANI_MARIO_RACCOON_RUNNING_RIGHT 2004
+#define ID_ANI_MARIO_RACCOON_RUNNING_LEFT  2005
+#define ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT 2006
+#define ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT  2007
+#define ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT  2008
+#define ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT   2009
+#define ID_ANI_MARIO_RACCOON_SIT_RIGHT 2010
+#define ID_ANI_MARIO_RACCOON_SIT_LEFT  2011
+#define ID_ANI_MARIO_RACCOON_BRACE_RIGHT 2012
+#define ID_ANI_MARIO_RACCOON_BRACE_LEFT  2013
+
+
+#define MARIO_RACCOON_BBOX_WIDTH  22
+#define MARIO_RACCOON_BBOX_HEIGHT 26
+#define MARIO_RACCOON_SITTING_BBOX_HEIGHT 15
+#define MARIO_RACCOON_SIT_HEIGHT_ADJUST ((MARIO_RACCOON_BBOX_HEIGHT - MARIO_RACCOON_SITTING_BBOX_HEIGHT) / 2)
 class CMario : public CGameObject
 {
 protected:
@@ -120,6 +143,8 @@ protected:
 	BOOLEAN isOnPlatform;
 	int coin;
 
+	int nextLevel = -1;
+
 	bool isTransforming = false;
 	ULONGLONG transform_start_time = 0;
 
@@ -132,6 +157,7 @@ protected:
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
+	int GetAniIdRaccoon(); 
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -182,12 +208,15 @@ public:
 	bool IsDead() { return isDead; }
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	void StartTransforming();
+	void StartTransforming(int targetLevel);
 	bool IsTransforming() const { return isTransforming; }
 	int GetDirection() const { return nx; }
 
 	bool IsSitting() const { return isSitting; }
 	bool IsOnPlatform() const { return isOnPlatform; }
 	float GetAx() const { return ax; }
+
+	float GetX() const { return x; }
+	void SetVY(float vy) { this->vy = vy; }
 
 };
