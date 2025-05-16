@@ -17,6 +17,7 @@
 #include "RedGoomba.h"
 #include "PiranhaPlant.h"
 #include "Bullet.h"
+#include "ItemMushroom.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -143,6 +144,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TURTLE: obj = new CTurtle(x, y); break;
 	case OBJECT_TYPE_REDGOOMBA: obj = new CRedGoomba(x, y); break;
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new CPiranhaPlant(x, y); break;
+	case OBJECT_TYPE_ITEM_MUSHROOM: obj = new CItemMushroom(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 

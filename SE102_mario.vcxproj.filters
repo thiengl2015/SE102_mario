@@ -88,6 +88,9 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
+    <ClCompile Include="ItemLeaf.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Core\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemLeaf.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

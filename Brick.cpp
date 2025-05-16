@@ -6,6 +6,8 @@
 #include "AssetIDs.h"
 #include "ItemCoin.h"
 #include "ItemMushroom.h"
+#include "ItemLeaf.h"
+#include "turle.h"
 
 #define ID_ANI_BRICK_QUESTION    21000
 #define ID_ANI_BRICK_EMPTY       22000
@@ -59,6 +61,12 @@ void CBrick::Render()
     else if (brickType == 1) {
         aniId = isUsed ? ID_ANI_BRICK_EMPTY : ID_ANI_BRICK_QUESTION;
     }
+	else if (brickType == 2) {
+		aniId = ID_ANI_BRICK_PATTERN;
+	}
+	else if (brickType == 3) {
+		aniId = ID_ANI_BRICK_EMPTY;
+	}
 
     CAnimations::GetInstance()->Get(aniId)->Render(x, y + bounceOffsetY);
 
@@ -76,33 +84,77 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-    if (isUsed || brickType != 1) return;
-
-    if (dynamic_cast<CMario*>(e->src_obj) &&
-        e->ny > 0 && 
-        e->obj == this)
     {
-        isUsed = true;
+        if (isUsed || brickType != 1) return;
 
-        if (!isBouncing)
+        if (dynamic_cast<CMario*>(e->src_obj) &&
+            e->ny > 0 &&
+            e->obj == this)
         {
-            isBouncing = true;
-            bounce_start = GetTickCount64();
-        }
+            isUsed = true;
 
-        float spawnX = x;
-        float spawnY = y - BRICK_BBOX_HEIGHT / 2;
-
-        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-
-        switch (spawnType)
-        {
-        case 1: scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId)); break;
-        case 2:
+            if (!isBouncing)
             {
-            auto mushroom = new CItemMushroom(spawnX, spawnY, itemSpriteId);
-            scene->AddObject(mushroom);
-            break;
+                isBouncing = true;
+                bounce_start = GetTickCount64();
+            }
+
+            float spawnX = x;
+            float spawnY = y - BRICK_BBOX_HEIGHT / 2;
+
+            CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+
+            switch (spawnType)
+            {
+            case 1: scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId)); break;
+            case 2:
+            {
+                auto mushroom = new CItemMushroom(spawnX, spawnY);
+                scene->AddObject(mushroom);
+                auto brick = new CBrick(spawnX, spawnY + 7.5, 3, 0, itemSpriteId, pointSpriteId);
+                scene->AddObject(brick);
+                break;
+            }
+            case 3:
+            {
+                auto leaf = new CItemLeaf(spawnX, spawnY);
+                scene->AddObject(leaf);
+                auto brick = new CBrick(spawnX, spawnY + 7.5, 3, 0, itemSpriteId, pointSpriteId);
+                scene->AddObject(brick);
+                break;
+            }
+            }
+            if (dynamic_cast<CTurtle*>(e->src_obj) && e->obj == this && e->nx >0)
+            {
+                CTurtle* turtle = dynamic_cast<CTurtle*>(e->src_obj);
+                if (turtle->GetState() == TURTLE_STATE_SHELL)
+                {
+                    isUsed = true;
+                    float spawnX = x;
+                    float spawnY = y - BRICK_BBOX_HEIGHT / 2;
+
+                    CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+                    switch (spawnType)
+                    {
+                    case 1: scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId)); break;
+                    case 2:
+                    {
+                        auto mushroom = new CItemMushroom(spawnX, spawnY);
+                        scene->AddObject(mushroom);
+                        auto brick = new CBrick(spawnX, spawnY + 7.5, 3, 0, itemSpriteId, pointSpriteId);
+                        scene->AddObject(brick);
+                        break;
+                    }
+                    case 3:
+                    {
+                        auto leaf = new CItemLeaf(spawnX, spawnY);
+                        scene->AddObject(leaf);
+                        auto brick = new CBrick(spawnX, spawnY + 7.5, 3, 0, itemSpriteId, pointSpriteId);
+                        scene->AddObject(brick);
+                        break;
+                    }
+                    }
+                }
             }
         }
     }
