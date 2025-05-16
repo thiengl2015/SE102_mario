@@ -10,9 +10,10 @@ CGoomba::CGoomba(float x, float y, int pointSpriteId) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
-	spawmX = x - 400;
+	spawmX = x - GOOMBA_ACTIVATE_DISTANCE;
+	originalX = x;
 	die_start = -1;
-	this->pointSpriteId = pointSpriteId; 
+	this->pointSpriteId = pointSpriteId;
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -64,20 +65,27 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 
 
-void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 	CMario* mario = (CMario*)scene->GetPlayer();
 	float marioX, marioY;
 	mario->GetPosition(marioX, marioY);
-	if (marioX < spawmX)
+
+	if (marioX < x - GOOMBA_ACTIVATE_DISTANCE)
 	{
+		vx = 0;
 		return;
 	}
+	else if (vx == 0 && state == GOOMBA_STATE_WALKING)
+	{
+		vx = -GOOMBA_WALKING_SPEED;
+	}
+
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
+	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -85,7 +93,18 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	float distanceToMario = abs(marioX - x);
+	if (distanceToMario > GOOMBA_ACTIVATE_DISTANCE + 200 && state != GOOMBA_STATE_DIE)
+	{
+		x = originalX;
+		vx = 0;
+		SetState(GOOMBA_STATE_WALKING);
+		return;
+	}
+
 }
+
 
 
 void CGoomba::Render()

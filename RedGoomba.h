@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "GameObject.h"
 
-#define RED_GOOMBA_JUMP_SPEED_Y		0.3f  // Tốc độ nhảy theo trục Y
+#define RED_GOOMBA_JUMP_SPEED_Y		0.4f  // Tốc độ nhảy theo trục Y
 #define RED_GOOMBA_GRAVITY			0.001f  // Lực hấp dẫn tác dụng lên Red Goomba
-#define RED_GOOMBA_WALK_SPEED		0.05f  // Tốc độ di chuyển của Red Goomba
+#define RED_GOOMBA_WALK_SPEED		0.03f  // Tốc độ di chuyển của Red Goomba
 
 #define RED_GOOMBA_BBOX_WIDTH 16  // Chiều rộng hitbox
 #define RED_GOOMBA_BBOX_HEIGHT 14  // Chiều cao hitbox ở trạng thái bình thường
@@ -20,6 +20,8 @@
 #define ID_ANI_RED_GOOMBA_WALK     5000002   
 #define ID_ANI_RED_GOOMBA_DIE      5000003   
 
+#define RED_GOOMBA_ACTIVATE_DISTANCE 200
+
 class CRedGoomba : public CGameObject
 {
 protected:
@@ -30,6 +32,7 @@ protected:
     float ay;
     ULONGLONG die_start;
     float spawmX;
+    float originalX;
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     virtual void Render();
