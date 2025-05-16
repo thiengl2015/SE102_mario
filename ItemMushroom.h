@@ -21,9 +21,11 @@ protected:
     float ax = 0; 
     float ay = 0; 
     float riseDistance = 0; 
+    int pointSpriteId;
+    int spriteId; 
 
 public:
-    CItemMushroom(float x, float y);
+    CItemMushroom(float x, float y, int spriteId, int pointSpriteId);
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

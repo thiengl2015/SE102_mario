@@ -22,6 +22,7 @@ class CGoomba : public CGameObject
 protected:
 	float ax;				
 	float ay; 
+	int pointSpriteId; 
 
 	ULONGLONG die_start;
 
@@ -36,6 +37,6 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public: 	
-	CGoomba(float x, float y);
+	CGoomba(float x, float y, int pointSpriteId);
 	virtual void SetState(int state);
 };

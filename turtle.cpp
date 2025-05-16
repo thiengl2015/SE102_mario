@@ -3,16 +3,22 @@
 #include "Platform.h" // để kiểm tra mặt đất
 #include "Mario.h"
 #include "Block.h"
-CTurtle::CTurtle(float x, float y) : CGameObject(x, y)
+#include "PlayScene.h"
+#include "ItemPoint.h"
+CTurtle::CTurtle(float x, float y, int pointIdStomp, int pointIdKick)
+    : CGameObject(x, y)
 {
     this->ax = 0;
     this->ay = TURTLE_GRAVITY;
     shell_start = -1;
     this->walkingDirection = -1;
     this->isBeingHeld = false;
+    this->pointIdStomp = pointIdStomp;
+    this->pointIdKick = pointIdKick;
     edgeSensor = new CEdgeSensor(x, y);
     SetState(TURTLE_STATE_WALKING);
 }
+
 
 void CTurtle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -95,7 +101,7 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         }
     }
 
-    
+
 
 
 
@@ -128,6 +134,7 @@ void CTurtle::Render()
     CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
 
+
 void CTurtle::SetState(int state)
 {
     CGameObject::SetState(state);
@@ -138,24 +145,42 @@ void CTurtle::SetState(int state)
         vx = walkingDirection * TURTLE_WALKING_SPEED;
         ay = TURTLE_GRAVITY;
         break;
+
     case TURTLE_STATE_SHELL:
         vx = 0;
         shell_start = GetTickCount64();
+
+        if (!hasSpawnedPointOnStomp)
+        {
+            hasSpawnedPointOnStomp = true;
+
+            if (CGame::GetInstance()->GetCurrentScene())
+            {
+                CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+                if (scene)
+                {
+                    scene->AddObject(new CItemPoint(x, y, pointIdStomp));
+                }
+            }
+        }
+
         break;
+
     case TURTLE_STATE_SHELL_MOVING:
         vx = walkingDirection * 0.15f;
         break;
+
     case TURTLE_STATE_HELD:
         vx = 0;
         break;
+
     case TURTLE_STATE_REVIVING:
-        if (walkingDirection == 0) walkingDirection = -1; 
+        if (walkingDirection == 0)
+            walkingDirection = -1;
         vx = walkingDirection * TURTLE_WALKING_SPEED;
         break;
-
     }
 }
-
 bool CTurtle::IsShellState()
 {
     return (state == TURTLE_STATE_SHELL || state == TURTLE_STATE_SHELL_MOVING || state == TURTLE_STATE_HELD);
@@ -168,8 +193,24 @@ void CTurtle::StartShell()
 void CTurtle::KickShell(int dir)
 {
     walkingDirection = dir;
+
+    if (!hasSpawnedPointOnKick)
+    {
+        hasSpawnedPointOnKick = true;
+
+        if (CGame::GetInstance()->GetCurrentScene())
+        {
+            CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+            if (scene)
+            {
+                scene->AddObject(new CItemPoint(x, y, pointIdKick));
+            }
+        }
+    }
+
     SetState(TURTLE_STATE_SHELL_MOVING);
 }
+
 bool CTurtle::IsBeingHeld()
 {
     return isBeingHeld;

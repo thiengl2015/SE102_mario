@@ -41,6 +41,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (vx > 0) vx = 0;
 		}
 	}
+
 	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
@@ -511,16 +512,17 @@ void CMario::Render()
 int CMario::GetAniIdRaccoon()
 {
 	int aniId = -1;
-	if (!isOnPlatform)
+
+	if (isSitting)
+	{
+		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_SIT_RIGHT : ID_ANI_MARIO_RACCOON_SIT_LEFT;
+	}
+	else if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
 		else
 			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT;
-	}
-	else if (isSitting)
-	{
-		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_SIT_RIGHT : ID_ANI_MARIO_RACCOON_SIT_LEFT;
 	}
 	else if (vx == 0)
 	{
@@ -599,21 +601,30 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_SIT:
-		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
+		if (!isSitting && isOnPlatform && level != MARIO_LEVEL_SMALL)
 		{
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y += MARIO_SIT_HEIGHT_ADJUST;
+
+			if (level == MARIO_LEVEL_BIG)
+				y += MARIO_SIT_HEIGHT_ADJUST;
+			else if (level == MARIO_LEVEL_RACCOON)
+				y += MARIO_RACCOON_SIT_HEIGHT_ADJUST;
 		}
 		break;
+
 
 	case MARIO_STATE_SIT_RELEASE:
 		if (isSitting)
 		{
 			isSitting = false;
 			state = MARIO_STATE_IDLE;
-			y -= MARIO_SIT_HEIGHT_ADJUST;
+
+			if (level == MARIO_LEVEL_BIG)
+				y -= MARIO_SIT_HEIGHT_ADJUST;
+			else if (level == MARIO_LEVEL_RACCOON)
+				y -= MARIO_RACCOON_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -658,7 +669,24 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
-	else
+	else if (level == MARIO_LEVEL_RACCOON)
+	{
+		if (isSitting)
+		{
+			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_SITTING_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
+			bottom = top + MARIO_RACCOON_SITTING_BBOX_HEIGHT;
+		}
+		else
+		{
+			left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;
+			right = left + MARIO_RACCOON_BBOX_WIDTH;
+			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
+		}
+	}
+	else // MARIO_LEVEL_SMALL
 	{
 		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
 		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
@@ -669,17 +697,31 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CMario::SetLevel(int l)
 {
-	if (this->level == MARIO_LEVEL_SMALL)
-	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
-	}
-	else if (this->level == MARIO_LEVEL_BIG && l == MARIO_LEVEL_RACCOON)
-	{
-		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) / 2; 
-	}
+	float oldHeight = 0, newHeight = 0;
+
+	// Lấy chiều cao hiện tại
+	if (level == MARIO_LEVEL_SMALL)
+		oldHeight = MARIO_SMALL_BBOX_HEIGHT;
+	else if (level == MARIO_LEVEL_BIG)
+		oldHeight = MARIO_BIG_BBOX_HEIGHT;
+	else if (level == MARIO_LEVEL_RACCOON)
+		oldHeight = MARIO_RACCOON_BBOX_HEIGHT;
+
+	// Lấy chiều cao level mới
+	if (l == MARIO_LEVEL_SMALL)
+		newHeight = MARIO_SMALL_BBOX_HEIGHT;
+	else if (l == MARIO_LEVEL_BIG)
+		newHeight = MARIO_BIG_BBOX_HEIGHT;
+	else if (l == MARIO_LEVEL_RACCOON)
+		newHeight = MARIO_RACCOON_BBOX_HEIGHT;
+
+	float deltaHeight = newHeight - oldHeight;
+
+	y -= deltaHeight / 2;
 
 	level = l;
 }
+
 
 
 

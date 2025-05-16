@@ -1,10 +1,13 @@
 #include "Goomba.h"
+#include "PlayScene.h"
+#include "ItemPoint.h"
 
-CGoomba::CGoomba(float x, float y):CGameObject(x, y)
+CGoomba::CGoomba(float x, float y, int pointSpriteId) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
+	this->pointSpriteId = pointSpriteId; 
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -78,15 +81,25 @@ void CGoomba::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-		case GOOMBA_STATE_DIE:
-			die_start = GetTickCount64();
-			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE)/2;
-			vx = 0;
-			vy = 0;
-			ay = 0; 
-			break;
-		case GOOMBA_STATE_WALKING: 
-			vx = -GOOMBA_WALKING_SPEED;
-			break;
+	case GOOMBA_STATE_DIE:
+		die_start = GetTickCount64();
+		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+		vx = 0;
+		vy = 0;
+		ay = 0;
+
+		if (CGame::GetInstance()->GetCurrentScene() != nullptr)
+		{
+			CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+			if (scene)
+			{
+				scene->AddObject(new CItemPoint(x, y, pointSpriteId));
+			}
+		}
+		break;
+
+	case GOOMBA_STATE_WALKING:
+		vx = -GOOMBA_WALKING_SPEED;
+		break;
 	}
 }

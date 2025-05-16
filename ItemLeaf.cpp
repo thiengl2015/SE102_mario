@@ -1,12 +1,17 @@
 #include "ItemLeaf.h"
+#include "Mario.h"
+#include "ItemPoint.h"
+#include "PlayScene.h"
 
-CItemLeaf::CItemLeaf(float x, float y) : CGameObject(x, y)
+CItemLeaf::CItemLeaf(float x, float y, int spriteId, int pointSpriteId)
+    : CGameObject(x, y), pointSpriteId(pointSpriteId)
 {
-    startY = y;
+    this->spriteId = spriteId;
     startX = x;
-    riseDistance = 0;
+    startY = y;
     SetState(LEAF_STATE_ON_RISE);
 }
+
 
 void CItemLeaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -42,7 +47,7 @@ void CItemLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CItemLeaf::Render()
 {
-    CSprites::GetInstance()->Get(ID_SPRITE_ITEM_LEAF)->Draw(x, y);
+    CSprites::GetInstance()->Get(spriteId)->Draw(x, y);
 }
 
 void CItemLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -53,6 +58,20 @@ void CItemLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
     }
     if (e->ny != 0)
         vy = 0;
+    if (dynamic_cast<CMario*>(e->obj)) {
+        CMario* mario = dynamic_cast<CMario*>(e->obj);
+
+        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId));
+
+        if (mario->GetLevel() == MARIO_LEVEL_BIG) {
+            mario->StartTransforming(MARIO_LEVEL_RACCOON);
+        }
+
+        this->Delete();
+        return;
+    }
+
 }
 
 void CItemLeaf::OnNoCollision(DWORD dt)

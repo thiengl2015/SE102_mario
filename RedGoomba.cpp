@@ -2,14 +2,21 @@
 #include "Mario.h"
 #include "Game.h"
 #include "PlayScene.h"
+#include "ItemPoint.h"
 
-CRedGoomba::CRedGoomba(float x, float y) : CGameObject(x, y)
+CRedGoomba::CRedGoomba(float x, float y, int pointIdWinged, int pointIdWalking)
+    : CGameObject(x, y)
 {
     this->ax = 0;
     this->ay = RED_GOOMBA_GRAVITY;
     die_start = -1;
-    this->jump_start = GetTickCount64();
-    this->isOnPlatform = false;
+    jump_start = GetTickCount64();
+    isOnPlatform = false;
+    this->pointIdWinged = pointIdWinged;
+    this->pointIdWalking = pointIdWalking;
+    hasSpawnedWingedPoint = false;
+    hasSpawnedWalkingPoint = false;
+
     SetState(RED_GOOMBA_STATE_WINGED);
 }
 
@@ -98,6 +105,8 @@ void CRedGoomba::Render()
 
 void CRedGoomba::SetState(int state)
 {
+    int oldState = this->state;
+
     CGameObject::SetState(state);
     switch (state)
     {
@@ -107,6 +116,14 @@ void CRedGoomba::SetState(int state)
 
     case RED_GOOMBA_STATE_WALKING:
         vx = -RED_GOOMBA_WALK_SPEED;
+
+        if (oldState == RED_GOOMBA_STATE_WINGED && !hasSpawnedWingedPoint)
+        {
+            hasSpawnedWingedPoint = true;
+            auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            if (scene)
+                scene->AddObject(new CItemPoint(x, y, pointIdWinged));
+        }
         break;
 
     case RED_GOOMBA_STATE_DIE:
@@ -115,6 +132,14 @@ void CRedGoomba::SetState(int state)
         vx = 0;
         vy = 0;
         ay = 0;
+
+        if (!hasSpawnedWalkingPoint)
+        {
+            hasSpawnedWalkingPoint = true;
+            auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            if (scene)
+                scene->AddObject(new CItemPoint(x, y, pointIdWalking));
+        }
         break;
     }
 }

@@ -38,8 +38,12 @@ protected:
     virtual int IsBlocking() { return 0; }
     virtual void OnNoCollision(DWORD dt);
     virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+    int pointIdWinged;
+    int pointIdWalking;
+    bool hasSpawnedWingedPoint = false;
+    bool hasSpawnedWalkingPoint = false;
 
 public:
-    CRedGoomba(float x, float y);
+    CRedGoomba(float x, float y, int pointIdWinged, int pointIdWalking);
     virtual void SetState(int state);
 };

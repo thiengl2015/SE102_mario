@@ -12,6 +12,7 @@ standing.txt
 fullblock.txt
 piranhaplant.txt
 bulllet.txt
+point.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -132,11 +133,11 @@ bulllet.txt
 
 
 #Goomba
-2	175	10
-15	900	30
+2	175	10	20100
+15	900	30	20400	20800
 
 #Turtle
-3	600	30	7000
+3	600	30	20200	20400
 16	373	133	7000
 160	373	131	7000
 8	372	148	30	48	100000	#Pipe 1
@@ -269,4 +270,3 @@ bulllet.txt
 1	678	116	1	3	200001	21000	16	16
 1	726	116	1	1	11000	20100	16	16
 
-8	263	68	16	16	100002	#Clod 1
