@@ -90,6 +90,8 @@
     </ClCompile>
     <ClCompile Include="RacoonMario.cpp">
       <Filter>Object\Mario</Filter>
+    <ClCompile Include="ItemLeaf.cpp">
+      <Filter>Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +202,8 @@
     </ClInclude>
     <ClInclude Include="RacoonMario.h">
       <Filter>Object\Mario</Filter>
+    <ClInclude Include="ItemLeaf.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

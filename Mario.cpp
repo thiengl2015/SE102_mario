@@ -3,6 +3,7 @@
 
 #include "Mario.h"
 #include "Game.h"
+#include "PlayScene.h"
 
 #include "Goomba.h"
 #include "Coin.h"
@@ -630,6 +631,17 @@ void CMario::StartPipeTeleport(float destX, float destY, bool goingUp)
 
 void CMario::StartTransforming()
 {
-	isTransforming = true;
-	transform_start_time = GetTickCount64();
+	CItemMushroom* mushroom = nullptr;
+	CPlayScene* s = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	for (auto obj : s->GetObjects())
+	{
+		mushroom = dynamic_cast<CItemMushroom*>(obj);
+		if (mushroom) break;
+	}
+	if (mushroom->GetState() == MUSHROOM_STATE_FULL)
+	{
+		isTransforming = true;
+		transform_start_time = GetTickCount64();
+	}
+
 }
