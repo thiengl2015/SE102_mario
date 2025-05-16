@@ -1,4 +1,7 @@
 ﻿#include "RedGoomba.h"
+#include "Mario.h"
+#include "Game.h"
+#include "PlayScene.h"
 
 CRedGoomba::CRedGoomba(float x, float y) : CGameObject(x, y)
 {
@@ -53,6 +56,14 @@ void CRedGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+    LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+    CMario* mario = (CMario*)scene->GetPlayer();
+    float marioX, marioY;
+    mario->GetPosition(marioX, marioY);
+    if (marioX < 700)
+    {
+        return;
+    }
     vy += ay * dt;
     vx += ax * dt;
 
@@ -75,6 +86,7 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CRedGoomba::Render()
 {
+
     int aniId = ID_ANI_RED_GOOMBA_WALK;
     if (state == RED_GOOMBA_STATE_WINGED)
         aniId = ID_ANI_RED_GOOMBA_WING;

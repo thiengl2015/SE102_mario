@@ -13,6 +13,7 @@ CPiranhaPlant::CPiranhaPlant(float x, float y) : CGameObject(x, y)
     bullet = nullptr; 
     fire_start = 0; 
     initialY = y; 
+    fireCooldown = 0;
     SetState(PIRANHA_PLANT_STATE_IDLE);
 }
 
@@ -38,7 +39,7 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
         if (distance <= PIRANHA_PLANT_DETECTION_RANGE)
         {
-            if (state == PIRANHA_PLANT_STATE_IDLE || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+            if (state == PIRANHA_PLANT_STATE_IDLE )
             {
                 SetState(PIRANHA_PLANT_STATE_MOVE_UP);
                 nx = (marioX < x) ? -1 : 1;
@@ -62,22 +63,33 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     else if (state == PIRANHA_PLANT_STATE_MOVE_DOWN)
     {
-        if (y < initialY) 
+        if (y < initialY+5) 
             y += PIRANHA_PLANT_MOVE_SPEED * dt;
         else
             SetState(PIRANHA_PLANT_STATE_IDLE);
     }
 
-    else if (state == PIRANHA_PLANT_STATE_FIRE && GetTickCount64() - fire_start > 1000)
+    else if (state == PIRANHA_PLANT_STATE_FIRE)
     {
-        fire_start = GetTickCount64(); 
-
-
-        if (!bullet || bullet->IsDeleted())
+        if (GetTickCount64() - fire_start > 2000) // Bắn đạn sau mỗi 1 giây
         {
-            bullet = new CBullet(x, y, marioX, marioY);
+            fire_start = GetTickCount64();
+            fireCooldown = fire_start + 300; // Chờ đúng 0.3 giây
+
+            if (!bullet || bullet->IsDeleted())
+            {
+                bullet = new CBullet(x, y, marioX, marioY-27);
+            }
+        }
+
+        // Kiểm tra nếu đã hết thời gian chờ 0.3 giây sau khi bắn
+        if (fireCooldown > 0 && GetTickCount64() >= fireCooldown)
+        {
+            SetState(PIRANHA_PLANT_STATE_MOVE_DOWN);
+            fireCooldown = 0; // Reset thời gian chờ
         }
     }
+
 
     if (bullet) 
         bullet->Update(dt, coObjects);

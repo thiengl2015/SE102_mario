@@ -226,6 +226,7 @@ void CMario::OnCollisionWithRedGoomba(LPCOLLISIONEVENT e)
 		if (redgoomba->GetState() == RED_GOOMBA_STATE_WINGED)
 		{
 			redgoomba->SetState(RED_GOOMBA_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else if (redgoomba->GetState() == RED_GOOMBA_STATE_WALKING)
 		{

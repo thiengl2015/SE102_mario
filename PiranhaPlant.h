@@ -20,6 +20,7 @@ class CPiranhaPlant : public CGameObject
 protected:
 	CBullet* bullet;
 	ULONGLONG fire_start;
+	ULONGLONG fireCooldown = 0;
 	int initialY;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
