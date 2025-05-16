@@ -1,38 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Object\Enemies</Filter>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Core\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="RedGoomba.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="turtle.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Object\Mario</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
-      <Filter>Object\Mario</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Core\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Object\Background</Filter>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Coin.cpp">
       <Filter>Object\Item</Filter>
@@ -40,7 +19,25 @@
     <ClCompile Include="FullBlock.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Object\Enemies</Filter>
+    </ClCompile>
     <ClCompile Include="ItemCoin.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemLeaf.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemMushroom.cpp">
@@ -49,11 +46,14 @@
     <ClCompile Include="ItemPoint.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Object\Background</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Object\Background</Filter>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Object\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>Object\Mario</Filter>
     </ClCompile>
     <ClCompile Include="PipeTeleport.cpp">
       <Filter>Object\Background</Filter>
@@ -61,57 +61,94 @@
     <ClCompile Include="PiranhaPlant.cpp">
       <Filter>Object\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="turtle.cpp">
+      <Filter>Object\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Object</Filter>
+    <ClCompile Include="RedGoomba.cpp">
+      <Filter>Object\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Core\Animation</Filter>
+    <ClCompile Include="RacoonMario.cpp">
+      <Filter>Object\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Core\Animation</Filter>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Object\Background</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Core\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
+    <ClCompile Include="Sprite.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="Sprites.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
-    <ClCompile Include="RacoonMario.cpp">
-      <Filter>Object\Mario</Filter>
-    <ClCompile Include="ItemLeaf.cpp">
-      <Filter>Object\Item</Filter>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Object\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h">
+      <Filter>Core\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Core\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Core\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetIDs.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Object\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeSensor.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="FullBlock.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
       <Filter>Object\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="RedGoomba.h">
-      <Filter>Object\Enemies</Filter>
+    <ClInclude Include="ItemCoin.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="turle.h">
-      <Filter>Object\Enemies</Filter>
+    <ClInclude Include="ItemLeaf.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="ItemMushroom.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="ItemPoint.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Object\Mario</Filter>
@@ -122,32 +159,23 @@
     <ClInclude Include="SampleKeyEventHandler.h">
       <Filter>Object\Mario</Filter>
     </ClInclude>
-    <ClInclude Include="AssetIDs.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
+    <ClInclude Include="PipeTeleport.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
+    <ClInclude Include="PiranhaPlant.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="turle.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoomba.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Decorations.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="FullBlock.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="EdgeSensor.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemCoin.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemMushroom.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemPoint.h">
-      <Filter>Object\Item</Filter>
+    <ClInclude Include="RacoonMario.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Object\Background</Filter>
@@ -155,37 +183,10 @@
     <ClInclude Include="Platform.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="PipeTeleport.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="PiranhaPlant.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Decorations.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Core\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationFrame.h">
-      <Filter>Core\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Core\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Core\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Core\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
       <Filter>Core\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
@@ -200,10 +201,11 @@
     <ClInclude Include="Textures.h">
       <Filter>Core\Load</Filter>
     </ClInclude>
-    <ClInclude Include="RacoonMario.h">
-      <Filter>Object\Mario</Filter>
-    <ClInclude Include="ItemLeaf.h">
-      <Filter>Object\Item</Filter>
+    <ClInclude Include="Utils.h">
+      <Filter>Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Object\Background</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,13 +215,13 @@
     <Text Include="1-1.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="brick.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="bulllet.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="coin.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="brick.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="goomba.txt">
@@ -245,38 +247,41 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Data">
-      <UniqueIdentifier>{10f9da73-7ab6-4eb0-939f-6de9b8f9f861}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
-      <UniqueIdentifier>{5281da42-df93-4a78-9e44-cad08f313b34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{756f9d73-7b45-4782-b631-35505b456f40}</UniqueIdentifier>
+      <UniqueIdentifier>{6793f3ad-d1cf-49fe-b817-6c0470b3f737}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object">
-      <UniqueIdentifier>{ea62185f-24ab-421a-a6aa-a1a60bf4e3e7}</UniqueIdentifier>
+      <UniqueIdentifier>{231dd8b9-87dd-42a2-a9c3-1c1fdab446b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Mario">
-      <UniqueIdentifier>{090cb1fa-087b-44db-a6fb-02498e59b51e}</UniqueIdentifier>
+    <Filter Include="Data">
+      <UniqueIdentifier>{7013a3b9-7b4f-4c68-9eca-b5ce6b35c496}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Enemies">
-      <UniqueIdentifier>{d06ab4f1-0a6d-4a63-9a44-a06e7b1b4547}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Background">
-      <UniqueIdentifier>{45a59c76-3a1b-4463-8ed9-92cdd00861af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Item">
-      <UniqueIdentifier>{aadf89b4-8a65-4abf-9444-72f906444f66}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{13048b15-53c4-4af7-b276-f02602a911f1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Animation">
-      <UniqueIdentifier>{981fd7b0-a9c5-410c-ba49-9b6c5de08c5b}</UniqueIdentifier>
+      <UniqueIdentifier>{35e867bf-16c6-4b12-bd8b-e812b2412ea5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Scene">
-      <UniqueIdentifier>{29115b8b-02ac-4606-9741-f4fad86e25a6}</UniqueIdentifier>
+      <UniqueIdentifier>{15dcc843-92f6-48ef-aa2a-8de555e998f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Background">
+      <UniqueIdentifier>{ae107520-9f63-44c1-93ef-e869c5f1394f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemies">
+      <UniqueIdentifier>{5546a43c-fa7d-4926-8706-9bff7ddd1799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Item">
+      <UniqueIdentifier>{54f454c7-3b37-4c86-82ac-a114020a6b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Game">
+      <UniqueIdentifier>{618b3184-33ed-4693-8582-8798b974bce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Mario">
+      <UniqueIdentifier>{59f1b7c9-f1f1-4791-b389-06320dc9d8dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Load">
-      <UniqueIdentifier>{f61cd875-16e4-4dfc-a5a6-e2d994860567}</UniqueIdentifier>
+      <UniqueIdentifier>{f4a983fc-5bdb-4ef9-a21e-dde0d622d500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
