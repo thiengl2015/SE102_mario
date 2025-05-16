@@ -8,6 +8,7 @@ CRedGoomba::CRedGoomba(float x, float y) : CGameObject(x, y)
     this->ax = 0;
     this->ay = RED_GOOMBA_GRAVITY;
     die_start = -1;
+    spawmX = x - 300;
     this->jump_start = GetTickCount64();
     this->isOnPlatform = false;
     SetState(RED_GOOMBA_STATE_WINGED);
@@ -60,7 +61,7 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     CMario* mario = (CMario*)scene->GetPlayer();
     float marioX, marioY;
     mario->GetPosition(marioX, marioY);
-    if (marioX < 700)
+    if (marioX < spawmX)
     {
         return;
     }
