@@ -5,6 +5,9 @@
 #include "Block.h"
 #include "PlayScene.h"
 #include "ItemPoint.h"
+#include "Brick.h"
+#include "Goomba.h"
+#include "RedGoomba.h"
 CTurtle::CTurtle(float x, float y, int pointIdStomp, int pointIdKick)
     : CGameObject(x, y)
 {
@@ -46,6 +49,13 @@ void CTurtle::OnNoCollision(DWORD dt)
 
 void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+    CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+    if (brick && IsShellState())
+    {
+        DebugOut(L"Rùa va chạm với Brick khi ở trạng thái shell!\n");
+        brick->OnCollisionWith(e); 
+    }
+
     if (!e->obj->IsBlocking()) return;
     if (dynamic_cast<CTurtle*>(e->obj)) return;
 
@@ -65,6 +75,24 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
     {
         vx = -vx;
         walkingDirection = -walkingDirection;
+    }
+    CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+    if (goomba && state == TURTLE_STATE_SHELL_MOVING && goomba->GetState() == GOOMBA_STATE_WALKING)
+    {
+        goomba->SetState(GOOMBA_STATE_DIE);
+    }
+
+    CRedGoomba* redgoomba = dynamic_cast<CRedGoomba*>(e->obj);
+    if (redgoomba && state == TURTLE_STATE_SHELL_MOVING)
+    {
+        if (redgoomba->GetState() == RED_GOOMBA_STATE_WINGED)
+        {
+            redgoomba->SetState(RED_GOOMBA_STATE_WALKING);
+        }
+        else if (redgoomba->GetState() == RED_GOOMBA_STATE_WALKING)
+        {
+            redgoomba->SetState(RED_GOOMBA_STATE_DIE);
+        }
     }
 
 }

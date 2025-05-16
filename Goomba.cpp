@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "PlayScene.h"
+#include "turle.h"
 
 CGoomba::CGoomba(float x, float y, int pointSpriteId) : CGameObject(x, y)
 {
@@ -52,6 +53,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
 }
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)

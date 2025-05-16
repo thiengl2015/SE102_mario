@@ -7,6 +7,7 @@
 #include "ItemLeaf.h"
 #include "ItemMushroom.h"
 #include "ItemPoint.h"
+#include "turle.h"
 
 CBrick::CBrick(float x, float y, float width, float height, int brickType, int spawnType, int itemSpriteId, int pointSpriteId)
     : CGameObject(x, y), width(width), height(height), brickType(brickType), spawnType(spawnType), itemSpriteId(itemSpriteId), pointSpriteId(pointSpriteId) {
@@ -93,5 +94,33 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e) {
             pendingSpawnType = spawnType;
             break;
         }
+    }
+    else if (dynamic_cast<CTurtle*>(e->src_obj) && abs(e->nx) > 0 && e->obj == this)
+    {
+        CTurtle* turtle = dynamic_cast<CTurtle*>(e->src_obj);
+        if (turtle && turtle->IsShellState()) 
+        {
+            DebugOut(L"Rùa phá viên gạch!\n");
+            isUsed = true; 
+            isBouncing = true;
+            bounce_start = GetTickCount64();
+
+            float spawnX = x;
+            float spawnY = y - height / 2;
+            CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+
+            switch (spawnType)
+            {
+            case 1:
+                scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
+                break;
+            case 2:
+            case 3:
+                pendingSpawn = true;
+                pendingSpawnType = spawnType;
+                break;
+            }
+        }
+
     }
 }
