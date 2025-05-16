@@ -18,6 +18,7 @@
 #include "PiranhaPlant.h"
 #include "Bullet.h"
 #include "RacoonMario.h"
+#include "BlockerWall.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -233,6 +234,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetObjectType(OBJECT_TYPE_PIPE_TELEPORT);
 		break;
 	}
+	case OBJECT_TYPE_MARIO_BLOCKER:
+		obj = new CBlockerWall(x, y);
+		break;
 
 	break;
 
@@ -332,7 +336,12 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		if (dynamic_cast<CMario*>(player) && ((CMario*)player)->IsTransforming())
+		{
+			if (objects[i] != player) continue;
+		}
+
+		objects[i]->Update(dt, &objects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

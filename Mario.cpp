@@ -92,7 +92,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		ay = 0;
 		vy = pipe_is_going_up ? -0.015f : 0.015f;
 
-		if (GetTickCount64() - pipe_exit_start_time > 1500)
+		if (GetTickCount64() - pipe_exit_start_time > MARIO_TRANSFORM_DURATION)
 		{
 			isExitingPipe = false;
 			vy = 0;
@@ -107,7 +107,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		vx = vy = ax = ay = 0;
 
-		if (GetTickCount64() - transform_start_time > 2000)
+		if (GetTickCount64() - transform_start_time > MARIO_TRANSFORM_DURATION)
 		{
 			isTransforming = false;
 			ay = MARIO_GRAVITY;
@@ -142,11 +142,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else
-		if (e->nx != 0 && e->obj->IsBlocking())
-		{
-			vx = 0;
-		}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		vx = 0;
+	}
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -159,12 +158,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPipeTeleport*>(e->obj))
 		((CPipeTeleport*)e->obj)->OnCollisionWith(this);
 	else if (dynamic_cast<CRedGoomba*>(e->obj))
-	{
 		OnCollisionWithRedGoomba(e);
-	}
 	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
-	{
 		OnCollisionWithPiranhaPlant(e);
+
+	else if (dynamic_cast<CBullet*>(e->obj))
+	{
+		if (untouchable == 0)
+			OnAttacked();
 	}
 
 	else if (dynamic_cast<CBrick*>(e->obj))
@@ -172,28 +173,21 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CItemMushroom*>(e->obj))
 	{
 		if (level == MARIO_LEVEL_SMALL)
-		{
 			StartTransforming(MARIO_LEVEL_BIG);
-		}
 		e->obj->Delete();
 	}
 	else if (dynamic_cast<CItemLeaf*>(e->obj))
 	{
 		if (level == MARIO_LEVEL_BIG)
-		{
 			StartTransforming(MARIO_LEVEL_RACCOON);
-		}
 		e->obj->Delete();
 	}
-
-
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
@@ -202,26 +196,15 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-	else // hit by Goomba
+	else
 	{
-		if (untouchable == 0)
+		if (untouchable == 0 && goomba->GetState() != GOOMBA_STATE_DIE)
 		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
+			OnAttacked();
 		}
 	}
 }
+
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
@@ -253,24 +236,13 @@ void CMario::OnCollisionWithRedGoomba(LPCOLLISIONEVENT e)
 	}
 	else
 	{
-		if (untouchable == 0)
+		if (untouchable == 0 && redgoomba->GetState() != RED_GOOMBA_STATE_DIE)
 		{
-			if (redgoomba->GetState() != RED_GOOMBA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
+			OnAttacked();
 		}
 	}
 }
+
 
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
@@ -295,16 +267,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		{
 			if (turtle->getvx() != 0)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				OnAttacked();
 			}
 			else
 			{
@@ -314,47 +277,21 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 		else if (untouchable == 0)
 		{
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
+			OnAttacked();
 		}
 	}
 }
+
 void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 {
 	CPiranhaPlant* piranha = dynamic_cast<CPiranhaPlant*>(e->obj);
 
-	if (untouchable == 0)
+	if (untouchable == 0 && piranha->GetState() != PIRANHA_PLANT_STATE_IDLE)
 	{
-		if (piranha->GetState() != PIRANHA_PLANT_STATE_IDLE)
-		{
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
-		}
+		OnAttacked();
 	}
-
 }
 
-
-
-//
-// Get animation ID for small Mario
-//
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
@@ -495,14 +432,38 @@ void CMario::Render()
 
 	if (isTransforming)
 	{
-		if (nextLevel == MARIO_LEVEL_BIG)
+		if (
+			(level == MARIO_LEVEL_SMALL && nextLevel == MARIO_LEVEL_BIG) ||
+			(level == MARIO_LEVEL_BIG && nextLevel == MARIO_LEVEL_SMALL)
+			)
+		{
 			aniId = (nx > 0) ? ID_ANI_MARIO_TRANSFORM_RIGHT : ID_ANI_MARIO_TRANSFORM_LEFT;
-		else if (nextLevel == MARIO_LEVEL_RACCOON)
+		}
+		else if (
+			(level == MARIO_LEVEL_BIG && nextLevel == MARIO_LEVEL_RACCOON) ||
+			(level == MARIO_LEVEL_RACCOON && nextLevel == MARIO_LEVEL_BIG)
+			)
+		{
 			aniId = ID_ANI_MARIO_TRANSFORM_TO_RACCOON;
+		}
+		else
+		{
+			aniId = (nx > 0) ? ID_ANI_MARIO_TRANSFORM_RIGHT : ID_ANI_MARIO_TRANSFORM_LEFT;
+		}
 
 		animations->Get(aniId)->Render(x, y - 8.0f);
 		return;
 	}
+	if (untouchable)
+	{
+		if ((GetTickCount64() / 100) % 2 == 0)
+			animations->Get(aniId)->Render(x, y);
+	}
+	else
+	{
+		animations->Get(aniId)->Render(x, y);
+	}
+
 
 	animations->Get(aniId)->Render(x, y);
 
@@ -747,4 +708,24 @@ void CMario::StartTransforming(int targetLevel)
 	isTransforming = true;
 	transform_start_time = GetTickCount64();
 	nextLevel = targetLevel;
+	StartUntouchable();
+}
+
+void CMario::OnAttacked()
+{
+	if (level == MARIO_LEVEL_RACCOON)
+	{
+		StartTransforming(MARIO_LEVEL_BIG); 
+		StartUntouchable();
+	}
+	else if (level == MARIO_LEVEL_BIG)
+	{
+		StartTransforming(MARIO_LEVEL_SMALL);
+		StartUntouchable();
+	}
+	else
+	{
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+	}
 }

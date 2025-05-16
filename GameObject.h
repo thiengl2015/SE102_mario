@@ -14,6 +14,13 @@ using namespace std;
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 
+enum ObjectType {
+	TYPE_MARIO,
+	TYPE_GOOMBA,
+	TYPE_MUSHROOM,
+	TYPE_BLOCKERWALL,
+};
+
 class CGameObject
 {
 protected:
@@ -81,4 +88,6 @@ public:
 
 	float getX() { return x; }
 	float getY() { return y; }
+
+	virtual int GetType() { return -1; }
 };

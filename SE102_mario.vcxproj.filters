@@ -91,6 +91,9 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="BlockerWall.cpp">
+      <Filter>Core\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockerWall.h">
+      <Filter>Core\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
