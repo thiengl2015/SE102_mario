@@ -707,19 +707,21 @@ void CMario::StartTransforming(int targetLevel)
 
 void CMario::OnAttacked()
 {
+	if (isTransforming) return; 
+
 	if (level == MARIO_LEVEL_RACCOON)
 	{
-		StartTransforming(MARIO_LEVEL_BIG); 
-		StartUntouchable();
+		StartTransforming(MARIO_LEVEL_BIG);
 	}
 	else if (level == MARIO_LEVEL_BIG)
 	{
 		StartTransforming(MARIO_LEVEL_SMALL);
-		StartUntouchable();
 	}
 	else
 	{
 		DebugOut(L">>> Mario DIE >>> \n");
 		SetState(MARIO_STATE_DIE);
 	}
+
+	StartUntouchable();
 }

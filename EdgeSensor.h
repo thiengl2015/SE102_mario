@@ -30,8 +30,9 @@ public:
         GetBoundingBox(sensorL, sensorT, sensorR, sensorB);
 
         for (LPGAMEOBJECT obj : *coObjects) {
-            CHalfSolidBlock* block = dynamic_cast<CHalfSolidBlock*>(obj);
-            if (block) {
+            CGameObject* block = obj;
+			if (block->IsBlocking() == 0)
+            {
                 float l, t, r, b;
                 block->GetBoundingBox(l, t, r, b);
                 if (sensorR >= l && sensorL <= r && sensorB >= t && sensorT <= b) {
