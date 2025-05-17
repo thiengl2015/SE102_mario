@@ -22,9 +22,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Core\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Core\Game</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Core\Game</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="BlockerWall.cpp">
       <Filter>Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Core\Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
