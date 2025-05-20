@@ -256,10 +256,21 @@ void CMario::PickOrThrowTurtle()
 {
 	if (heldTurtle)
 	{
-		heldTurtle->SetPosition(x + nx * 10.0f, y);
+		float throwX = x + nx * 18.0f;
+		float throwY = y + 5.0f;
+
+		heldTurtle->SetPosition(throwX, throwY);
+
+		float throwVx = nx * 0.25f; 
+		float throwVy = 0.18f;     
+
+		heldTurtle->SetVx(throwVx);
+		heldTurtle->SetVy(throwVy);
+		heldTurtle->SetAy(TURTLE_GRAVITY);
+
+		heldTurtle->SetWalkingDirection(nx);
 		heldTurtle->SetState(TURTLE_STATE_SHELL_MOVING);
-		heldTurtle->SetVx(nx * TURTLE_SHELL_SLIDE_SPEED);
-		heldTurtle->SetVy(-0.1f);        
+
 		heldTurtle->SetBeingHeld(false);
 		heldTurtle->SetHolder(nullptr);
 		heldTurtle = nullptr;

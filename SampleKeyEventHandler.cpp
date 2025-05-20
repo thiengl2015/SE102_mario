@@ -33,7 +33,6 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A:
 		mario->isPressingA = true;
-		mario->PickOrThrowTurtle();
 		break;
 	}
 }
@@ -53,6 +52,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_A:
 		mario->isPressingA = false;
+		mario->PickOrThrowTurtle();
 		break;
 	}
 }

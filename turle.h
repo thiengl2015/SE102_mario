@@ -24,7 +24,7 @@
 #define TURTLE_STATE_DIE_FALL 700
 
 #define TURTLE_REVIVE_TIMEOUT 5000 // Thời gian hồi sinh sau khi ở trạng thái vỏ
-#define TURTLE_SHELL_SLIDE_SPEED 0.15f
+#define TURTLE_SHELL_SLIDE_SPEED 0.2f
 class CMario; 
 class CTurtle : public CGameObject {
 protected:
@@ -66,4 +66,5 @@ public:
     void SetVx(float vx) { this->vx = vx; }
     void SetVy(float vy) { this->vy = vy; }
 	void SetAy(float ay) { this->ay = ay; }
+    void SetWalkingDirection(int dir) { walkingDirection = dir; }
 };
