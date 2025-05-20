@@ -130,6 +130,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(MARIO_STATE_DIE);
 	}
+
+	if (heldTurtle)
+	{
+		heldTurtle->SetPosition(x + nx * 16.0f, y);
+	}
 }
 
 
@@ -247,7 +252,20 @@ void CMario::OnCollisionWithRedGoomba(LPCOLLISIONEVENT e)
 		}
 	}
 }
-
+void CMario::PickOrThrowTurtle()
+{
+	if (heldTurtle)
+	{
+		heldTurtle->SetPosition(x + nx * 10.0f, y);
+		heldTurtle->SetState(TURTLE_STATE_SHELL_MOVING);
+		heldTurtle->SetVx(nx * TURTLE_SHELL_SLIDE_SPEED);
+		heldTurtle->SetVy(-0.1f);        
+		heldTurtle->SetBeingHeld(false);
+		heldTurtle->SetHolder(nullptr);
+		heldTurtle = nullptr;
+		isHolding = false;
+	}
+}
 
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
@@ -262,17 +280,10 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 		else if (!turtle->IsBeingHeld())
 		{
-			turtle->KickShell(nx);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-	}
-	else
-	{
-		if (turtle->IsShellState())
-		{
-			if (turtle->getvx() != 0)
+			if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
 			{
-				OnAttacked();
+				turtle->SetState(TURTLE_STATE_DIE_FALL);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 			else
 			{
@@ -280,12 +291,53 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 		}
-		else if (untouchable == 0)
+	}
+
+	else
+	{
+		if (turtle->IsShellState())
 		{
-			OnAttacked();
+			if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
+			{
+				if (!isPressingA || level == MARIO_LEVEL_SMALL)
+				{
+					OnAttacked();
+				}
+				else if (heldTurtle == nullptr && (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON))
+				{
+					heldTurtle = turtle;
+					isHolding = true;
+					turtle->SetState(TURTLE_STATE_HELD);
+					turtle->SetBeingHeld(true);
+					turtle->SetHolder(this);
+				}
+			}
+			else
+			{
+				if (isPressingA && heldTurtle == nullptr && (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON))
+				{
+					heldTurtle = turtle;
+					isHolding = true;
+					turtle->SetState(TURTLE_STATE_HELD);
+					turtle->SetBeingHeld(true);
+					turtle->SetHolder(this);
+				}
+				else
+				{
+					turtle->KickShell(nx);
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+			}
+		}
+		else if (turtle->GetState() == TURTLE_STATE_WALKING)
+		{
+			if (untouchable == 0)
+				OnAttacked();
 		}
 	}
+
 }
+
 
 void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 {
@@ -400,7 +452,15 @@ int CMario::GetAniIdBig()
 		else if (ax == -MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_WALKING_LEFT;
 	}
+	if (isHolding && heldTurtle != nullptr)
+	{
+		if (vx == 0)
+			aniId = (nx > 0) ? ID_ANI_MARIO_HOLD_IDLE_RIGHT : ID_ANI_MARIO_HOLD_IDLE_LEFT;
+		else
+			aniId = (nx > 0) ? ID_ANI_MARIO_HOLD_WALK_RIGHT : ID_ANI_MARIO_HOLD_WALK_LEFT;
 
+		return aniId;
+	}
 	if (aniId == -1)
 		aniId = (nx > 0) ? ID_ANI_MARIO_IDLE_RIGHT : ID_ANI_MARIO_IDLE_LEFT;
 
@@ -500,6 +560,16 @@ int CMario::GetAniIdRaccoon()
 			aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
 		else if (ax == -MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
+	}
+
+	if (isHolding && heldTurtle != nullptr)
+	{
+		if (vx == 0)
+			aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_HOLD_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_HOLD_IDLE_LEFT;
+		else
+			aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_HOLD_WALK_RIGHT : ID_ANI_MARIO_RACCOON_HOLD_WALK_LEFT;
+
+		return aniId;
 	}
 
 	if (aniId == -1)
@@ -707,6 +777,16 @@ void CMario::StartTransforming(int targetLevel)
 
 void CMario::OnAttacked()
 {
+	if (heldTurtle)
+	{
+		heldTurtle->SetState(TURTLE_STATE_SHELL_MOVING);
+		heldTurtle->SetVx(nx * TURTLE_SHELL_SLIDE_SPEED);
+		heldTurtle->SetVy(-0.05f);
+		heldTurtle->SetBeingHeld(false);
+		heldTurtle->SetHolder(nullptr);
+		heldTurtle = nullptr;
+		isHolding = false;
+	}
 	if (isTransforming) return; 
 
 	if (level == MARIO_LEVEL_RACCOON)

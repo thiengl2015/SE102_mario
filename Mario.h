@@ -3,7 +3,7 @@
 
 #include "Animation.h"
 #include "Animations.h"
-
+#include "turle.h"
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.08f
@@ -62,6 +62,13 @@
 
 #define ID_ANI_MARIO_ENTER_PIPE 850
 
+#define ID_ANI_MARIO_HOLD_IDLE_RIGHT 810
+#define ID_ANI_MARIO_HOLD_IDLE_LEFT 811
+
+#define ID_ANI_MARIO_HOLD_WALK_RIGHT 812
+#define ID_ANI_MARIO_HOLD_WALK_LEFT 813
+
+
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
 #define ID_ANI_MARIO_SMALL_IDLE_LEFT 1102
@@ -109,7 +116,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 #define MARIO_TRANSFORM_FREEZE_TIME 500
-#define MARIO_UNTOUCHABLE_TIME 1000
+#define MARIO_UNTOUCHABLE_TIME 2000
 
 #define ID_ANI_MARIO_RACCOON_IDLE_RIGHT   2000
 #define ID_ANI_MARIO_RACCOON_IDLE_LEFT    2001
@@ -126,11 +133,18 @@
 #define ID_ANI_MARIO_RACCOON_BRACE_RIGHT 2012
 #define ID_ANI_MARIO_RACCOON_BRACE_LEFT  2013
 
+#define ID_ANI_MARIO_RACCOON_HOLD_IDLE_RIGHT 2014
+#define ID_ANI_MARIO_RACCOON_HOLD_IDLE_LEFT  2015
+#define ID_ANI_MARIO_RACCOON_HOLD_WALK_RIGHT 2016
+#define ID_ANI_MARIO_RACCOON_HOLD_WALK_LEFT  2017
 
 #define MARIO_RACCOON_BBOX_WIDTH  13
 #define MARIO_RACCOON_BBOX_HEIGHT 26
 #define MARIO_RACCOON_SITTING_BBOX_HEIGHT 16
 #define MARIO_RACCOON_SIT_HEIGHT_ADJUST ((MARIO_RACCOON_BBOX_HEIGHT - MARIO_RACCOON_SITTING_BBOX_HEIGHT) / 2)
+
+class CTurtle;
+
 class CMario : public CGameObject
 {
 protected:
@@ -161,6 +175,8 @@ protected:
 	int GetAniIdSmall();
 	int GetAniIdRaccoon(); 
 	bool isSkidding = false;
+	CTurtle* heldTurtle = nullptr;
+	bool isHolding = false;
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -175,6 +191,7 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -220,7 +237,11 @@ public:
 	float GetAx() const { return ax; }
 
 	float GetX() const { return x; }
+	float GetY() const { return y; }
 	void SetVY(float vy) { this->vy = vy; }
 	void OnAttacked();
 	int GetType() override { return TYPE_MARIO; }
+
+	void PickOrThrowTurtle(); 
+	bool isPressingA = false;
 };
