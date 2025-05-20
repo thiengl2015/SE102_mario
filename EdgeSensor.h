@@ -29,17 +29,18 @@ public:
         float sensorL, sensorT, sensorR, sensorB;
         GetBoundingBox(sensorL, sensorT, sensorR, sensorB);
 
-        for (LPGAMEOBJECT obj : *coObjects) {
-            CGameObject* block = obj;
-			if (block->IsBlocking() == 0)
+        for (LPGAMEOBJECT obj : *coObjects)
+        {
+            float l, t, r, b;
+            obj->GetBoundingBox(l, t, r, b);
+
+            if ((dynamic_cast<CHalfSolidBlock*>(obj) || obj->IsBlocking() == 1) &&
+                sensorR >= l && sensorL <= r && sensorB >= t && sensorT <= b)
             {
-                float l, t, r, b;
-                block->GetBoundingBox(l, t, r, b);
-                if (sensorR >= l && sensorL <= r && sensorB >= t && sensorT <= b) {
-                    return true;
-                }
+                return true;
             }
         }
+
         return false;
 
     }
