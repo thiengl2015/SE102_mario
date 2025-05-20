@@ -8,7 +8,6 @@
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	if (mario->IsEnteringPipe() || mario->isExitingPipe || mario->IsTransforming()) return;
 
@@ -29,16 +28,18 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
-	case DIK_R: // reset
+	case DIK_R:
 		//Reload();
+		break;
+	case DIK_A:
+		mario->isPressingA = true;
+		mario->PickOrThrowTurtle();
 		break;
 	}
 }
 
 void CSampleKeyHandler::OnKeyUp(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	if (mario->IsEnteringPipe() || mario->isExitingPipe || mario->IsTransforming()) return;
 
@@ -49,6 +50,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
+		break;
+	case DIK_A:
+		mario->isPressingA = false;
 		break;
 	}
 }

@@ -47,6 +47,14 @@ void CTurtle::OnNoCollision(DWORD dt)
     y += vy * dt;
 }
 
+void CTurtle::SetHolder(CMario* mario) {
+    holder = mario;
+}
+
+CMario* CTurtle::GetHolder() {
+    return holder;
+}
+
 void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -96,71 +104,62 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
     }
 
 }
-
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    vx += ax * dt;
-    vy += ay * dt;
+    if (state == TURTLE_STATE_HELD && holder != nullptr) {
+        x = holder->GetX() + holder->GetDirection() * 12.0f;
+        y = holder->GetY();
+    }
+    else {
+        vx += ax * dt;
+        vy += ay * dt;
 
-    if (state == TURTLE_STATE_SHELL)
-    {
-        if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)
+        if (state == TURTLE_STATE_SHELL)
         {
-            SetState(TURTLE_STATE_REVIVING);
+            if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)
+            {
+                SetState(TURTLE_STATE_REVIVING);
+            }
         }
-    }
-    if (state == TURTLE_STATE_WALKING)
-    {
-        edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
 
-        if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
-            walkingDirection = -walkingDirection;
-            vx = walkingDirection * TURTLE_WALKING_SPEED;
-        }
-    }
-    if (state == TURTLE_STATE_REVIVING)
-    {
-        edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
-
-        if (!edgeSensor->IsOnHalfSolidBlock(coObjects))
+        if (state == TURTLE_STATE_WALKING || state == TURTLE_STATE_REVIVING)
         {
-            walkingDirection = -walkingDirection;
-            vx = walkingDirection * TURTLE_WALKING_SPEED;
+            edgeSensor->SetPosition(x + walkingDirection * TURTLE_BBOX_WIDTH / 2, y + TURTLE_BBOX_HEIGHT / 2);
+
+            if (!edgeSensor->IsOnHalfSolidBlock(coObjects)) {
+                walkingDirection = -walkingDirection;
+                vx = walkingDirection * TURTLE_WALKING_SPEED;
+            }
         }
     }
 
+    CGameObject::Update(dt, coObjects);
 
+    if (state == TURTLE_STATE_DIE_FALL && y > CGame::GetInstance()->GetBackBufferHeight())
+    {
+        Delete(); 
+    }
 
-
-
-    CGameObject::Update(dt, coObjects); // Cập nhật dx, dy
     CCollision::GetInstance()->Process(this, dt, coObjects);
-
 }
+
 
 void CTurtle::Render()
 {
     int aniId = ID_ANI_TURTLE_WALKING_LEFT;
 
-    if (state == TURTLE_STATE_SHELL)
+    if (state == TURTLE_STATE_SHELL || state == TURTLE_STATE_SHELL_MOVING || state == TURTLE_STATE_HELD)
     {
-        aniId = ID_ANI_TURTLE_SHELL;
+        aniId = ID_ANI_TURTLE_SHELL; 
     }
-    else if (state == TURTLE_STATE_SHELL_MOVING)
-    {
-        aniId = ID_ANI_TURTLE_SHELL;
-    }
-    else if (state == TURTLE_STATE_WALKING)
-    {
-        aniId = (walkingDirection > 0) ? ID_ANI_TURTLE_WALKING_LEFT : ID_ANI_TURTLE_WALKING_RIGHT;
-    }
-    else if (state == TURTLE_STATE_REVIVING)
+    else if (state == TURTLE_STATE_WALKING || state == TURTLE_STATE_REVIVING)
     {
         aniId = (walkingDirection > 0) ? ID_ANI_TURTLE_WALKING_LEFT : ID_ANI_TURTLE_WALKING_RIGHT;
     }
 
     CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
+
 
 
 void CTurtle::SetState(int state)
@@ -195,7 +194,8 @@ void CTurtle::SetState(int state)
         break;
 
     case TURTLE_STATE_SHELL_MOVING:
-        vx = walkingDirection * 0.15f;
+        vx = walkingDirection * TURTLE_SHELL_SLIDE_SPEED;
+        ay = TURTLE_GRAVITY;
         break;
 
     case TURTLE_STATE_HELD:
@@ -206,6 +206,12 @@ void CTurtle::SetState(int state)
         if (walkingDirection == 0)
             walkingDirection = -1;
         vx = walkingDirection * TURTLE_WALKING_SPEED;
+        break;
+
+    case TURTLE_STATE_DIE_FALL:
+        vx = 0;
+        vy = 0.15f;
+        ay = TURTLE_GRAVITY;
         break;
     }
 }
@@ -239,7 +245,11 @@ void CTurtle::KickShell(int dir)
     SetState(TURTLE_STATE_SHELL_MOVING);
 }
 
-bool CTurtle::IsBeingHeld()
+bool CTurtle::checkMario()
 {
-    return isBeingHeld;
+	if (holder != nullptr)
+	{
+		return true;
+	}
+	return false;
 }

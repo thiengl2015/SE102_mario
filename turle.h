@@ -21,9 +21,11 @@
 #define TURTLE_STATE_SHELL_MOVING 400 // Trạng thái vỏ đang di chuyển
 #define TURTLE_STATE_HELD 500 // Trạng thái rùa bị Mario giữ
 #define TURTLE_STATE_REVIVING 600 // Trạng thái rùa hồi sinh
+#define TURTLE_STATE_DIE_FALL 700
 
 #define TURTLE_REVIVE_TIMEOUT 5000 // Thời gian hồi sinh sau khi ở trạng thái vỏ
-
+#define TURTLE_SHELL_SLIDE_SPEED 0.15f
+class CMario; 
 class CTurtle : public CGameObject {
 protected:
     float ax, ay; // Gia tốc theo trục x và y
@@ -45,6 +47,7 @@ protected:
     int pointIdKick;
     bool hasSpawnedPointOnStomp = false;
     bool hasSpawnedPointOnKick = false;
+    CMario* holder = nullptr;
 
 public:
     CTurtle(float x, float y, int pointIdStomp, int pointIdKick);
@@ -53,6 +56,14 @@ public:
     void StartShell(); // Đặt rùa vào trạng thái vỏ
     void KickShell(int dir); // Đá rùa đi theo một hướng
     bool IsShellState(); // Kiểm tra rùa có đang ở trạng thái vỏ không
-    bool IsBeingHeld(); // Kiểm tra rùa có đang bị Mario giữ không
+    bool IsBeingHeld() {return isBeingHeld;}   
     float getvx() { return vx; } // Lấy vận tốc theo trục x
+    void SetBeingHeld(bool held) { isBeingHeld = held; }
+	float GetX() { return x; } 
+	float GetY() { return y; }
+    void SetHolder(CMario* mario);
+    CMario* GetHolder();
+    void SetVx(float vx) { this->vx = vx; }
+    void SetVy(float vy) { this->vy = vy; }
+	void SetAy(float ay) { this->ay = ay; }
 };
