@@ -21,6 +21,22 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
+	if (isTailAttacking)
+	{
+		if (tailAttack)
+			tailAttack->Update(dt, coObjects);
+
+		if (GetTickCount64() - tail_attack_start > TAIL_ATTACK_DURATION)
+		{
+			if (tailAttack) {
+				tailAttack->Delete();
+				tailAttack = nullptr;
+			}
+			isTailAttacking = false;
+		}
+	}
+
 	vy += ay * dt;
 	vx += ax * dt;
 
@@ -125,6 +141,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		return;
 	}
+
 
 	if (y > 230 && x < 2013)
 	{
@@ -585,6 +602,9 @@ int CMario::GetAniIdRaccoon()
 
 	if (aniId == -1)
 		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_IDLE_LEFT;
+
+	if (isTailAttacking)
+		return (nx > 0) ? ID_ANI_MARIO_RACCOON_ATTACK_RIGHT : ID_ANI_MARIO_RACCOON_ATTACK_LEFT;
 
 	return aniId;
 }

@@ -155,6 +155,7 @@
     <ClInclude Include="ItemPoint.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioTail.h" />
     <ClInclude Include="PipeTeleport.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Platform.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="ItemPoint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioTail.cpp" />
     <ClCompile Include="PipeTeleport.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Platform.cpp" />

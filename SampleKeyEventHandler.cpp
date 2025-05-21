@@ -4,6 +4,7 @@
 #include "Game.h"
 
 #include "Mario.h"
+#include "MarioTail.h"
 #include "PlayScene.h"
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
@@ -25,6 +26,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
+	case DIK_3:
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
@@ -33,6 +37,17 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A:
 		mario->isPressingA = true;
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON && !mario->isTailAttacking)
+		{
+			mario->isTailAttacking = true;
+			mario->tail_attack_start = GetTickCount64();
+
+			mario->tailAttack = new CMarioTail(mario);
+
+			CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+			if (scene)
+				scene->AddObject(mario->tailAttack);
+		}
 		break;
 	}
 }

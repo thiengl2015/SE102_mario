@@ -125,4 +125,29 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e) {
         }
 
     }
+    else if (dynamic_cast<CMarioTail*>(e->src_obj))
+    {
+        DebugOut(L"Đuôi đập viên gạch!\n");
+
+        isUsed = true;
+        isBouncing = true;
+        bounce_start = GetTickCount64();
+
+        float spawnX = x;
+        float spawnY = y - height / 2;
+        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+
+        switch (spawnType)
+        {
+        case 1:
+            scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
+            break;
+        case 2:
+        case 3:
+            pendingSpawn = true;
+            pendingSpawnType = spawnType;
+            break;
+        }
+    }
+
 }
