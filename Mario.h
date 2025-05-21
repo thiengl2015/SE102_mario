@@ -5,6 +5,7 @@
 #include "Animations.h"
 #include "turle.h"
 #include "debug.h"
+#include "MarioTail.h"
 
 #define MARIO_WALKING_SPEED		0.08f
 #define MARIO_RUNNING_SPEED		0.18f
@@ -138,12 +139,16 @@
 #define ID_ANI_MARIO_RACCOON_HOLD_WALK_RIGHT 2016
 #define ID_ANI_MARIO_RACCOON_HOLD_WALK_LEFT  2017
 
+#define ID_ANI_MARIO_RACCOON_ATTACK_RIGHT 2018
+#define ID_ANI_MARIO_RACCOON_ATTACK_LEFT 2019
+
 #define MARIO_RACCOON_BBOX_WIDTH  13
 #define MARIO_RACCOON_BBOX_HEIGHT 26
 #define MARIO_RACCOON_SITTING_BBOX_HEIGHT 16
 #define MARIO_RACCOON_SIT_HEIGHT_ADJUST ((MARIO_RACCOON_BBOX_HEIGHT - MARIO_RACCOON_SITTING_BBOX_HEIGHT) / 2)
 
 class CTurtle;
+class CMarioTail;
 
 class CMario : public CGameObject
 {
@@ -244,4 +249,8 @@ public:
 
 	void PickOrThrowTurtle(); 
 	bool isPressingA = false;
+
+	ULONGLONG tail_attack_start = 0;
+	bool isTailAttacking = false;
+	CMarioTail* tailAttack = nullptr;
 };

@@ -94,6 +94,9 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Core\Load</Filter>
     </ClCompile>
+    <ClCompile Include="MarioTail.cpp">
+      <Filter>Object\Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="BlockerWall.h">
       <Filter>Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioTail.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
