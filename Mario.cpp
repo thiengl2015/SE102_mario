@@ -24,9 +24,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isTailAttacking)
 	{
-		if (tailAttack)
-			tailAttack->Update(dt, coObjects);
-
+		if (isSitting && level == MARIO_LEVEL_RACCOON)
+		{
+			if (tailAttack)
+			{
+				tailAttack->Delete();
+				tailAttack = nullptr;
+			}
+			isTailAttacking = false;
+		}
 		if (GetTickCount64() - tail_attack_start > TAIL_ATTACK_DURATION)
 		{
 			if (tailAttack) {
@@ -308,18 +314,18 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 		else if (!turtle->IsBeingHeld())
 		{
-			if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
-			{
-				turtle->SetState(TURTLE_STATE_DIE_FALL);
-				vy = -MARIO_JUMP_DEFLECT_SPEED;
-			}
-			else
+			if (turtle->GetState() != TURTLE_STATE_SHELL_MOVING) 
 			{
 				turtle->KickShell(nx);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
+			else
+			{
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
 		}
 	}
+
 
 	else
 	{

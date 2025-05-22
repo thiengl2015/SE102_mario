@@ -32,4 +32,5 @@ public:
 
     int IsBlocking() override { return 1; }
     int IsCollidable() override { return 1; }
+    void SpawnItem();
 };
