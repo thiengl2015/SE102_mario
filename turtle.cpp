@@ -135,10 +135,6 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     CGameObject::Update(dt, coObjects);
 
-    if (state == TURTLE_STATE_DIE_FALL && y > CGame::GetInstance()->GetBackBufferHeight())
-    {
-        Delete(); 
-    }
 
     CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -206,12 +202,6 @@ void CTurtle::SetState(int state)
         if (walkingDirection == 0)
             walkingDirection = -1;
         vx = walkingDirection * TURTLE_WALKING_SPEED;
-        break;
-
-    case TURTLE_STATE_DIE_FALL:
-        vx = 0;
-        vy = 0.15f;
-        ay = TURTLE_GRAVITY;
         break;
     }
 }

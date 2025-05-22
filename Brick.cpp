@@ -30,28 +30,13 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
     else {
         bounceOffset = 0.0f;
     }
+
     if (!isBouncing && pendingSpawn) {
-        float spawnX = x;
-        float spawnY = y - height / 2;
-
-        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-
-        CMario* mario = (CMario*)scene->GetPlayer();
-
-        if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-        {
-            scene->AddObject(new CItemMushroom(spawnX, spawnY, itemSpriteId, pointSpriteId));
-        }
-        else
-        {
-            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
-        }
-        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
-
-
+        SpawnItem();
         pendingSpawn = false;
     }
 }
+
 
 void CBrick::Render() {
     int aniId = 23000; // default pattern
@@ -76,78 +61,54 @@ void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b) {
 void CBrick::OnCollisionWith(LPCOLLISIONEVENT e) {
     if (isUsed || brickType != 1) return;
 
+    bool shouldBounce = false;
+
     if (dynamic_cast<CMario*>(e->src_obj) && e->ny > 0 && e->obj == this) {
-        isUsed = true;
-        isBouncing = true;
-        bounce_start = GetTickCount64();
-
-        float spawnX = x;
-        float spawnY = y - height / 2;
-
-        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-
-        switch (spawnType) {
-        case 1:
-            scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
-            break;
-        case 2:
-        case 3:
-            pendingSpawn = true;
-            pendingSpawnType = spawnType;
-            break;
-        }
+        shouldBounce = true;
     }
-    else if (dynamic_cast<CTurtle*>(e->src_obj) && abs(e->nx) > 0 && e->obj == this)
-    {
+    else if (dynamic_cast<CTurtle*>(e->src_obj) && abs(e->nx) > 0 && e->obj == this) {
         CTurtle* turtle = dynamic_cast<CTurtle*>(e->src_obj);
-        if (turtle && turtle->IsShellState()) 
-        {
+        if (turtle && turtle->IsShellState()) {
             DebugOut(L"Rùa phá viên gạch!\n");
-            isUsed = true; 
-            isBouncing = true;
-            bounce_start = GetTickCount64();
-
-            float spawnX = x;
-            float spawnY = y - height / 2;
-            CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-
-            switch (spawnType)
-            {
-            case 1:
-                scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
-                break;
-            case 2:
-            case 3:
-                pendingSpawn = true;
-                pendingSpawnType = spawnType;
-                break;
-            }
+            shouldBounce = true;
         }
-
     }
-    else if (dynamic_cast<CMarioTail*>(e->src_obj))
-    {
+    else if (dynamic_cast<CMarioTail*>(e->src_obj)) {
         DebugOut(L"Đuôi đập viên gạch!\n");
+        shouldBounce = true;
+    }
 
+    if (shouldBounce) {
         isUsed = true;
         isBouncing = true;
         bounce_start = GetTickCount64();
 
-        float spawnX = x;
-        float spawnY = y - height / 2;
-        CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-
-        switch (spawnType)
-        {
-        case 1:
-            scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
-            break;
-        case 2:
-        case 3:
-            pendingSpawn = true;
-            pendingSpawnType = spawnType;
-            break;
+        if (spawnType == 1) {
+            SpawnItem();
+        }
+        else if (spawnType == 2 || spawnType == 3) {
+            pendingSpawn = true; 
         }
     }
+}
 
+
+void CBrick::SpawnItem() {
+    float spawnX = x;
+    float spawnY = y - height / 2;
+
+    CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+    CMario* mario = (CMario*)scene->GetPlayer();
+
+    if (spawnType == 1) {
+        scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
+    }
+    else if (spawnType == 2) {
+        if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+            scene->AddObject(new CItemMushroom(spawnX, spawnY, itemSpriteId, pointSpriteId));
+        else
+            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
+
+        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
+    }
 }
