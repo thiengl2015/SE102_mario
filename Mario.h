@@ -10,13 +10,13 @@
 #define MARIO_WALKING_SPEED		0.08f
 #define MARIO_RUNNING_SPEED		0.18f
 
-#define MARIO_ACCEL_WALK_X	0.0004f
-#define MARIO_ACCEL_RUN_X	0.0006f
+#define MARIO_ACCEL_WALK_X	0.0005f
+#define MARIO_ACCEL_RUN_X	0.00075f
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
-#define MARIO_GRAVITY			0.0016f
+#define MARIO_GRAVITY			0.0012f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
@@ -119,6 +119,18 @@
 #define MARIO_TRANSFORM_FREEZE_TIME 500
 #define MARIO_UNTOUCHABLE_TIME 2000
 
+#define POWERMETER_MAX 1.0f
+#define POWERMETER_INCREASE 0.0004f
+#define POWERMETER_DECREASE 0.0002f
+
+#define FLY_MAX_DURATION 8000      
+#define FLAP_IMPULSE -0.3f          
+#define FLAP_ANIMATION_TIME 600    
+
+#define ID_ANI_MARIO_RACCOON_FLY_RIGHT 2020
+#define ID_ANI_MARIO_RACCOON_FLY_LEFT  2021
+
+
 #define ID_ANI_MARIO_RACCOON_IDLE_RIGHT   2000
 #define ID_ANI_MARIO_RACCOON_IDLE_LEFT    2001
 #define ID_ANI_MARIO_RACCOON_WALKING_RIGHT 2002
@@ -141,6 +153,9 @@
 
 #define ID_ANI_MARIO_RACCOON_ATTACK_RIGHT 2018
 #define ID_ANI_MARIO_RACCOON_ATTACK_LEFT 2019
+
+#define ID_ANI_MARIO_RACCOON_FLY_RIGHT 2020
+#define ID_ANI_MARIO_RACCOON_FLY_LEFT  2021
 
 #define MARIO_RACCOON_BBOX_WIDTH  13
 #define MARIO_RACCOON_BBOX_HEIGHT 26
@@ -182,6 +197,12 @@ protected:
 	bool isSkidding = false;
 	CTurtle* heldTurtle = nullptr;
 	bool isHolding = false;
+
+	bool isFlying = false;
+	ULONGLONG flyStartTime = 0;
+	ULONGLONG lastFlapTime = 0;
+	float powerMeter = 0.0f;
+	ULONGLONG flyingDuration = 0;
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)

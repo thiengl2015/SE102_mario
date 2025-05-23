@@ -21,7 +21,6 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
 	if (isTailAttacking)
 	{
 		if (isSitting && level == MARIO_LEVEL_RACCOON)
@@ -46,6 +45,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (level == MARIO_LEVEL_RACCOON)
+	{
+		if (abs(vx) >= MARIO_RUNNING_SPEED * 0.9f && isOnPlatform)
+			powerMeter = min(powerMeter + POWERMETER_INCREASE * dt, POWERMETER_MAX);
+		else if (!isFlying)
+			powerMeter = max(powerMeter - POWERMETER_DECREASE * dt, 0.0f);
+	}
+
+	if (isFlying && GetTickCount64() - flyStartTime > flyingDuration)
+		isFlying = false;
+
 	if ((vx > 0 && ax < 0) || (vx < 0 && ax > 0))
 		isSkidding = true;
 	else
@@ -69,7 +79,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
@@ -77,6 +86,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
 	if (isEnteringPipe && GetTickCount64() - pipe_start_time > 2500)
 	{
 		SetPosition(pipe_dest_x, pipe_dest_y);
@@ -94,7 +104,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = 0;
 		ax = 0;
 		ay = 0;
-
 		vy = pipe_is_going_up ? -0.01f : 0.01f;
 
 		if (GetTickCount64() - pipe_start_time > 1500)
@@ -148,7 +157,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-
 	if (y > 230 && x < 2013)
 	{
 		SetState(MARIO_STATE_DIE);
@@ -158,7 +166,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		heldTurtle->SetPosition(x + nx * 16.0f, y);
 	}
+
+	if (isOnPlatform && GetTickCount64() - flyStartTime > 500)
+	{
+		isFlying = false;
+	}
+
+	if (!isOnPlatform && vy > 0 && isFlying && GetTickCount64() - lastFlapTime < 200)
+	{
+		vy = 0.012f; 
+	}
+
 }
+
 
 
 void CMario::OnNoCollision(DWORD dt)
@@ -568,11 +588,14 @@ int CMario::GetAniIdRaccoon()
 	}
 	else if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		if (isFlying && GetTickCount64() - lastFlapTime < FLAP_ANIMATION_TIME)
+			aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_FLY_RIGHT : ID_ANI_MARIO_RACCOON_FLY_LEFT;
+		else if (abs(ax) == MARIO_ACCEL_RUN_X)
 			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
 		else
 			aniId = (nx >= 0) ? ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT : ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT;
 	}
+
 	else if (vx == 0)
 	{
 		aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_IDLE_LEFT;
@@ -649,15 +672,30 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
+
 		if (isOnPlatform)
 		{
-			if (abs(this->vx) == MARIO_RUNNING_SPEED)
+			if (abs(vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
+
+			isOnPlatform = false;
+
+			if (level == MARIO_LEVEL_RACCOON && powerMeter > 0.1f)
+			{
+				isFlying = true;
+				flyStartTime = GetTickCount64();
+				flyingDuration = FLY_MAX_DURATION * powerMeter;
+			}
+
+		}
+		else if (isFlying)
+		{
+			vy = FLAP_IMPULSE;                     
+			lastFlapTime = GetTickCount64();        
 		}
 		break;
-
 	case MARIO_STATE_RELEASE_JUMP:
 		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
 		break;
