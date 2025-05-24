@@ -13,6 +13,7 @@ fullblock.txt
 piranhaplant.txt
 bulllet.txt
 point.txt
+dropbrick.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -132,8 +133,8 @@ point.txt
 6	1500	485	80005	#Black
 
 # MARIO
-0	500	-300
-
+0	2324	-300
+17	1500	-20
 
 #Goomba
 2	175	100	20100

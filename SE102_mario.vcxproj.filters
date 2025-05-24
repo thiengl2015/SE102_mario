@@ -97,6 +97,9 @@
     <ClCompile Include="MarioTail.cpp">
       <Filter>Object\Mario</Filter>
     </ClCompile>
+    <ClCompile Include="DropBrick.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="MarioTail.h">
       <Filter>Object\Mario</Filter>
     </ClInclude>
+    <ClInclude Include="DropBrick.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -249,6 +255,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="turtle.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="dropbrick.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

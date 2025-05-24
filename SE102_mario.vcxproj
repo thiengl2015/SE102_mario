@@ -144,6 +144,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Decorations.h" />
+    <ClInclude Include="DropBrick.h" />
     <ClInclude Include="EdgeSensor.h" />
     <ClInclude Include="FullBlock.h" />
     <ClInclude Include="Game.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="DropBrick.cpp" />
     <ClCompile Include="FullBlock.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -210,6 +212,7 @@
     <Text Include="brick.txt" />
     <Text Include="bulllet.txt" />
     <Text Include="coin.txt" />
+    <Text Include="dropbrick.txt" />
     <Text Include="goomba.txt" />
     <Text Include="land1.txt" />
     <Text Include="mario-sample.txt" />
