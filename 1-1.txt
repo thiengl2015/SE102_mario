@@ -133,7 +133,7 @@ dropbrick.txt
 6	1500	485	80005	#Black
 
 # MARIO
-0	2324	-300
+0	40	-300
 
 
 #Goomba

@@ -25,13 +25,20 @@ CTurtle::CTurtle(float x, float y, int pointIdStomp, int pointIdKick)
 
 void CTurtle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-    if (state == TURTLE_STATE_SHELL || state == TURTLE_STATE_SHELL_MOVING || state == TURTLE_STATE_HELD || state == TURTLE_STATE_REVIVING)
+    if (state == TURTLE_STATE_SHELL || state == TURTLE_STATE_SHELL_MOVING || state == TURTLE_STATE_HELD )
     {
         left = x - TURTLE_BBOX_WIDTH / 2;
         top = y - TURTLE_BBOX_HEIGHT_DIE / 2;
         right = left + TURTLE_BBOX_WIDTH;
         bottom = top + TURTLE_BBOX_HEIGHT_DIE;
-    }
+	}
+	else if (state == TURTLE_STATE_REVIVING)
+	{
+		left = x - TURTLE_BBOX_WIDTH / 2;
+		top = y - TURTLE_BBOX_HEIGHT / 2;
+		right = left + TURTLE_BBOX_WIDTH;
+        bottom = top + TURTLE_BBOX_HEIGHT;
+	}
     else
     {
         left = x - TURTLE_BBOX_WIDTH / 2;
@@ -119,6 +126,7 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             if (GetTickCount64() - shell_start > TURTLE_REVIVE_TIMEOUT)
             {
                 SetState(TURTLE_STATE_REVIVING);
+				SetPosition(x, y -TURTLE_BBOX_HEIGHT / 2); // Đặt lại vị trí để rùa đứng lên
             }
         }
 
