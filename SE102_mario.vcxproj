@@ -153,6 +153,7 @@
     <ClInclude Include="ItemCoin.h" />
     <ClInclude Include="ItemLeaf.h" />
     <ClInclude Include="ItemMushroom.h" />
+    <ClInclude Include="ItemGreenMushroom.h" />
     <ClInclude Include="ItemPoint.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Mario.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="ItemCoin.cpp" />
     <ClCompile Include="ItemLeaf.cpp" />
     <ClCompile Include="ItemMushroom.cpp" />
+    <ClCompile Include="ItemGreenMushroom.cpp" />
     <ClCompile Include="ItemPoint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
