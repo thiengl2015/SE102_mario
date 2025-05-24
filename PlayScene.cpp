@@ -18,6 +18,7 @@
 #include "PiranhaPlant.h"
 #include "Bullet.h"
 #include "BlockerWall.h"
+#include "DropBrick.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -151,7 +152,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CBrick(x, y, width, height, brickType, spawnType, itemSpriteId, pointSpriteId);
 		break;
 	}
-
+	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); break;
 
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE:

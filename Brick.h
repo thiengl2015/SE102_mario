@@ -16,7 +16,7 @@ protected:
 
     bool isUsed = false;
     bool isBouncing = false;
-    DWORD bounce_start = 0;
+    ULONGLONG bounce_start = 0;
 
     bool pendingSpawn = false;
     int pendingSpawnType = 0;
