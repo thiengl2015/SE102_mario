@@ -6,11 +6,12 @@
 #include "ItemCoin.h"
 #include "ItemLeaf.h"
 #include "ItemMushroom.h"
+#include "ItemGreenMushroom.h"
 #include "ItemPoint.h"
 #include "turle.h"
 
-CBrick::CBrick(float x, float y, float width, float height, int brickType, int spawnType, int itemSpriteId, int pointSpriteId)
-    : CGameObject(x, y), width(width), height(height), brickType(brickType), spawnType(spawnType), itemSpriteId(itemSpriteId), pointSpriteId(pointSpriteId) {
+CBrick::CBrick(float x, float y, float width, float height, int brickType, int spawnType, int pointSpriteId)
+    : CGameObject(x, y), width(width), height(height), brickType(brickType), spawnType(spawnType), pointSpriteId(pointSpriteId) {
 }
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -86,7 +87,7 @@ void CBrick::OnCollisionWith(LPCOLLISIONEVENT e) {
         if (spawnType == 1) {
             SpawnItem();
         }
-        else if (spawnType == 2 || spawnType == 3) {
+        else if (spawnType == 2) {
             pendingSpawn = true; 
         }
     }
@@ -105,10 +106,12 @@ void CBrick::SpawnItem() {
     }
     else if (spawnType == 2) {
         if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-            scene->AddObject(new CItemMushroom(spawnX, spawnY, itemSpriteId, pointSpriteId));
-        else
-            scene->AddObject(new CItemLeaf(spawnX, spawnY, itemSpriteId, pointSpriteId));
+            scene->AddObject(new CItemMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_RED, pointSpriteId));
+        else if (mario->GetLevel() == MARIO_LEVEL_BIG)
+            scene->AddObject(new CItemLeaf(spawnX, spawnY, ID_SPRITE_ITEM_LEAF, pointSpriteId));
+        else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+            scene->AddObject(new CItemGreenMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_GREEN, pointSpriteId));
 
-        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, itemSpriteId, pointSpriteId));
+        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, pointSpriteId));
     }
 }

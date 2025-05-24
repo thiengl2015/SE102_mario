@@ -138,18 +138,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK:
 	{
-		if (tokens.size() < 9) {
+		if (tokens.size() < 8) {
 			return;
 		}
 
 		int brickType = atoi(tokens[3].c_str());
 		int spawnType = atoi(tokens[4].c_str());
-		int itemSpriteId = atoi(tokens[5].c_str());
-		int pointSpriteId = atoi(tokens[6].c_str());
-		float width = (float)atof(tokens[7].c_str());
-		float height = (float)atof(tokens[8].c_str());
+		int pointSpriteId = atoi(tokens[5].c_str());
+		float width = (float)atof(tokens[6].c_str());
+		float height = (float)atof(tokens[7].c_str());
 
-		obj = new CBrick(x, y, width, height, brickType, spawnType, itemSpriteId, pointSpriteId);
+		obj = new CBrick(x, y, width, height, brickType, spawnType, pointSpriteId);
 		break;
 	}
 	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); break;
