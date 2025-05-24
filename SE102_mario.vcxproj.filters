@@ -100,6 +100,9 @@
     <ClCompile Include="DropBrick.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="ItemGreenMushroom.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="DropBrick.h">
       <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGreenMushroom.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

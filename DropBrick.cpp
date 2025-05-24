@@ -4,6 +4,13 @@
 #include "Mario.h"
 #include "Sprites.h"
 
+CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y)
+{
+    isMarioOn = false;
+    ax = 0;
+    ay = DROPBRICK_DROP_SPEED; 
+    vx = -DROPBRICK_DROP_SPEED; 
+}
 
 void CDropBrick::Update(DWORD dt)
 {
@@ -16,45 +23,30 @@ void CDropBrick::Update(DWORD dt)
     float brickL, brickT, brickR, brickB;
     GetBoundingBox(brickL, brickT, brickR, brickB);
 
-    // Kiểm tra xem Mario có đứng trên gạch không
-    isMarioOn = (marioB >= brickT && marioB <= brickT + 2 && marioR > brickL && marioL < brickR);
 
-    // Nếu Mario đứng lên thì gạch bắt đầu rơi
+    isMarioOn = (marioB >= brickT && marioB <= brickT + 5 && marioR > brickL && marioL < brickR);
+
+
     if (isMarioOn)
     {
-        isFalling = true;
+        vx = 0;
+        vy += DROPBRICK_DROP_SPEED * dt;
     }
-
-    if (isFalling)
-    {
-        vx = 0; // dừng di chuyển ngang
-        vy += DROPBRICK_GRAVITY * dt;
-    }
-    else
-    {
-        vx = -0.05f; // di chuyển sang trái khi không có Mario
-        vy = 0;
-    }
+	DebugOut(L"[DROPBRICK] Vx: %d\n", vx);
 
     x += vx * dt;
     y += vy * dt;
 }
 
-
 void CDropBrick::Render()
 {
-    CSprites::GetInstance()->Get(DROPBRICK_SPRITE_ID)->Draw(x, y);
+    CAnimations::GetInstance()->Get(ANIMATION_DROPBRICK)->Render(x, y);
 }
 
 void CDropBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-    l = x - DROPBRICK_WIDTH / 2;
-    t = y - DROPBRICK_HEIGHT / 2;
-    r = l + DROPBRICK_WIDTH;
-    b = t + DROPBRICK_HEIGHT;
-}
-void CDropBrick::OnNoCollision(DWORD dt)
-{
-	x += vx * dt;
-	y += vy * dt;
+    l = x - DROPBRICK_BBOX_WIDTH / 2;
+    t = y - DROPBRICK_BBOX_HEIGHT / 2;
+    r = l + DROPBRICK_BBOX_WIDTH;
+    b = t + DROPBRICK_BBOX_HEIGHT;
 }
