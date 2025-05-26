@@ -67,7 +67,8 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_A:
 		mario->isPressingA = false;
-		mario->PickOrThrowTurtle();
+		if (mario->heldTurtle) mario->PickOrThrowTurtle();
+		else if (mario->heldKoopas) mario->PickOrThrowKoopas();
 		break;
 	}
 }

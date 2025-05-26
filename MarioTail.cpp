@@ -1,4 +1,4 @@
-#include "MarioTail.h"
+﻿#include "MarioTail.h"
 #include "Goomba.h"
 #include "RedGoomba.h"
 #include "turle.h"
@@ -7,6 +7,7 @@
 #include "Collision.h"
 #include "Brick.h"
 #include "Texture.h"
+#include "JumpingKoopas.h"
 
 CMarioTail::CMarioTail(CMario* mario)
 {
@@ -94,5 +95,20 @@ void CMarioTail::OnCollisionWith(LPCOLLISIONEVENT e)
     {
         brick->OnCollisionWith(e);
         StartUntouchable();
+    }
+    else if (auto jk = dynamic_cast<CJumpingKoopas*>(e->obj))
+    {
+        if (jk->GetState() == JKOOPAS_STATE_JUMPING)
+        {
+            jk->SetState(JKOOPAS_STATE_WALKING);
+            DebugOut(L">>> Tail hit JumpingKoopas (jumping → walking)\n");
+            StartUntouchable();
+        }
+        else if (!jk->IsShellState())
+        {
+            jk->SetState(JKOOPAS_STATE_SHELL);
+            DebugOut(L">>> Tail hit JumpingKoopas (walking → shell)\n");
+            StartUntouchable();
+        }
     }
 }
