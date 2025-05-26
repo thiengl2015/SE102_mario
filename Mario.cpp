@@ -16,6 +16,7 @@
 #include "ItemMushroom.h"
 #include "Bullet.h"
 #include "ItemLeaf.h"
+#include "JumpingKoopas.h"
 
 #include "Collision.h"
 
@@ -166,6 +167,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		heldTurtle->SetPosition(x + nx * 16.0f, y);
 	}
+	if (heldKoopas)
+	{
+		heldKoopas->SetPosition(x + nx * 16.0f, y);
+	}
 
 	if (isOnPlatform && GetTickCount64() - flyStartTime > 500)
 	{
@@ -235,6 +240,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			StartTransforming(MARIO_LEVEL_RACCOON);
 		e->obj->Delete();
 	}
+	else if (dynamic_cast<CJumpingKoopas*>(e->obj))
+		OnCollisionWithJumpingKoopas(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -403,6 +410,80 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e)
+{
+	CJumpingKoopas* koopas = dynamic_cast<CJumpingKoopas*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		if (koopas->GetState() == JKOOPAS_STATE_JUMPING)
+		{
+			koopas->SetState(JKOOPAS_STATE_WALKING); 
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (!koopas->IsShellState())
+		{
+			koopas->SetState(JKOOPAS_STATE_SHELL); 
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (!koopas->IsBeingHeld())
+		{
+			if (koopas->GetState() != JKOOPAS_STATE_SHELL_MOVING)
+			{
+				koopas->KickShell(nx);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+			else
+			{
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+		}
+	}
+	else
+	{
+		if (koopas->IsShellState())
+		{
+			if (koopas->GetState() == JKOOPAS_STATE_SHELL_MOVING)
+			{
+				if (!isPressingA || level == MARIO_LEVEL_SMALL)
+				{
+					OnAttacked();
+				}
+				else if (!koopas->IsBeingHeld() && heldTurtle == nullptr && (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON))
+				{
+					heldKoopas = koopas;
+					isHolding = true;
+					koopas->SetState(JKOOPAS_STATE_HELD);
+					koopas->SetBeingHeld(true);
+					koopas->SetHolder(this);
+				}
+			}
+			else
+			{
+				if (isPressingA && heldTurtle == nullptr && (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON))
+				{
+					heldKoopas = koopas;
+					isHolding = true;
+					koopas->SetState(JKOOPAS_STATE_HELD);
+					koopas->SetBeingHeld(true);
+					koopas->SetHolder(this);
+				}
+				else
+				{
+					koopas->KickShell(nx);
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+			}
+		}
+		else if (koopas->GetState() == JKOOPAS_STATE_WALKING || koopas->GetState() == JKOOPAS_STATE_JUMPING)
+		{
+			if (untouchable == 0)
+				OnAttacked();
+		}
+	}
+}
+
+
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
@@ -506,7 +587,7 @@ int CMario::GetAniIdBig()
 		else if (ax == -MARIO_ACCEL_WALK_X)
 			aniId = ID_ANI_MARIO_WALKING_LEFT;
 	}
-	if (isHolding && heldTurtle != nullptr)
+	if (isHolding && (heldTurtle !=nullptr || heldKoopas != nullptr))
 	{
 		if (vx == 0)
 			aniId = (nx > 0) ? ID_ANI_MARIO_HOLD_IDLE_RIGHT : ID_ANI_MARIO_HOLD_IDLE_LEFT;
@@ -619,7 +700,7 @@ int CMario::GetAniIdRaccoon()
 			aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
 	}
 
-	if (isHolding && heldTurtle != nullptr)
+	if (isHolding && (heldTurtle != nullptr || heldKoopas != nullptr))
 	{
 		if (vx == 0)
 			aniId = (nx > 0) ? ID_ANI_MARIO_RACCOON_HOLD_IDLE_RIGHT : ID_ANI_MARIO_RACCOON_HOLD_IDLE_LEFT;
@@ -862,6 +943,17 @@ void CMario::OnAttacked()
 		heldTurtle = nullptr;
 		isHolding = false;
 	}
+
+	if (heldKoopas)
+	{
+		heldKoopas->SetState(JKOOPAS_STATE_SHELL_MOVING);
+		heldKoopas->SetVx(nx * JKOOPAS_SHELL_SLIDE_SPEED);
+		heldKoopas->SetVy(-0.05f);
+		heldKoopas->SetBeingHeld(false);
+		heldKoopas->SetHolder(nullptr);
+		heldKoopas = nullptr;
+		isHolding = false;
+	}
 	if (isTransforming) return; 
 
 	if (level == MARIO_LEVEL_RACCOON)
@@ -879,4 +971,30 @@ void CMario::OnAttacked()
 	}
 
 	StartUntouchable();
+}
+
+void CMario::PickOrThrowKoopas()
+{
+	if (heldKoopas)
+	{
+		float throwX = x + nx * 18.0f;
+		float throwY = y + 5.0f;
+
+		heldKoopas->SetPosition(throwX, throwY);
+
+		float throwVx = nx * 0.25f;
+		float throwVy = 0.18f;
+
+		heldKoopas->SetVx(throwVx);
+		heldKoopas->SetVy(throwVy);
+		heldKoopas->SetAy(JKOOPAS_GRAVITY);
+
+		heldKoopas->SetWalkingDirection(nx);
+		heldKoopas->SetState(JKOOPAS_STATE_SHELL_MOVING);
+
+		heldKoopas->SetBeingHeld(false);
+		heldKoopas->SetHolder(nullptr);
+		heldKoopas = nullptr;
+		isHolding = false;
+	}
 }

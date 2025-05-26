@@ -19,6 +19,7 @@
 #include "Bullet.h"
 #include "BlockerWall.h"
 #include "DropBrick.h"
+#include "JumpingKoopas.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -238,7 +239,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 
 	break;
+	case OBJECT_TYPE_JUMPING_KOOPAS:
+	{
+		if (tokens.size() < 6) return;
 
+		int pointJump = atoi(tokens[3].c_str());
+		int pointWalk = atoi(tokens[4].c_str());
+		int pointKick = atoi(tokens[5].c_str());
+
+		obj = new CJumpingKoopas(x, y, pointJump, pointWalk, pointKick);
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

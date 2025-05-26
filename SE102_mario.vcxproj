@@ -155,6 +155,7 @@
     <ClInclude Include="ItemMushroom.h" />
     <ClInclude Include="ItemGreenMushroom.h" />
     <ClInclude Include="ItemPoint.h" />
+    <ClInclude Include="JumpingKoopas.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioTail.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="ItemMushroom.cpp" />
     <ClCompile Include="ItemGreenMushroom.cpp" />
     <ClCompile Include="ItemPoint.cpp" />
+    <ClCompile Include="JumpingKoopas.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioTail.cpp" />

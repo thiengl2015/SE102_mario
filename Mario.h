@@ -163,6 +163,7 @@
 #define MARIO_RACCOON_SIT_HEIGHT_ADJUST ((MARIO_RACCOON_BBOX_HEIGHT - MARIO_RACCOON_SITTING_BBOX_HEIGHT) / 2)
 
 class CTurtle;
+class CJumpingKoopas;
 class CMarioTail;
 
 class CMario : public CGameObject
@@ -190,12 +191,12 @@ protected:
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithRedGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
+	void OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon(); 
 	bool isSkidding = false;
-	CTurtle* heldTurtle = nullptr;
 	bool isHolding = false;
 
 	bool isFlying = false;
@@ -219,6 +220,8 @@ public:
 		coin = 0;
 
 	}
+	CTurtle* heldTurtle = nullptr;
+	CJumpingKoopas* heldKoopas = nullptr;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
@@ -270,6 +273,7 @@ public:
 
 	void PickOrThrowTurtle(); 
 	bool isPressingA = false;
+	void PickOrThrowKoopas();
 
 	ULONGLONG tail_attack_start = 0;
 	bool isTailAttacking = false;

@@ -103,6 +103,9 @@
     <ClCompile Include="ItemGreenMushroom.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="JumpingKoopas.cpp">
+      <Filter>Object\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="ItemGreenMushroom.h">
       <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpingKoopas.h">
+      <Filter>Object\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
