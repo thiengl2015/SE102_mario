@@ -5,6 +5,8 @@
 #define ITEM_COIN_HEIGHT 16
 #define ID_ANI_ITEM_COIN 11000
 
+#define COIN_POINT_ID 20100
+
 class CItemCoin : public CGameObject
 {
     int pointSpriteId;
@@ -19,7 +21,7 @@ class CItemCoin : public CGameObject
     static constexpr float FALL_SPEED = 0.3f;
 
 public:
-    CItemCoin(float x, float y, int pointId);
+    CItemCoin(float x, float y);
 
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override;
     void Render() override;

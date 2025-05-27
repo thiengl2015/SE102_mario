@@ -17,7 +17,7 @@
 #include "Bullet.h"
 #include "ItemLeaf.h"
 #include "JumpingKoopas.h"
-
+#include "ItemPoint.h"
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -230,16 +230,19 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		e->obj->OnCollisionWith(e);
 	else if (dynamic_cast<CItemMushroom*>(e->obj))
 	{
-		if (level == MARIO_LEVEL_SMALL)
-			StartTransforming(MARIO_LEVEL_BIG);
-		e->obj->Delete();
+
 	}
 	else if (dynamic_cast<CItemLeaf*>(e->obj))
 	{
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		scene->AddObject(new CItemPoint(x, y - 10, LEAF_POINT_ID));
+
 		if (level == MARIO_LEVEL_BIG)
 			StartTransforming(MARIO_LEVEL_RACCOON);
+
 		e->obj->Delete();
 	}
+
 	else if (dynamic_cast<CJumpingKoopas*>(e->obj))
 		OnCollisionWithJumpingKoopas(e);
 }
@@ -475,11 +478,16 @@ void CMario::OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e)
 				}
 			}
 		}
-		else if (koopas->GetState() == JKOOPAS_STATE_WALKING || koopas->GetState() == JKOOPAS_STATE_JUMPING)
+		else if (
+			koopas->GetState() == JKOOPAS_STATE_WALKING ||
+			koopas->GetState() == JKOOPAS_STATE_JUMPING ||
+			koopas->GetState() == JKOOPAS_STATE_REVIVING 
+			)
 		{
 			if (untouchable == 0)
 				OnAttacked();
 		}
+
 	}
 }
 

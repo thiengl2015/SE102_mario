@@ -15,6 +15,8 @@
 #define LEAF_STATE_SWAY 300
 #define LEAF_STATE_FULL 400
 
+#define LEAF_POINT_ID 21000
+
 class CItemLeaf : public CGameObject
 {
 protected:
@@ -29,7 +31,7 @@ protected:
     bool isCollected = false; 
 
 public:
-    CItemLeaf(float x, float y, int spriteId, int pointSpriteId);
+    CItemLeaf(float x, float y, int spriteId);
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

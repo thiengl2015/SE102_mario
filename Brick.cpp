@@ -10,8 +10,8 @@
 #include "ItemPoint.h"
 #include "turle.h"
 
-CBrick::CBrick(float x, float y, float width, float height, int brickType, int spawnType, int pointSpriteId)
-    : CGameObject(x, y), width(width), height(height), brickType(brickType), spawnType(spawnType), pointSpriteId(pointSpriteId) {
+CBrick::CBrick(float x, float y, float width, float height, int brickType, int spawnType)
+    : CGameObject(x, y), width(width), height(height), brickType(brickType), spawnType(spawnType) {
 }
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -102,16 +102,16 @@ void CBrick::SpawnItem() {
     CMario* mario = (CMario*)scene->GetPlayer();
 
     if (spawnType == 1) {
-        scene->AddObject(new CItemCoin(spawnX, spawnY, pointSpriteId));
+        scene->AddObject(new CItemCoin(spawnX, spawnY));
     }
     else if (spawnType == 2) {
         if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-            scene->AddObject(new CItemMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_RED, pointSpriteId));
+            scene->AddObject(new CItemMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_RED));
         else if (mario->GetLevel() == MARIO_LEVEL_BIG)
-            scene->AddObject(new CItemLeaf(spawnX, spawnY, ID_SPRITE_ITEM_LEAF, pointSpriteId));
+            scene->AddObject(new CItemLeaf(spawnX, spawnY, ID_SPRITE_ITEM_LEAF));
         else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-            scene->AddObject(new CItemGreenMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_GREEN, pointSpriteId));
+            scene->AddObject(new CItemGreenMushroom(spawnX, spawnY, ID_SPRITE_ITEM_MUSHROOM_GREEN));
 
-        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0, pointSpriteId));
+        scene->AddObject(new CBrick(spawnX, spawnY + 8.0f, width, height, 3, 0));
     }
 }

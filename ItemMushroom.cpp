@@ -7,11 +7,12 @@
 #include "BlockerWall.h"
 
 
-CItemMushroom::CItemMushroom(float x, float y, int spriteId, int pointSpriteId)
-    : CGameObject(x, y), pointSpriteId(pointSpriteId)
+CItemMushroom::CItemMushroom(float x, float y, int spriteId)
+    : CGameObject(x, y)
 {
     this->spriteId = spriteId;
     this->startY = y;
+    this->pointSpriteId = MUSHROOM_POINT_ID;
     SetState(MUSHROOM_STATE_ON_RISE);
 }
 

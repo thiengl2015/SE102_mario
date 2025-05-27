@@ -19,7 +19,7 @@ CJumpingKoopas::CJumpingKoopas(float x, float y, int pointJump, int pointWalk, i
     this->pointIdWalk = pointWalk;
     this->pointIdKick = pointKick;
 
-    SetState(JKOOPAS_STATE_SHELL);
+    SetState(JKOOPAS_STATE_JUMPING);
 }
 
 void CJumpingKoopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)

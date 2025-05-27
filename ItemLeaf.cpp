@@ -3,12 +3,13 @@
 #include "ItemPoint.h"
 #include "PlayScene.h"
 
-CItemLeaf::CItemLeaf(float x, float y, int spriteId, int pointSpriteId)
-    : CGameObject(x, y), pointSpriteId(pointSpriteId)
+CItemLeaf::CItemLeaf(float x, float y, int spriteId)
+    : CGameObject(x, y)
 {
     this->spriteId = spriteId;
     startX = x;
     startY = y;
+	this->pointSpriteId = LEAF_POINT_ID;
     SetState(LEAF_STATE_ON_RISE);
 }
 
@@ -52,15 +53,8 @@ void CItemLeaf::Render()
 
 void CItemLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-    if (e->obj->IsCollidable())
-    {
-        SetState(LEAF_STATE_FULL);
-    }
-    if (e->ny != 0)
-        vy = 0;
     if (dynamic_cast<CMario*>(e->obj)) {
         CMario* mario = dynamic_cast<CMario*>(e->obj);
-
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
         scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId));
 
@@ -72,7 +66,11 @@ void CItemLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
         return;
     }
 
+    if (e->obj->IsBlocking()) {
+        vy = 0;
+    }
 }
+
 
 void CItemLeaf::OnNoCollision(DWORD dt)
 {
