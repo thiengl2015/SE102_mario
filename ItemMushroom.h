@@ -13,6 +13,8 @@
 #define MUSHROOM_STATE_ON_RISE 200
 #define MUSHROOM_STATE_FULL 300
 
+#define MUSHROOM_POINT_ID 21000
+
 class CItemMushroom : public CGameObject
 {
 protected:
@@ -25,7 +27,7 @@ protected:
     int spriteId; 
 
 public:
-    CItemMushroom(float x, float y, int spriteId, int pointSpriteId);
+    CItemMushroom(float x, float y, int spriteId);
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

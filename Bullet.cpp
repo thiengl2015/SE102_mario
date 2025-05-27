@@ -60,7 +60,7 @@ void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBullet::OnCollisionWith(LPCOLLISIONEVENT e)
 {
     CMario* mario = dynamic_cast<CMario*>(e->obj);
-    if (mario) 
+    if (mario)
     {
         if (mario->GetUntouchable() == 0)
         {
@@ -68,22 +68,15 @@ void CBullet::OnCollisionWith(LPCOLLISIONEVENT e)
             {
                 DebugOut(L">>> Mario bị bắn trúng bởi đạn! >>>\n");
 
-                if (mario->GetLevel() > MARIO_LEVEL_SMALL)
-                {
-                    mario->SetLevel(MARIO_LEVEL_SMALL);
-                    mario->StartUntouchable();
-                }
-                else 
-                {
-                    DebugOut(L">>> Mario DIE >>> \n");
-                    mario->SetState(MARIO_STATE_DIE);
-                }
+                mario->OnAttacked();
+
+                isExist = false;
+                isDeleted = true;
             }
         }
-        isExist = false;
-        isDeleted = true;
     }
 }
+
 
 void CBullet::Render()
 {

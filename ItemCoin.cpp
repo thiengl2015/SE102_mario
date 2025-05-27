@@ -3,9 +3,9 @@
 #include "PlayScene.h"
 #include "ItemPoint.h"
 
-CItemCoin::CItemCoin(float x, float y, int pointId) : CGameObject(x, y)
+CItemCoin::CItemCoin(float x, float y) : CGameObject(x, y)
 {
-    this->pointSpriteId = pointId;
+    this->pointSpriteId = COIN_POINT_ID;
     this->startY = y;
     isRising = true;
     isFalling = false;

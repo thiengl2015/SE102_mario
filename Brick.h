@@ -9,7 +9,6 @@ class CBrick : public CGameObject {
 protected:
     int brickType;
     int spawnType;
-    int pointSpriteId;
     float width, height;
     float bounceOffset = 0.0f;
 
@@ -22,7 +21,7 @@ protected:
     DWORD spawn_delay_start = 0;
 
 public:
-    CBrick(float x, float y, float width, float height, int brickType, int spawnType, int pointSpriteId);
+    CBrick(float x, float y, float width, float height, int brickType, int spawnType);
 
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override;
     void Render() override;

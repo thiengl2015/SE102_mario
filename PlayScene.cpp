@@ -139,17 +139,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK:
 	{
-		if (tokens.size() < 8) {
+		if (tokens.size() < 7) {
 			return;
 		}
 
 		int brickType = atoi(tokens[3].c_str());
 		int spawnType = atoi(tokens[4].c_str());
-		int pointSpriteId = atoi(tokens[5].c_str());
-		float width = (float)atof(tokens[6].c_str());
-		float height = (float)atof(tokens[7].c_str());
+		float width = (float)atof(tokens[5].c_str());
+		float height = (float)atof(tokens[6].c_str());
 
-		obj = new CBrick(x, y, width, height, brickType, spawnType, pointSpriteId);
+		obj = new CBrick(x, y, width, height, brickType, spawnType);
+
 		break;
 	}
 	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); break;
@@ -348,8 +348,10 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (dynamic_cast<CMario*>(player) && ((CMario*)player)->IsTransforming())
 		{
-			if (objects[i] != player) continue;
+			if (objects[i] != player && objects[i]->GetType() != TYPE_ITEM_POINT)
+				continue;
 		}
+
 
 		objects[i]->Update(dt, &objects);
 	}
