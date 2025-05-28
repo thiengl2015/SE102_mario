@@ -6,36 +6,15 @@
 
 CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y)
 {
-    isMarioOn = false;
-    ax = 0;
-    ay = DROPBRICK_DROP_SPEED; 
-    vx = -DROPBRICK_DROP_SPEED; 
+    vx = -0.05f; 
+    vy = 0;
 }
 
-void CDropBrick::Update(DWORD dt)
+void CDropBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
-    CMario* mario = (CMario*)scene->GetPlayer();
-
-    float marioL, marioT, marioR, marioB;
-    mario->GetBoundingBox(marioL, marioT, marioR, marioB);
-
-    float brickL, brickT, brickR, brickB;
-    GetBoundingBox(brickL, brickT, brickR, brickB);
-
-
-    isMarioOn = (marioB >= brickT && marioB <= brickT + 5 && marioR > brickL && marioL < brickR);
-
-
-    if (isMarioOn)
-    {
-        vx = 0;
-        vy += DROPBRICK_DROP_SPEED * dt;
-    }
-	DebugOut(L"[DROPBRICK] Vx: %d\n", vx);
-
     x += vx * dt;
     y += vy * dt;
+    CGameObject::Update(dt, coObjects);
 }
 
 void CDropBrick::Render()
@@ -49,4 +28,11 @@ void CDropBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
     t = y - DROPBRICK_BBOX_HEIGHT / 2;
     r = l + DROPBRICK_BBOX_WIDTH;
     b = t + DROPBRICK_BBOX_HEIGHT;
+}
+int CDropBrick::IsBlocking()
+{
+    LPGAMEOBJECT mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+    if (dynamic_cast<CMario*>(mario))
+        return 1;
+    return 0;
 }

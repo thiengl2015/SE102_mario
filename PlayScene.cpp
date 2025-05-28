@@ -21,6 +21,7 @@
 #include "DropBrick.h"
 #include "JumpingKoopas.h"
 #include "FlyingKoopas.h"
+#include "GreenPiranhaPlant.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -153,7 +154,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
-	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); break;
+	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); DebugOut(L"[INFO] Speed: %f\n", obj->GetVx()); break;
 
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE:
@@ -173,7 +174,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_PIRANHA_PLANT: obj = new CPiranhaPlant(x, y); break;
-
+	case OBJECT_TYPE_GREEN_PIRANHA_PLANT: obj = new CGreenPiranhaPlant(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 

@@ -194,6 +194,7 @@ protected:
 	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e);
 	void OnCollisionWithFlyingKoopas(LPCOLLISIONEVENT e);
+	void OnCollisionWithDropBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
