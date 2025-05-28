@@ -153,7 +153,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
-	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); break;
+	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); DebugOut(L"[INFO] Speed: %f\n", obj->GetVx()); break;
 
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_TURTLE:

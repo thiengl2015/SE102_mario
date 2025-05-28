@@ -12,15 +12,13 @@
 class CDropBrick : public CGameObject
 {
 protected:
-    bool isMarioOn = false;
-    float ax;
-    float ay;
-
-public:
-    CDropBrick(float x, float y);
-    void Update(DWORD dt) ;
+    virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render() override;
     void GetBoundingBox(float& l, float& t, float& r, float& b) override;
-    int IsBlocking() override { return 1; }
+    int IsBlocking();
     int IsCollidable() override { return 1; }
+    void setVx(float vx) { this->vx = vx; }
+public:
+    CDropBrick(float x, float y);
+
 };

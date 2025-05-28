@@ -19,6 +19,7 @@
 #include "JumpingKoopas.h"
 #include "ItemPoint.h"
 #include "Collision.h"
+#include "DropBrick.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -219,7 +220,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithRedGoomba(e);
 	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
 		OnCollisionWithPiranhaPlant(e);
-
+	else if (dynamic_cast<CDropBrick*>(e->obj))
+	{
+			OnCollisionWithDropBrick(e);
+	}
 	else if (dynamic_cast<CBullet*>(e->obj))
 	{
 		if (untouchable == 0)
@@ -245,6 +249,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	else if (dynamic_cast<CJumpingKoopas*>(e->obj))
 		OnCollisionWithJumpingKoopas(e);
+}
+void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
+{
+	CDropBrick* dropBrick = dynamic_cast<CDropBrick*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		dropBrick->SetSpeed(0, 0.3f);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)

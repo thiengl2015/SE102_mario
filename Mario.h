@@ -192,6 +192,7 @@ protected:
 	void OnCollisionWithRedGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e);
+	void OnCollisionWithDropBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
