@@ -146,6 +146,7 @@
     <ClInclude Include="Decorations.h" />
     <ClInclude Include="DropBrick.h" />
     <ClInclude Include="EdgeSensor.h" />
+    <ClInclude Include="FlyingKoopas.h" />
     <ClInclude Include="FullBlock.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="DropBrick.cpp" />
+    <ClCompile Include="FlyingKoopas.cpp" />
     <ClCompile Include="FullBlock.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />

@@ -165,6 +165,7 @@
 class CTurtle;
 class CJumpingKoopas;
 class CMarioTail;
+class CFlyingKoopas;
 
 class CMario : public CGameObject
 {
@@ -192,6 +193,7 @@ protected:
 	void OnCollisionWithRedGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithJumpingKoopas(LPCOLLISIONEVENT e);
+	void OnCollisionWithFlyingKoopas(LPCOLLISIONEVENT e);
 	void OnCollisionWithDropBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
@@ -223,6 +225,7 @@ public:
 	}
 	CTurtle* heldTurtle = nullptr;
 	CJumpingKoopas* heldKoopas = nullptr;
+	CFlyingKoopas* heldFlyingKoopas = nullptr;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
