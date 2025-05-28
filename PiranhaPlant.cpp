@@ -4,9 +4,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
-#define PIRANHA_PLANT_MOVE_SPEED 0.015f
-#define PIRANHA_PLANT_IDLE_OFFSET 20 
-#define PIRANHA_PLANT_DETECTION_RANGE 150 
+ 
 
 CPiranhaPlant::CPiranhaPlant(float x, float y) : CGameObject(x, y)
 {
