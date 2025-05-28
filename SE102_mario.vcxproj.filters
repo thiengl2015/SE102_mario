@@ -272,6 +272,9 @@
     <Text Include="dropbrick.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="scene02.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

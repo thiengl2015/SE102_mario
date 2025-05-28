@@ -48,6 +48,8 @@ void CBrick::Render() {
         aniId = isUsed ? 23000 : 23000;
     else if (brickType == 3)
         aniId = 22000;
+	else if (brickType == 4)
+		aniId = 23001; // solid brick
 
     CAnimations::GetInstance()->Get(aniId)->Render(x, y + bounceOffset);
 }
