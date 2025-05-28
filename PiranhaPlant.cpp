@@ -98,31 +98,64 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CPiranhaPlant::Render()
 {
-    int aniId = ID_ANI_PIRANHA_PLANT_LEFT; 
-
-	if (nx > 0) 
-	{
-		aniId = ID_ANI_PIRANHA_PLANT_RIGHT;
-		if (state == PIRANHA_PLANT_STATE_FIRE) 
-		{
-			aniId = ID_ANI_PIRANHA_PLANT_FIRE_RIGHT;
-		}
-		else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN) 
-		{
-			aniId = ID_ANI_PIRANHA_PLANT_RIGHT;
-		}
-	}
-    else if (nx < 0) 
+    int aniId = 0;
+    if (this->x < 300)
     {
-        if (state == PIRANHA_PLANT_STATE_FIRE) 
+         aniId = ID_ANI_PIRANHA_PLANT_LEFT;
+
+        if (nx > 0)
         {
-            aniId = ID_ANI_PIRANHA_PLANT_FIRE_LEFT;
+            aniId = ID_ANI_PIRANHA_PLANT_RIGHT;
+            if (state == PIRANHA_PLANT_STATE_FIRE)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_FIRE_RIGHT;
+            }
+            else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_RIGHT;
+            }
         }
-        else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+        else if (nx < 0)
         {
-            aniId = ID_ANI_PIRANHA_PLANT_LEFT;
+            if (state == PIRANHA_PLANT_STATE_FIRE)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_FIRE_LEFT;
+            }
+            else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_LEFT;
+            }
         }
     }
+    else
+    {
+        aniId = ID_ANI_PIRANHA_PLANT_GREEN_LEFT;
+
+        if (nx > 0)
+        {
+            aniId = ID_ANI_PIRANHA_PLANT_GREEN_RIGHT;
+            if (state == PIRANHA_PLANT_STATE_FIRE)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_GREEN_FIRE_RIGHT;
+            }
+            else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_GREEN_RIGHT;
+            }
+        }
+        else if (nx < 0)
+        {
+            if (state == PIRANHA_PLANT_STATE_FIRE)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_GREEN_FIRE_LEFT;
+            }
+            else if (state == PIRANHA_PLANT_STATE_MOVE_UP || state == PIRANHA_PLANT_STATE_MOVE_DOWN)
+            {
+                aniId = ID_ANI_PIRANHA_PLANT_GREEN_LEFT;
+            }
+        }
+    }
+    
 
     LPANIMATION ani = CAnimations::GetInstance()->Get(aniId);
     if (ani) 
