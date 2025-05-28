@@ -223,6 +223,7 @@
     <Text Include="mario.txt" />
     <Text Include="piranhaplant.txt" />
     <Text Include="redgoomba.txt" />
+    <Text Include="scene02.txt" />
     <Text Include="turtle.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
