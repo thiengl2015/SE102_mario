@@ -36,6 +36,8 @@ dropbrick.txt
 # MARIO
 0	1830	10
 
+#Flying Koopas
+13	1850	10
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5	9	160	19	39	8	55001	55002	55003	0
 5	9	191	19	39	8	55004	55005	55006	0

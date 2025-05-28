@@ -20,6 +20,7 @@
 #include "BlockerWall.h"
 #include "DropBrick.h"
 #include "JumpingKoopas.h"
+#include "FlyingKoopas.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -248,6 +249,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int pointKick = atoi(tokens[5].c_str());
 
 		obj = new CJumpingKoopas(x, y, pointJump, pointWalk, pointKick);
+		break;
+	}
+	case OBJECT_TYPE_FLYING_KOOPAS:
+	{
+		obj = new CFlyingKoopas(x, y);
 		break;
 	}
 

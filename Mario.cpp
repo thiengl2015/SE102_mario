@@ -19,6 +19,7 @@
 #include "JumpingKoopas.h"
 #include "ItemPoint.h"
 #include "Collision.h"
+#include "FlyingKoopas.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -219,7 +220,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithRedGoomba(e);
 	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
 		OnCollisionWithPiranhaPlant(e);
-
+	else if (dynamic_cast<CFlyingKoopas*>(e->obj))
+		OnCollisionWithFlyingKoopas(e);  
 	else if (dynamic_cast<CBullet*>(e->obj))
 	{
 		if (untouchable == 0)
@@ -400,6 +402,62 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 	}
 
+}
+
+void CMario::OnCollisionWithFlyingKoopas(LPCOLLISIONEVENT e)
+{
+	CFlyingKoopas* koopas = dynamic_cast<CFlyingKoopas*>(e->obj);
+	if (!koopas) return;
+
+	if (e->ny < 0) {
+		if (!koopas->IsShellState()) {
+			koopas->SetState(FKOOPAS_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (!koopas->IsBeingHeld()) {
+			if (koopas->GetState() != FKOOPAS_STATE_SHELL_MOVING) {
+				koopas->KickShell(nx);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+		}
+	}
+	else {
+		if (koopas->IsShellState()) {
+			if (koopas->GetState() == FKOOPAS_STATE_SHELL_MOVING) {
+				if (!isPressingA || level == MARIO_LEVEL_SMALL) {
+					OnAttacked();
+				}
+				else {
+					heldFlyingKoopas = koopas;
+					isHolding = true;
+					koopas->SetState(FKOOPAS_STATE_HELD);
+					koopas->SetBeingHeld(true);
+					koopas->SetHolder(this);
+				}
+			}
+			else {
+				if (isPressingA && heldKoopas == nullptr) {
+					heldFlyingKoopas = koopas;
+					isHolding = true;
+					koopas->SetState(FKOOPAS_STATE_HELD);
+					koopas->SetBeingHeld(true);
+					koopas->SetHolder(this);
+				}
+				else {
+					koopas->KickShell(nx);
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+			}
+		}
+		else if (
+			koopas->GetState() == FKOOPAS_STATE_WALKING ||
+			koopas->GetState() == FKOOPAS_STATE_FLYING ||
+			koopas->GetState() == FKOOPAS_STATE_REVIVING
+			) {
+			if (untouchable == 0)
+				OnAttacked();
+		}
+	}
 }
 
 
