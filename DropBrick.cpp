@@ -19,7 +19,7 @@ void CDropBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CDropBrick::Render()
 {
-    CAnimations::GetInstance()->Get(ANIMATION_DROPBRICK)->Render(x, y);
+	CAnimations::GetInstance()->Get(ANIMATION_DROPBRICK)->Render(x, y);
 }
 
 void CDropBrick::GetBoundingBox(float& l, float& t, float& r, float& b)

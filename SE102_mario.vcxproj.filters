@@ -112,6 +112,9 @@
     <ClCompile Include="GreenPiranhaPlant.cpp">
       <Filter>Object\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -243,6 +246,9 @@
     <ClInclude Include="GreenPiranhaPlant.h">
       <Filter>Object\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -285,6 +291,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="scene02.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="HUD.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

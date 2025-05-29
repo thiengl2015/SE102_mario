@@ -22,3 +22,4 @@ height	240
 31	textures\world-1-1-1.png
 32	textures\black-1.png
 33	textures\black-2.png
+34	textures\HUD.png
