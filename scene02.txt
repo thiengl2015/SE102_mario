@@ -16,6 +16,7 @@ piranhaplant.txt
 bulllet.txt
 point.txt
 dropbrick.txt
+HUD.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -40,7 +41,8 @@ dropbrick.txt
 6	2330	111	80004
 
 #MARIO
-0	1840	10
+0	2200	10
+
 
 #Pipe
 8	1840	125	30	32	100000
@@ -203,4 +205,4 @@ dropbrick.txt
 
 
 
-
+19	100	100

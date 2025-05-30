@@ -16,40 +16,41 @@ void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     if (mario)
     {
-        coin = mario->GetCoin(); // Cập nhật số xu Mario có
-        score = mario->GetScore(); // Cập nhật điểm số
-        time = mario->GetTime(); // Cập nhật thời gian còn lại
-        itemBox[0] = mario->GetItemBox(0);
-        itemBox[1] = mario->GetItemBox(1);
-        itemBox[2] = mario->GetItemBox(2);
+        coin = 99;// Cập nhật số xu Mario có
+        score = 1000; // Cập nhật điểm số
+        time = 111; // Cập nhật thời gian còn lại
+        itemBox[0] = 1;
+        itemBox[1] = 1;
+        itemBox[2] = 1;
     }
 }
 
 void CHud::Render()
 {
-    float hudX = 100;
-    float hudY = 100;
+    float hudX = 84;
+    float hudY = 215;
+    CSprites::GetInstance()->Get(ID_SPRITE_BLACK)->DrawStatic(hudX + 50, hudY + 30);
     CSprites::GetInstance()->Get(ID_SPRITE_HUD)->DrawStatic(hudX, hudY);
-
+    
     int coinDigit1 = coin / 10;
     int coinDigit2 = coin % 10;
-    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + coinDigit1)->DrawStatic(hudX + 50, hudY);
-    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + coinDigit2)->DrawStatic(hudX + 60, hudY);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + coinDigit1)->DrawStatic(hudX + 61, hudY - 10);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + coinDigit2)->DrawStatic(hudX + 68, hudY - 10);
 
     int tempScore = score;
     for (int i = 5; i >= 0; i--)
     {
         int digit = tempScore % 10;
         tempScore /= 10;
-        CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + digit)->DrawStatic(hudX + (i * 10), hudY + 20);
+        CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + digit)->DrawStatic(hudX - 20+ (i * 10), hudY - 1);
     }
 
     int timeDigit1 = time / 100;
     int timeDigit2 = (time / 10) % 10;
     int timeDigit3 = time % 10;
-    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit1)->DrawStatic(hudX + 100, hudY);
-    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit2)->DrawStatic(hudX + 110, hudY);
-    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit3)->DrawStatic(hudX + 120, hudY);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit1)->DrawStatic(hudX + 53, hudY - 1);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit2)->DrawStatic(hudX + 61, hudY - 1);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + timeDigit3)->DrawStatic(hudX + 69, hudY - 1);
 
     float itemBoxX = hudX + 150;
     float itemBoxY = hudY + 10;
@@ -60,7 +61,8 @@ void CHud::Render()
         else if (itemBox[i] == 2) itemSpriteId = ID_SPRITE_ITEM_BOX_2; 
         else if (itemBox[i] == 3) itemSpriteId = ID_SPRITE_ITEM_BOX_3; 
 
-        CSprites::GetInstance()->Get(itemSpriteId)->DrawStatic(itemBoxX + (i * 16), itemBoxY);
+        CSprites::GetInstance()->Get(itemSpriteId)->DrawStatic(itemBoxX - 50 + (i * 25), itemBoxY - 15);
     }
+
 
 }

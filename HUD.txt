@@ -1,7 +1,7 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #BLACK
-1000000000	7	0	328	100	31
+1000000000	7	0	328	100	32
 
 #HUD
 1000000001	11	128	164	167	34

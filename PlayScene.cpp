@@ -22,6 +22,7 @@
 #include "JumpingKoopas.h"
 #include "FlyingKoopas.h"
 #include "GreenPiranhaPlant.h"
+#include "HUD.h"
 
 
 #include "SampleKeyEventHandler.h"
@@ -157,6 +158,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_DROP_BRICK: obj = new CDropBrick(x, y); DebugOut(L"[INFO] Speed: %f\n", obj->GetVx()); break;
 
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_HUD: obj = new CHud(x, y); break;
 	case OBJECT_TYPE_TURTLE:
 	{
 		if (tokens.size() < 5) return;

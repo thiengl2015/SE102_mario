@@ -41,7 +41,7 @@ protected:
 	int type; // 0: HUD, 1: NUMBER, 2: ITEM_BOX, 3: BLACK
 	int time;
 public:
-	CHud(float x, float y) {}
+	CHud(float x, float y);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override;
 	void Render() override;
@@ -49,4 +49,11 @@ public:
 	void SetCoin(int c) { coin = c; }
 	void SetScore(int s) { score = s; }
 	void SetItemBox(int index, int itemType) { if (index >= 0 && index < 3) itemBox[index] = itemType; }
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom) override
+	{
+		left = x;
+		top = y;
+		right = x + 100; // Width of HUD
+		bottom = y + 50; // Height of HUD
+	}
 };
