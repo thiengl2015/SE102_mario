@@ -40,6 +40,7 @@ protected:
 	int itemBox[3]; // 0: empty, 1: mushroom, 2: flower, 3: star
 	int type; // 0: HUD, 1: NUMBER, 2: ITEM_BOX, 3: BLACK
 	int time;
+	ULONGLONG startTime = GetTickCount64(); 
 public:
 	CHud(float x, float y);
 

@@ -10,119 +10,122 @@
     <ClCompile Include="Block.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="FullBlock.cpp">
+    <ClCompile Include="BlockerWall.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Brick.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Object\Enemies\Boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBrother.cpp">
+      <Filter>Object\Enemies\Boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="DropBrick.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Background\Piranhaplants</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
       <Filter>Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Core\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="FullBlock.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenPiranhaPlant.cpp">
+      <Filter>Object\Background\Piranhaplants</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingKoopas.cpp">
+      <Filter>Object\Enemies\Koopas</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCoin.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGreenMushroom.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemLeaf.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemMushroom.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemPoint.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>Object\Enemies</Filter>
+      <Filter>Object\Goomba</Filter>
     </ClCompile>
-    <ClCompile Include="ItemCoin.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemLeaf.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemMushroom.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemPoint.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="JumpingKoopas.cpp">
+      <Filter>Object\Enemies\Koopas</Filter>
     </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>Object\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
+    <ClCompile Include="MarioTail.cpp">
       <Filter>Object\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="PipeTeleport.cpp">
-      <Filter>Object\Background</Filter>
-    </ClCompile>
     <ClCompile Include="PiranhaPlant.cpp">
-      <Filter>Object\Enemies</Filter>
+      <Filter>Object\Background\Piranhaplants</Filter>
     </ClCompile>
-    <ClCompile Include="turtle.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="RedGoomba.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Portal.cpp">
+    <ClCompile Include="PipeTeleport.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="RedGoomba.cpp">
+      <Filter>Object\Goomba</Filter>
+    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Core\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Core\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Core\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Core\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
+    <ClCompile Include="Portal.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
-    <ClCompile Include="BlockerWall.cpp">
-      <Filter>Core\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Core\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioTail.cpp">
+    <ClCompile Include="SampleKeyEventHandler.cpp">
       <Filter>Object\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="DropBrick.cpp">
-      <Filter>Object\Background</Filter>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ItemGreenMushroom.cpp">
-      <Filter>Object\Item</Filter>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="JumpingKoopas.cpp">
-      <Filter>Object\Enemies</Filter>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="FlyingKoopas.cpp">
-      <Filter>Object\Enemies</Filter>
+    <ClCompile Include="turtle.cpp">
+      <Filter>Object\Enemies\Koopas</Filter>
     </ClCompile>
-    <ClCompile Include="GreenPiranhaPlant.cpp">
-      <Filter>Object\Enemies</Filter>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Boomerang.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="BoomerangBrother.cpp">
-      <Filter>Object\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Object\Background</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Object\Mario\Data</Filter>
+    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Core\Animation</Filter>
     </ClInclude>
@@ -132,26 +135,29 @@
     <ClInclude Include="Animations.h">
       <Filter>Core\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="AssetIDs.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EdgeSensor.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="FullBlock.h">
+    <ClInclude Include="BlockerWall.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Core\Game</Filter>
+    <ClInclude Include="Brick.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBrother.h">
+      <Filter>Object\Enemies\Boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Decorations.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="DropBrick.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Background\Piranhaplants</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Core\Game</Filter>
@@ -159,196 +165,197 @@
     <ClInclude Include="debug.h">
       <Filter>Core\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="FullBlock.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPiranhaPlant.h">
+      <Filter>Object\Background\Piranhaplants</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingKoopas.h">
+      <Filter>Object\Enemies\Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCoin.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGreenMushroom.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemLeaf.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMushroom.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPoint.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeSensor.h">
+      <Filter>Object\Enemies\Koopas</Filter>
+    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
-      <Filter>Object\Enemies</Filter>
+      <Filter>Object\Goomba</Filter>
     </ClInclude>
-    <ClInclude Include="ItemCoin.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemLeaf.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemMushroom.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemPoint.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Object\Mario</Filter>
+    <ClInclude Include="JumpingKoopas.h">
+      <Filter>Object\Enemies\Koopas</Filter>
     </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
       <Filter>Object\Mario</Filter>
     </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
+    <ClInclude Include="Mario.h">
       <Filter>Object\Mario</Filter>
     </ClInclude>
-    <ClInclude Include="PipeTeleport.h">
-      <Filter>Object\Background</Filter>
+    <ClInclude Include="MarioTail.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
     <ClInclude Include="PiranhaPlant.h">
-      <Filter>Object\Enemies</Filter>
+      <Filter>Object\Background\Piranhaplants</Filter>
     </ClInclude>
-    <ClInclude Include="turle.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="RedGoomba.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Decorations.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
+    <ClInclude Include="PipeTeleport.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
+    <ClInclude Include="RedGoomba.h">
+      <Filter>Object\Goomba</Filter>
+    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleKeyEventHandler.h">
+      <Filter>Object\Mario</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Core\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
-      <Filter>Core\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Core\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Core\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Core\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Core\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockerWall.h">
       <Filter>Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MarioTail.h">
-      <Filter>Object\Mario</Filter>
+    <ClInclude Include="Sprites.h">
+      <Filter>Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DropBrick.h">
-      <Filter>Object\Background</Filter>
+    <ClInclude Include="Texture.h">
+      <Filter>Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ItemGreenMushroom.h">
-      <Filter>Object\Item</Filter>
+    <ClInclude Include="Textures.h">
+      <Filter>Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="JumpingKoopas.h">
-      <Filter>Object\Enemies</Filter>
+    <ClInclude Include="turle.h">
+      <Filter>Object\Enemies\Koopas</Filter>
     </ClInclude>
-    <ClInclude Include="FlyingKoopas.h">
-      <Filter>Object\Enemies</Filter>
+    <ClInclude Include="Utils.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="GreenPiranhaPlant.h">
-      <Filter>Object\Enemies</Filter>
+    <ClInclude Include="AssetIDs.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Boomerang.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="BoomerangBrother.h">
-      <Filter>Object\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Object\Background</Filter>
-    </ClInclude>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="bulllet.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="coin.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="brick.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="goomba.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="land1.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="mario.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="mario-sample.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="piranhaplant.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="redgoomba.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="turtle.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="dropbrick.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="scene02.txt">
-      <Filter>Data</Filter>
+      <Filter>Object\Mario\Data</Filter>
     </Text>
     <Text Include="boomerang.txt">
-      <Filter>Data</Filter>
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="brick.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="bulllet.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="coin.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="dropbrick.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="goomba.txt">
+      <Filter>Object\Mario\Data</Filter>
     </Text>
     <Text Include="HUD.txt">
-      <Filter>Data</Filter>
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="land1.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="mario.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="mario-sample.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="scene02.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="redgoomba.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="piranhaplant.txt">
+      <Filter>Object\Mario\Data</Filter>
+    </Text>
+    <Text Include="turtle.txt">
+      <Filter>Object\Mario\Data</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
-      <UniqueIdentifier>{6793f3ad-d1cf-49fe-b817-6c0470b3f737}</UniqueIdentifier>
+      <UniqueIdentifier>{53a45f6a-85de-4873-a55a-a836ed3a9173}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object">
-      <UniqueIdentifier>{231dd8b9-87dd-42a2-a9c3-1c1fdab446b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{7013a3b9-7b4f-4c68-9eca-b5ce6b35c496}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{13048b15-53c4-4af7-b276-f02602a911f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Animation">
-      <UniqueIdentifier>{35e867bf-16c6-4b12-bd8b-e812b2412ea5}</UniqueIdentifier>
+      <UniqueIdentifier>{3bc2e33d-4b0a-441a-9a37-8f45483ed2e2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Scene">
-      <UniqueIdentifier>{15dcc843-92f6-48ef-aa2a-8de555e998f8}</UniqueIdentifier>
+      <UniqueIdentifier>{e9bd7738-5b53-46bc-8b25-7de298cc8215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Animation">
+      <UniqueIdentifier>{ec5a8a85-ccca-4dee-a8d4-f6007524eacc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Background">
-      <UniqueIdentifier>{ae107520-9f63-44c1-93ef-e869c5f1394f}</UniqueIdentifier>
+      <UniqueIdentifier>{1587f25f-42d1-4390-8d79-b1c8cb037d08}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Enemies">
-      <UniqueIdentifier>{5546a43c-fa7d-4926-8706-9bff7ddd1799}</UniqueIdentifier>
+      <UniqueIdentifier>{5f2d6beb-4dd2-4846-b314-f5b67747d4a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Item">
-      <UniqueIdentifier>{54f454c7-3b37-4c86-82ac-a114020a6b1e}</UniqueIdentifier>
+    <Filter Include="Object\Enemies\Boomerang">
+      <UniqueIdentifier>{25cfc28a-0562-4640-9a6f-a1888fce2c2b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Game">
-      <UniqueIdentifier>{618b3184-33ed-4693-8582-8798b974bce1}</UniqueIdentifier>
+      <UniqueIdentifier>{15be406d-7ff9-42f1-be4f-a38a059a80b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemies\Koopas">
+      <UniqueIdentifier>{084653b7-7861-43bd-a06f-9b9c5a3b0a5e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Mario">
-      <UniqueIdentifier>{59f1b7c9-f1f1-4791-b389-06320dc9d8dd}</UniqueIdentifier>
+      <UniqueIdentifier>{f823657e-2f52-4e6e-a973-90e7e8399023}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Load">
-      <UniqueIdentifier>{f4a983fc-5bdb-4ef9-a21e-dde0d622d500}</UniqueIdentifier>
+    <Filter Include="Object\Goomba">
+      <UniqueIdentifier>{860c13a3-5702-44b1-8ca0-2b21b87d4210}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Background\Piranhaplants">
+      <UniqueIdentifier>{fc5ac431-b0e9-4d23-862b-5b53e03ef6a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Mario\Data">
+      <UniqueIdentifier>{4f9aa268-9dd6-4829-95bf-6b1db49f838f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{6920ab51-37c8-43bc-8aa7-429bcaf02e9d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Source</Filter>
+    </None>
   </ItemGroup>
 </Project>

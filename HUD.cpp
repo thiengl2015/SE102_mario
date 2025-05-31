@@ -11,14 +11,16 @@ CHud::CHud(float x, float y) : CGameObject(x, y), coin(0), score(0), time(300) /
 
 void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+    ULONGLONG now = GetTickCount64();
+    int elapsed = (int)((now - startTime) / 1000);
     LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
     CMario* mario = (CMario*)scene->GetPlayer();
 
     if (mario)
     {
-        coin = 99;// Cập nhật số xu Mario có
+        coin = 1;// Cập nhật số xu Mario có
         score = 1000; // Cập nhật điểm số
-        time = 111; // Cập nhật thời gian còn lại
+        time = max(0, 300 - elapsed);  // Cập nhật thời gian còn lại
         itemBox[0] = 1;
         itemBox[1] = 1;
         itemBox[2] = 1;
