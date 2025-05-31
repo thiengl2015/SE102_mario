@@ -1,4 +1,4 @@
-#include "FlyingKoopas.h"
+﻿#include "FlyingKoopas.h"
 #include "PlayScene.h"
 #include "ItemPoint.h"
 #include "Brick.h"
@@ -77,12 +77,10 @@ void CFlyingKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     if (state == FKOOPAS_STATE_FLYING)
     {
-        if (y < rootY - FKOOPAS_FLY_RANGE)
-            vy = FKOOPAS_FLY_SPEED;
-        else if (y > rootY + FKOOPAS_FLY_RANGE)
-            vy = -FKOOPAS_FLY_SPEED;
-
-        walkingDirection = -1; 
+        flyTime += dt / 1000.0f;
+        y = rootY + sin(flyTime * 2.0f) * FKOOPAS_FLY_RANGE;  
+        vy = 0; 
+        walkingDirection = -1;
     }
 
     CGameObject::Update(dt, coObjects);

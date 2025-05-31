@@ -27,6 +27,7 @@ protected:
     float ax, ay;
     int walkingDirection;
     bool isBeingHeld;
+    float flyTime = 0;
 
     ULONGLONG shell_start;
 

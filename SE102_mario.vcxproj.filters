@@ -112,6 +112,12 @@
     <ClCompile Include="GreenPiranhaPlant.cpp">
       <Filter>Object\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Object\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBrother.cpp">
+      <Filter>Object\Enemies</Filter>
+    </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
@@ -246,8 +252,15 @@
     <ClInclude Include="GreenPiranhaPlant.h">
       <Filter>Object\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBrother.h">
+      <Filter>Object\Enemies</Filter>
+    </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Object\Background</Filter>
+    </ClInclude>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +304,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="scene02.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="boomerang.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="HUD.txt">

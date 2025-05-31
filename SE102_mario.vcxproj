@@ -138,6 +138,8 @@
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockerWall.h" />
+    <ClInclude Include="Boomerang.h" />
+    <ClInclude Include="BoomerangBrother.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
@@ -182,6 +184,8 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockerWall.cpp" />
+    <ClCompile Include="Boomerang.cpp" />
+    <ClCompile Include="BoomerangBrother.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -219,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt" />
+    <Text Include="boomerang.txt" />
     <Text Include="brick.txt" />
     <Text Include="bulllet.txt" />
     <Text Include="coin.txt" />
