@@ -16,6 +16,7 @@ piranhaplant.txt
 bulllet.txt
 point.txt
 dropbrick.txt
+boomerang.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -40,7 +41,7 @@ dropbrick.txt
 6	2330	111	80004
 
 #MARIO
-0	1840	10
+0	2100	10
 
 #Pipe
 8	1840	125	30	32	100000
@@ -48,13 +49,12 @@ dropbrick.txt
 8	2106	162	30	32	100001
 
 
-
-
-# MARIO
-0	1830	10
-
 #Flying Koopas
-13	1850	10
+13	1750	140	
+
+#Boomerang Brother
+14	2050	50
+
 #Platform: (ID  x  y  cell_width  cell_height  length  IDfirst  IDmid  IDlast  length)
 5	9	160	19	39	8	55001	55002	55003	0
 5	9	191	19	39	8	55004	55005	55006	0

@@ -21,7 +21,7 @@
 #include "Collision.h"
 #include "FlyingKoopas.h"
 #include "DropBrick.h"
-
+#include "BoomerangBrother.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -253,6 +253,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	else if (dynamic_cast<CJumpingKoopas*>(e->obj))
 		OnCollisionWithJumpingKoopas(e);
+	else if (dynamic_cast<CBoomerangBrother*>(e->obj)) {
+		OnCollisionWithBoomerangBrother(e);
+	}
+
 }
 void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 {
@@ -262,6 +266,22 @@ void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 	{
 		dropBrick->SetSpeed(0, 0.3f);
 	}
+}
+void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)
+{
+	CBoomerangBrother* bb = dynamic_cast<CBoomerangBrother*>(e->obj);
+	if (!bb) return;
+
+	if (e->ny < 0)
+	{
+		bb->Delete();
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		scene->AddObject(new CItemPoint(bb->GetX(), bb->GetY() - 10, 21000));
+	}
+	else
+		OnAttacked();
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -424,18 +444,28 @@ void CMario::OnCollisionWithFlyingKoopas(LPCOLLISIONEVENT e)
 	CFlyingKoopas* koopas = dynamic_cast<CFlyingKoopas*>(e->obj);
 	if (!koopas) return;
 
-	if (e->ny < 0) {
-		if (!koopas->IsShellState()) {
-			koopas->SetState(FKOOPAS_STATE_SHELL);
+	if (e->ny < 0)
+	{
+		if (koopas->GetState() == FKOOPAS_STATE_FLYING)
+		{
+			koopas->SetState(FKOOPAS_STATE_WALKING);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
-		else if (!koopas->IsBeingHeld()) {
-			if (koopas->GetState() != FKOOPAS_STATE_SHELL_MOVING) {
+		else if (!koopas->IsShellState())
+		{
+			koopas->SetState(FKOOPAS_STATE_SHELL);  
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (!koopas->IsBeingHeld())
+		{
+			if (koopas->GetState() != FKOOPAS_STATE_SHELL_MOVING)
+			{
 				koopas->KickShell(nx);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 		}
 	}
+
 	else {
 		if (koopas->IsShellState()) {
 			if (koopas->GetState() == FKOOPAS_STATE_SHELL_MOVING) {
