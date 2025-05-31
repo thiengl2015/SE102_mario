@@ -17,6 +17,7 @@ bulllet.txt
 point.txt
 dropbrick.txt
 boomerang.txt
+HUD.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -42,6 +43,7 @@ boomerang.txt
 
 #MARIO
 0	2100	10
+
 
 #Pipe
 8	1840	125	30	32	100000
@@ -203,4 +205,4 @@ boomerang.txt
 
 
 
-
+19	100	100

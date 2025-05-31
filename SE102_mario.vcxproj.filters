@@ -118,6 +118,9 @@
     <ClCompile Include="BoomerangBrother.cpp">
       <Filter>Object\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -255,6 +258,10 @@
     <ClInclude Include="BoomerangBrother.h">
       <Filter>Object\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -300,6 +307,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="boomerang.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="HUD.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
