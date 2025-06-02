@@ -14,7 +14,7 @@ piranhaplant.txt
 bulllet.txt
 point.txt
 dropbrick.txt
-
+HUD.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -135,9 +135,9 @@ dropbrick.txt
 6	1500	485	80005	#Black
 
 # MARIO
-0	2324	-150
+0	10	-100
 17	1700	-30
-	
+		
 
 #Goomba
 2	175	100	20100
@@ -288,4 +288,4 @@ dropbrick.txt
 1	1463	-116	1	2	16	16
 1	1526	132	1	2	16	16
 
-
+19	100	100

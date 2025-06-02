@@ -29,7 +29,7 @@
       <Filter>Object\Background</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Core\Game</Filter>
@@ -47,7 +47,7 @@
       <Filter>Object\Background</Filter>
     </ClCompile>
     <ClCompile Include="GreenPiranhaPlant.cpp">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClCompile>
     <ClCompile Include="FlyingKoopas.cpp">
       <Filter>Object\Enemies\Koopas</Filter>
@@ -71,7 +71,7 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>Object\Goomba</Filter>
+      <Filter>Object\Enemies\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="JumpingKoopas.cpp">
       <Filter>Object\Enemies\Koopas</Filter>
@@ -83,7 +83,7 @@
       <Filter>Object\Mario</Filter>
     </ClCompile>
     <ClCompile Include="PiranhaPlant.cpp">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClCompile>
     <ClCompile Include="PipeTeleport.cpp">
       <Filter>Object\Background</Filter>
@@ -92,7 +92,7 @@
       <Filter>Object\Background</Filter>
     </ClCompile>
     <ClCompile Include="RedGoomba.cpp">
-      <Filter>Object\Goomba</Filter>
+      <Filter>Object\Enemies\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Core\Scene</Filter>
@@ -123,9 +123,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Boomerang.h">
-      <Filter>Object\Mario\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Core\Animation</Filter>
     </ClInclude>
@@ -157,7 +154,7 @@
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Core\Game</Filter>
@@ -175,7 +172,7 @@
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="GreenPiranhaPlant.h">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClInclude>
     <ClInclude Include="FlyingKoopas.h">
       <Filter>Object\Enemies\Koopas</Filter>
@@ -202,7 +199,7 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
-      <Filter>Object\Goomba</Filter>
+      <Filter>Object\Enemies\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="JumpingKoopas.h">
       <Filter>Object\Enemies\Koopas</Filter>
@@ -217,7 +214,7 @@
       <Filter>Object\Mario</Filter>
     </ClInclude>
     <ClInclude Include="PiranhaPlant.h">
-      <Filter>Object\Background\Piranhaplants</Filter>
+      <Filter>Object\Enemies\Piranhaplants</Filter>
     </ClInclude>
     <ClInclude Include="PipeTeleport.h">
       <Filter>Object\Background</Filter>
@@ -226,7 +223,7 @@
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="RedGoomba.h">
-      <Filter>Object\Goomba</Filter>
+      <Filter>Object\Enemies\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Core\Scene</Filter>
@@ -261,52 +258,55 @@
     <ClInclude Include="AssetIDs.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Object\Enemies\Boomerang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="boomerang.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="brick.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="bulllet.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="coin.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="dropbrick.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="goomba.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="HUD.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="land1.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="mario.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="mario-sample.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="scene02.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="redgoomba.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="piranhaplant.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
     <Text Include="turtle.txt">
-      <Filter>Object\Mario\Data</Filter>
+      <Filter>Data</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -340,17 +340,17 @@
     <Filter Include="Object\Mario">
       <UniqueIdentifier>{f823657e-2f52-4e6e-a973-90e7e8399023}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Goomba">
-      <UniqueIdentifier>{860c13a3-5702-44b1-8ca0-2b21b87d4210}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Background\Piranhaplants">
-      <UniqueIdentifier>{fc5ac431-b0e9-4d23-862b-5b53e03ef6a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Mario\Data">
-      <UniqueIdentifier>{4f9aa268-9dd6-4829-95bf-6b1db49f838f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{6920ab51-37c8-43bc-8aa7-429bcaf02e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{4f9aa268-9dd6-4829-95bf-6b1db49f838f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemies\Goomba">
+      <UniqueIdentifier>{860c13a3-5702-44b1-8ca0-2b21b87d4210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemies\Piranhaplants">
+      <UniqueIdentifier>{fc5ac431-b0e9-4d23-862b-5b53e03ef6a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
