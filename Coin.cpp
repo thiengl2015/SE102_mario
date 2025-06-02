@@ -1,5 +1,5 @@
 #include "Coin.h"
-
+#include "HUD.h"
 void CCoin::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -7,6 +7,12 @@ void CCoin::Render()
 
 	//RenderBoundingBox();
 }
+
+void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+
+}
+
 
 void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 {

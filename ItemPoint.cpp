@@ -1,21 +1,38 @@
 #include "ItemPoint.h"
 #include "Sprites.h"
+#include "HUD.h"
 
-CItemPoint::CItemPoint(float x, float y, int spriteId) : CGameObject(x, y)
+CItemPoint::CItemPoint(float x, float y, int spriteId, int value) : CGameObject(x, y)
 {
     this->spriteId = spriteId;
+	this->value = value;
     spawn_time = GetTickCount64();
 }
 
 void CItemPoint::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    if (GetTickCount64() - spawn_time > ITEM_POINT_LIFETIME)
+    y -= 0.1f * dt;
+
+    if (!hasAddedScore)
     {
-        this->Delete();
-        return;
+        CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+        if (scene)
+        {
+            for (auto obj : scene->GetObjects())
+            {
+                CHud* hud = dynamic_cast<CHud*>(obj);
+                if (hud)
+                {
+                    hud->AddScore(value);
+                    hasAddedScore = true;
+                    break;
+                }
+            }
+        }
     }
 
-    y -= 0.1f * dt;
+    if (GetTickCount64() - spawn_time > ITEM_POINT_LIFETIME)
+        this->Delete();
 }
 
 void CItemPoint::Render()

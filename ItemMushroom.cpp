@@ -12,7 +12,7 @@ CItemMushroom::CItemMushroom(float x, float y, int spriteId)
 {
     this->spriteId = spriteId;
     this->startY = y;
-    this->pointSpriteId = MUSHROOM_POINT_ID;
+    this->pointSpriteId = ID_SPRITE_ITEM_POINT_1000;
     SetState(MUSHROOM_STATE_ON_RISE);
 }
 
@@ -68,7 +68,7 @@ void CItemMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
     if (dynamic_cast<CMario*>(e->obj)) {
         CMario* mario = dynamic_cast<CMario*>(e->obj);
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId));
+        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId, 1000));
 
         if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
             mario->StartTransforming(MARIO_LEVEL_BIG);

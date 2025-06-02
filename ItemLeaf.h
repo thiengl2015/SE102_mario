@@ -15,8 +15,6 @@
 #define LEAF_STATE_SWAY 300
 #define LEAF_STATE_FULL 400
 
-#define LEAF_POINT_ID 21000
-
 class CItemLeaf : public CGameObject
 {
 protected:
@@ -29,7 +27,7 @@ protected:
     int pointSpriteId;
 	int spriteId;
     bool isCollected = false; 
-
+    int value;
 public:
     CItemLeaf(float x, float y, int spriteId);
 
@@ -41,4 +39,5 @@ public:
     int IsBlocking() override { return 0; }
     int IsCollidable() override { return true; }
     virtual void SetState(int state);
+    int GetValue() const { return value; }
 };

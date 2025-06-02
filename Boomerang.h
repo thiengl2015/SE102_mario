@@ -27,4 +27,6 @@ public:
     int IsCollidable() override { return 1; }
     int IsBlocking() override { return 0; }
     void OnCollisionWith(LPCOLLISIONEVENT e);
+	float GetX() { return x; } 
+
 };

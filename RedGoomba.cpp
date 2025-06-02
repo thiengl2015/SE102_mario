@@ -143,7 +143,7 @@ void CRedGoomba::SetState(int state)
             hasSpawnedWingedPoint = true;
             auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
             if (scene)
-                scene->AddObject(new CItemPoint(x, y, pointIdWinged));
+                scene->AddObject(new CItemPoint(x, y, pointIdWinged, 400));
         }
         break;
 
@@ -159,7 +159,7 @@ void CRedGoomba::SetState(int state)
             hasSpawnedWalkingPoint = true;
             auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
             if (scene)
-                scene->AddObject(new CItemPoint(x, y, pointIdWalking));
+                scene->AddObject(new CItemPoint(x, y, pointIdWalking, 800));
         }
         break;
     }

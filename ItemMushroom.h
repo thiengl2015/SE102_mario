@@ -13,7 +13,6 @@
 #define MUSHROOM_STATE_ON_RISE 200
 #define MUSHROOM_STATE_FULL 300
 
-#define MUSHROOM_POINT_ID 21000
 
 class CItemMushroom : public CGameObject
 {

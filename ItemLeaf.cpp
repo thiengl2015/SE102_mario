@@ -9,7 +9,7 @@ CItemLeaf::CItemLeaf(float x, float y, int spriteId)
     this->spriteId = spriteId;
     startX = x;
     startY = y;
-	this->pointSpriteId = LEAF_POINT_ID;
+    this->pointSpriteId = ID_SPRITE_ITEM_POINT_1000;
     SetState(LEAF_STATE_ON_RISE);
 }
 
@@ -56,7 +56,7 @@ void CItemLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
     if (dynamic_cast<CMario*>(e->obj)) {
         CMario* mario = dynamic_cast<CMario*>(e->obj);
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId));
+        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId, 1000));
 
         if (mario->GetLevel() == MARIO_LEVEL_BIG) {
             mario->StartTransforming(MARIO_LEVEL_RACCOON);

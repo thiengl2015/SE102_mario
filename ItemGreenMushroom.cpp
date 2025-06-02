@@ -17,7 +17,7 @@ void CItemGreenMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 
     if (dynamic_cast<CMario*>(e->obj)) {
         CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId)); 
+        scene->AddObject(new CItemPoint(x, y - 10, pointSpriteId, 1000)); 
         this->Delete(); 
     }
 }

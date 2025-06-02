@@ -134,7 +134,7 @@ void CGoomba::SetState(int state)
 			CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
 			if (scene)
 			{
-				scene->AddObject(new CItemPoint(x, y, pointSpriteId));
+				scene->AddObject(new CItemPoint(x, y, pointSpriteId, 100));
 			}
 		}
 		break;

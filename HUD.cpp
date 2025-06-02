@@ -16,8 +16,6 @@ void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     if (mario)
     {
-        coin = 99;// Cập nhật số xu Mario có
-        score = 1000; // Cập nhật điểm số
         time = 111; // Cập nhật thời gian còn lại
         itemBox[0] = 1;
         itemBox[1] = 1;

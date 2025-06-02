@@ -6,6 +6,7 @@
 #include "turle.h"
 #include "debug.h"
 #include "MarioTail.h"
+#include "AssetIDs.h"
 
 #define MARIO_WALKING_SPEED		0.08f
 #define MARIO_RUNNING_SPEED		0.18f
