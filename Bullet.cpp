@@ -66,8 +66,6 @@ void CBullet::OnCollisionWith(LPCOLLISIONEVENT e)
         {
             if (IsExist())
             {
-                DebugOut(L">>> Mario bị bắn trúng bởi đạn! >>>\n");
-
                 mario->OnAttacked();
 
                 isExist = false;

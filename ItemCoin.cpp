@@ -5,7 +5,7 @@
 
 CItemCoin::CItemCoin(float x, float y) : CGameObject(x, y)
 {
-    this->pointSpriteId = COIN_POINT_ID;
+    this->pointSpriteId = ID_SPRITE_ITEM_POINT_100;
     this->startY = y;
     isRising = true;
     isFalling = false;
@@ -30,7 +30,7 @@ void CItemCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         {
             float pointY = startY - RISE_DISTANCE + FALL_DISTANCE;
             CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-            scene->AddObject(new CItemPoint(x, pointY, pointSpriteId));
+            scene->AddObject(new CItemPoint(x, pointY, pointSpriteId, 100));
 
             this->Delete();
             return;

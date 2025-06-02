@@ -22,6 +22,7 @@
 #include "FlyingKoopas.h"
 #include "DropBrick.h"
 #include "BoomerangBrother.h"
+#include "HUD.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -243,7 +244,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CItemLeaf*>(e->obj))
 	{
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-		scene->AddObject(new CItemPoint(x, y - 10, LEAF_POINT_ID));
+		scene->AddObject(new CItemPoint(x, y - 10, ID_SPRITE_ITEM_POINT_1000, 1000));
 
 		if (level == MARIO_LEVEL_BIG)
 			StartTransforming(MARIO_LEVEL_RACCOON);
@@ -278,7 +279,7 @@ void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-		scene->AddObject(new CItemPoint(bb->GetX(), bb->GetY() - 10, 21000));
+		scene->AddObject(new CItemPoint(bb->GetX(), bb->GetY() - 10, ID_SPRITE_ITEM_POINT_1000, 1000));
 	}
 	else
 		OnAttacked();
@@ -308,9 +309,26 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
-	coin++;
+	CCoin* coin = dynamic_cast<CCoin*>(e->obj);
+	if (!coin) return;
+
+	CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+	if (!scene) return;
+
+	for (auto obj : scene->GetObjects())
+	{
+		CHud* hud = dynamic_cast<CHud*>(obj);
+		if (hud)
+		{
+			hud->AddScore(100);                  
+			hud->SetCoin(hud->GetCoin() + 1);   
+			break;
+		}
+	}
+
+	coin->Delete(); // Xóa coin sau khi ăn
 }
+
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {

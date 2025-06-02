@@ -29,14 +29,15 @@ void CBoomerangBrother::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
     switch (step) {
     case 0:
-        if (x < startX - 48) {
-            direction = 1;
+        if (x < startX - walkRange) {
+            vx = BB_WALK_SPEED;
         }
-        else if (x > startX + 48) {
-            direction = -1;
+        else if (x > startX + walkRange) {
+            vx = -BB_WALK_SPEED;
         }
 
-        vx = direction * BB_WALK_SPEED;
+        direction = (mario->GetX() > x) ? 1 : -1;
+
         isHolding = true;
 
         if (GetTickCount64() - lastThrow > BB_THROW_INTERVAL) {
@@ -51,17 +52,37 @@ void CBoomerangBrother::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
             CBoomerang* b = new CBoomerang(x, y, direction);
             ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->AddObject(b);
             boomerangs.push_back(b);
-            isHolding = false;
             lastThrow = GetTickCount64();
             step = 2;
         }
         break;
     case 2:
+        if (x < startX - walkRange) {
+            vx = BB_WALK_SPEED;
+        }
+        else if (x > startX + walkRange) {
+            vx = -BB_WALK_SPEED;
+        }
+        else {
+            if (vx == 0)
+                vx = direction * BB_WALK_SPEED;
+        }
+
+        direction = (mario->GetX() > x) ? 1 : -1;
+
         if (GetTickCount64() - lastThrow > 500) {
             step = 0;
         }
         break;
     }
+    bool allBoomerangsFar = true;
+    for (CBoomerang* b : boomerangs) {
+        if (!b->IsDeleted() && abs(b->GetX() - x) < 10.0f) {
+            allBoomerangsFar = false;
+            break;
+        }
+    }
+    isHolding = !allBoomerangsFar;
 
     CCollision::GetInstance()->Process(this, dt, coObjects);
     isOnPlatform = false;
@@ -80,7 +101,8 @@ void CBoomerangBrother::Render() {
     }
 
     for (CBoomerang* b : boomerangs) {
-        if (!b->IsDeleted()) b->Render();
+        if (b && !b->IsDeleted())
+            b->Render();
     }
 
     CAnimations::GetInstance()->Get(ani)->Render(x, y);
@@ -109,7 +131,7 @@ void CBoomerangBrother::OnCollisionWith(LPCOLLISIONEVENT e) {
         if (mario && mario->GetUntouchable() == 0) {
             mario->SetVY(-0.4f);
             CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-            scene->AddObject(new CItemPoint(x, y - 10, 21000));
+            scene->AddObject(new CItemPoint(x, y - 10, 21000, 1000));
             this->SetState(BB_STATE_FLIPPED);
         }
     }

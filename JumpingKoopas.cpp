@@ -165,7 +165,7 @@ void CJumpingKoopas::SetState(int state)
             hasSpawnedPointJump = true;
             auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
             if (scene)
-                scene->AddObject(new CItemPoint(x, y, pointIdJump));
+                scene->AddObject(new CItemPoint(x, y, pointIdJump, 100));
         }
         break;
 
@@ -177,7 +177,7 @@ void CJumpingKoopas::SetState(int state)
             hasSpawnedPointWalk = true;
             auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
             if (scene)
-                scene->AddObject(new CItemPoint(x, y, pointIdWalk));
+                scene->AddObject(new CItemPoint(x, y, pointIdWalk, 200));
         }
         break;
 
@@ -188,7 +188,7 @@ void CJumpingKoopas::SetState(int state)
             hasSpawnedPointKick = true;
             auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
             if (scene)
-                scene->AddObject(new CItemPoint(x, y, pointIdKick));
+                scene->AddObject(new CItemPoint(x, y, pointIdKick, 400));
         }
         break;
 

@@ -12,11 +12,14 @@ class CItemPoint : public CGameObject
 {
     DWORD spawn_time;
     int spriteId;
+    int value;
 public:
-    CItemPoint(float x, float y, int spriteId);
+    CItemPoint(float x, float y, int spriteId, int value);
 
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override;
     void Render() override;
     void GetBoundingBox(float& l, float& t, float& r, float& b) override;
     int GetType() override { return TYPE_ITEM_POINT; }
+    int GetValue() const { return value; }
+    bool hasAddedScore = false;
 };

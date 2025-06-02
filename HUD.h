@@ -57,4 +57,6 @@ public:
 		right = x + 100; // Width of HUD
 		bottom = y + 50; // Height of HUD
 	}
+	void AddScore(int s) { score += s; }
+	int GetCoin() const { return coin; }
 };

@@ -190,7 +190,7 @@ void CTurtle::SetState(int state)
                 CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
                 if (scene)
                 {
-                    scene->AddObject(new CItemPoint(x, y, pointIdStomp));
+                    scene->AddObject(new CItemPoint(x, y, pointIdStomp, 200));
                 }
             }
         }
@@ -235,7 +235,7 @@ void CTurtle::KickShell(int dir)
             CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
             if (scene)
             {
-                scene->AddObject(new CItemPoint(x, y, pointIdKick));
+                scene->AddObject(new CItemPoint(x, y, pointIdKick, 400));
             }
         }
     }
