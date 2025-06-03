@@ -7,7 +7,8 @@
 #include "JumpingKoopas.h"
 
 
-CFlyingKoopas::CFlyingKoopas(float x, float y) : CGameObject(x, y)
+CFlyingKoopas::CFlyingKoopas(float x, float y, int pointFly, int pointWalk, int pointKick)
+    : CGameObject(x, y)
 {
     ax = 0;
     ay = FKOOPAS_GRAVITY;
@@ -17,8 +18,13 @@ CFlyingKoopas::CFlyingKoopas(float x, float y) : CGameObject(x, y)
     holder = nullptr;
     rootY = y;
 
+    this->pointIdFly = pointFly;
+    this->pointIdWalk = pointWalk;
+    this->pointIdKick = pointKick;
+
     SetState(FKOOPAS_STATE_FLYING);
 }
+
 
 void CFlyingKoopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -118,23 +124,50 @@ void CFlyingKoopas::SetState(int state)
     {
     case FKOOPAS_STATE_FLYING:
         vy = FKOOPAS_FLY_SPEED;
+        if (!hasSpawnedPointFly)
+        {
+            hasSpawnedPointFly = true;
+            auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            if (scene)
+                scene->AddObject(new CItemPoint(x, y, pointIdFly, 100));
+        }
         break;
+
     case FKOOPAS_STATE_WALKING:
         vx = walkingDirection * FKOOPAS_WALKING_SPEED;
+        if (!hasSpawnedPointWalk)
+        {
+            hasSpawnedPointWalk = true;
+            auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            if (scene)
+                scene->AddObject(new CItemPoint(x, y, pointIdWalk, 200));
+        }
         break;
+
     case FKOOPAS_STATE_SHELL:
         vx = 0;
         shell_start = GetTickCount64();
         break;
+
     case FKOOPAS_STATE_SHELL_MOVING:
         vx = walkingDirection * FKOOPAS_SHELL_SLIDE_SPEED;
+        if (!hasSpawnedPointKick)
+        {
+            hasSpawnedPointKick = true;
+            auto scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+            if (scene)
+                scene->AddObject(new CItemPoint(x, y, pointIdKick, 400));
+        }
         break;
+
     case FKOOPAS_STATE_HELD:
         vx = 0;
         break;
+
     case FKOOPAS_STATE_REVIVING:
         vx = walkingDirection * FKOOPAS_WALKING_SPEED;
         break;
+
     case FKOOPAS_STATE_DIE_FALL:
         vy = -0.5f;
         ay = FKOOPAS_GRAVITY;

@@ -24,6 +24,8 @@ protected:
 	void _ParseSection_OBJECTS(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
+	bool isFollowingMario = false;
+	float camIntroX = 0.0f;
 
 public:
 	CPlayScene(int id, LPCWSTR filePath);
