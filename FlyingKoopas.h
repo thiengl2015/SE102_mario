@@ -34,9 +34,13 @@ protected:
     float rootY;
 
     CMario* holder;
+    int pointIdFly, pointIdWalk, pointIdKick;
+    bool hasSpawnedPointFly = false;
+    bool hasSpawnedPointWalk = false;
+    bool hasSpawnedPointKick = false;
 
 public:
-    CFlyingKoopas(float x, float y);
+    CFlyingKoopas(float x, float y, int pointFly, int pointWalk, int pointKick);
 
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override;
     void Render() override;

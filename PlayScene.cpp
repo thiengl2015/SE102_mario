@@ -258,7 +258,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_FLYING_KOOPAS:
 	{
-		obj = new CFlyingKoopas(x, y);
+		if (tokens.size() < 6) return;
+
+		int pointFly = atoi(tokens[3].c_str());
+		int pointWalk = atoi(tokens[4].c_str());
+		int pointKick = atoi(tokens[5].c_str());
+
+		obj = new CFlyingKoopas(x, y, pointFly, pointWalk, pointKick);
 		break;
 	}
 
@@ -313,6 +319,17 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
 
+	wstring filePath(sceneFilePath);
+	if (filePath.find(L"scene02.txt") != wstring::npos)
+	{
+		isFollowingMario = false;
+		camIntroX = 0.0f;
+	}
+	else
+	{
+		isFollowingMario = true; 
+	}
+
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -346,76 +363,105 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
 
+	float camX, camY;
+	CGame::GetInstance()->GetCamPos(camX, camY);
+
+	float screenW = CGame::GetInstance()->GetBackBufferWidth();
+	float screenH = CGame::GetInstance()->GetBackBufferHeight();
+	float padding = 200.0f;
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
+		LPGAMEOBJECT obj = objects[i];
+
 		if (dynamic_cast<CMario*>(player) && ((CMario*)player)->IsTransforming())
 		{
-			if (objects[i] != player && objects[i]->GetType() != TYPE_ITEM_POINT)
+			if (obj != player && obj->GetType() != TYPE_ITEM_POINT)
 				continue;
 		}
 
+		float ox, oy;
+		obj->GetPosition(ox, oy);
 
-		objects[i]->Update(dt, &objects);
+		if (ox >= camX - padding && ox <= camX + screenW + padding)
+		{
+			obj->Update(dt, &objects);
+		}
 	}
 
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
-	float cx, cy;
-	player->GetPosition(cx, cy);
-
 	CGame* game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
+	float px, py;
+	player->GetPosition(px, py);
 
-	if (cx < 0) cx = 0;
-	else if (cx > MAX_CAM_X) cx = MAX_CAM_X;
+	float cx, cy;
+	float screenWidth = game->GetBackBufferWidth();
+	float screenHeight = game->GetBackBufferHeight();
 
-
-	float current_cx, current_cy;
-	game->GetCamPos(current_cx, current_cy);
-
-	if (((CMario*)player)->IsEnteringPipe())
+	// ======= SCENE 2: Intro camera scroll =========
+	if (id == 3 && !isFollowingMario)
 	{
-		cy = current_cy;
+		camIntroX += 0.05f * dt;
+
+		if (camIntroX >= 1700.0f)
+		{
+			isFollowingMario = true;
+			camIntroX = px - screenWidth / 2.0f;
+		}
+
+		game->SetCamPos(camIntroX, 0.0f);
 	}
 	else
 	{
-		if (cy > 200.0f)
+		cx = px - screenWidth / 2.0f;
+		if (cx < 0) cx = 0;
+		else if (cx > MAX_CAM_X) cx = MAX_CAM_X;
+
+		float current_cx, current_cy;
+		game->GetCamPos(current_cx, current_cy);
+
+		if (((CMario*)player)->IsEnteringPipe())
 		{
-			current_cy = 387.0f;
-		}
-		else if (cy < -150)
-		{
-			current_cy += (cy - current_cy) * 0.1f;
+			cy = current_cy;
 		}
 		else
 		{
-			current_cy += (0.0f - current_cy) * 0.1f;
+			cy = py - screenHeight / 2.0f;
+			if (cy > 200.0f)
+			{
+				current_cy = 387.0f;
+			}
+			else if (cy < -150)
+			{
+				current_cy += (cy - current_cy) * 0.1f;
+			}
+			else
+			{
+				current_cy += (0.0f - current_cy) * 0.1f;
+			}
+			cy = current_cy;
+		}
+
+		if (((CMario*)player)->IsDead())
+		{
+			game->SetCamPos(cx, MAX_CAM_Y);
+		}
+		else
+		{
+			game->SetCamPos(cx, cy);
 		}
 	}
 
-	if (((CMario*)player)->IsDead())
-	{	
-			current_cx = cx;
-			current_cy = MAX_CAM_Y;
-	}
-
-	game->SetCamPos(cx, current_cy);
-
-
-
 	PurgeDeletedObjects();
 }
+
 
 void CPlayScene::Render()
 {
