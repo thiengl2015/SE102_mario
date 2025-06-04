@@ -138,8 +138,10 @@
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockerWall.h" />
+    <ClInclude Include="BlueSwitch.h" />
     <ClInclude Include="Boomerang.h" />
     <ClInclude Include="BoomerangBrother.h" />
+    <ClInclude Include="BounceEffect.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
@@ -184,6 +186,7 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockerWall.cpp" />
+    <ClCompile Include="BlueSwitch.cpp" />
     <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="BoomerangBrother.cpp" />
     <ClCompile Include="Brick.cpp" />

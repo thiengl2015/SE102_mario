@@ -27,6 +27,8 @@ protected:
 	bool isFollowingMario = false;
 	float camIntroX = 0.0f;
 
+	ULONGLONG shake_start = 0;
+	bool isShaking = false;
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 
@@ -43,6 +45,10 @@ public:
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	vector<LPGAMEOBJECT>& GetObjects() { return objects; }
 
+	void StartCameraShake() {
+		shake_start = GetTickCount64();
+		isShaking = true;
+	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

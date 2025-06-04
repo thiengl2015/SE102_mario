@@ -23,6 +23,7 @@
 #include "DropBrick.h"
 #include "BoomerangBrother.h"
 #include "HUD.h"
+#include "BlueSwitch.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -225,10 +226,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPiranhaPlant(e);
 	else if (dynamic_cast<CFlyingKoopas*>(e->obj))
 		OnCollisionWithFlyingKoopas(e);  
+	else if (dynamic_cast<CSwitchBlock*>(e->obj))
+		e->obj->OnCollisionWith(e);
 	else if (dynamic_cast<CDropBrick*>(e->obj))
-	{
 			OnCollisionWithDropBrick(e);
-	}
 	else if (dynamic_cast<CBullet*>(e->obj))
 	{
 		if (untouchable == 0)
