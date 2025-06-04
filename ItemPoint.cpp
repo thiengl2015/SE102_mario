@@ -37,7 +37,8 @@ void CItemPoint::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CItemPoint::Render()
 {
-    CSprites::GetInstance()->Get(spriteId)->Draw(x, y);
+    if (spriteId >= 0)
+        CSprites::GetInstance()->Get(spriteId)->Draw(x, y);
 }
 
 void CItemPoint::GetBoundingBox(float& l, float& t, float& r, float& b)

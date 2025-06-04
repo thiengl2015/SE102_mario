@@ -393,6 +393,12 @@ void CPlayScene::Update(DWORD dt)
 		{
 			obj->Update(dt, &objects);
 		}
+
+		CMario* mario = dynamic_cast<CMario*>(player);
+		if (mario && mario->tailAttack)
+		{
+			mario->tailAttack->Update(dt, &objects);
+		}
 	}
 
 	if (player == NULL) return;
@@ -447,6 +453,16 @@ void CPlayScene::Update(DWORD dt)
 				current_cy += (0.0f - current_cy) * 0.1f;
 			}
 			cy = current_cy;
+		}
+
+		if (isShaking) {
+			if (GetTickCount64() - shake_start <= 500) {
+				float shakeOffset = rand() % 8 - 4; 
+				cy += shakeOffset;
+			}
+			else {
+				isShaking = false;
+			}
 		}
 
 		if (((CMario*)player)->IsDead())
@@ -524,4 +540,3 @@ void CPlayScene::AddObject(LPGAMEOBJECT obj)
 {
 	objects.push_back(obj);
 }
-

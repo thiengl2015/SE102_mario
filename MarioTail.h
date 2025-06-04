@@ -3,8 +3,8 @@
 #include "Mario.h"
 
 #define TAIL_ATTACK_DURATION 300
-#define TAIL_WIDTH 14
-#define TAIL_HEIGHT 10
+#define TAIL_WIDTH 16
+#define TAIL_HEIGHT 12
 
 class CMario;
 
