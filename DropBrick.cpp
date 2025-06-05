@@ -10,6 +10,7 @@ CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y)
 	vx = 0.0f;
 	vy = 0.0f; 
 	isActivated = false;
+	isFalling = false;
 	activationRange = 150.0f; // Distance within which the brick activates
 }
 
@@ -20,16 +21,36 @@ void CDropBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
     float mx, my;
     mario->GetPosition(mx, my);
+
+    // Khi Mario đến gần => bắt đầu di chuyển ngang
     if (!isActivated && abs(mx - x) <= activationRange)
     {
         isActivated = true;
+        vx = -0.05f; // Bắt đầu đi qua trái
     }
-    if (!isActivated)
-        return;
-    vy += ay * dt;
 
-    // Cập nhật vị trí
-    x += -0.05f * dt;
+    // Nếu đã kích hoạt và Mario đứng lên => bắt đầu rơi
+    if (isActivated && !isFalling)
+    {
+        float ml, mt, mr, mb;
+        mario->GetBoundingBox(ml, mt, mr, mb);
+        float bl, bt, br, bb;
+        this->GetBoundingBox(bl, bt, br, bb);
+
+        bool isOnTop = mr > bl && ml < br && abs(mb - bt) <= 1.0f && mario->IsOnPlatform();
+        if (isOnTop)
+        {
+            isFalling = true;
+            ay = 0.00025f;
+            vx = 0.0f; // Dừng đi ngang
+        }
+    }
+
+    // Cập nhật vận tốc và vị trí
+    if (isFalling)
+        vy += ay * dt;
+
+    x += vx * dt;
     y += vy * dt;
 }
 

@@ -262,13 +262,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 {
-	CDropBrick* dropBrick = dynamic_cast<CDropBrick*>(e->obj);
-
-	if (e->ny < 0)
-	{
-		dropBrick->setVx(0.0f);
-		dropBrick->setAy(0.00025f);
-	}
 }
 void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)
 {

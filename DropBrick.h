@@ -21,8 +21,15 @@ protected:
     bool isActivated = false;
     float activationRange = 150.0f;
     float ay;
+    float ax;
+    bool isFalling = false;
 public:
     CDropBrick(float x, float y);
 	void setAy(float ay) { this->ay = ay; }
     void setVx(float vx) { this->vx = vx; }
+	void setAx(float ax) { this->ax = ax; }
+	float getAy() { return ay; }
+	float getVx() { return vx; }
+	float getAx() { return ax; }
+	float getVy() { return vy; }
 };
