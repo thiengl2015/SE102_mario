@@ -83,19 +83,15 @@ void CGreenPiranhaPlant::SetState(int state)
 	{
 		fire_start = GetTickCount();
 	}
-    else if (state == GREEN_PIRANHA_PLANT_STATE_DIE)
-    {
-        die_start = GetTickCount64();
-        vx = 0;
-        vy = 0;
-
-        if (CGame::GetInstance()->GetCurrentScene() != nullptr)
-        {
-            CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
-            if (scene)
-            {
-                scene->AddObject(new CItemPoint(x, y, pointSpriteId, 100));
-            }
-        }
-    }
+}
+void CGreenPiranhaPlant::isTailHit()
+{
+	if (state != GREEN_PIRANHA_PLANT_STATE_DIE)
+	{
+		die_start = GetTickCount64();
+		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+		CItemPoint* itemPoint = new CItemPoint(x, y,pointSpriteId, 100);
+		scene->AddObject(itemPoint);
+        SetState(GREEN_PIRANHA_PLANT_STATE_DIE);
+	}
 }

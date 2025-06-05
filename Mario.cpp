@@ -267,7 +267,7 @@ void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 	if (e->ny < 0)
 	{
 		dropBrick->setVx(0.0f);
-		dropBrick->setAy(0.0001f);
+		dropBrick->setAy(0.00025f);
 	}
 }
 void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)

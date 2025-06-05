@@ -117,7 +117,7 @@ void CMarioTail::OnCollisionWith(LPCOLLISIONEVENT e)
     {
         if (pp && pp->GetState() != PIRANHA_PLANT_STATE_DIE)
         {
-            pp->SetState(PIRANHA_PLANT_STATE_DIE);
+			pp->isTailHit();
             DebugOut(L">>> Tail hit Piranha Plant\n");
             StartUntouchable();
         }
@@ -126,7 +126,7 @@ void CMarioTail::OnCollisionWith(LPCOLLISIONEVENT e)
     {
 		if (gp && gp->GetState() != GREEN_PIRANHA_PLANT_STATE_DIE)
 		{
-			gp->SetState(GREEN_PIRANHA_PLANT_STATE_DIE);
+			gp->isTailHit();
 			DebugOut(L">>> Tail hit Green Piranha Plant\n");
 			StartUntouchable();
 		}

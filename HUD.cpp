@@ -16,14 +16,10 @@ void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
     LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
     CMario* mario = (CMario*)scene->GetPlayer();
 
-    if (mario)
-    {
-
         time = max(0, 300 - elapsed);  // Cập nhật thời gian còn lại
         itemBox[0] = 1;
         itemBox[1] = 1;
         itemBox[2] = 1;
-    }
 }
 
 void CHud::Render()

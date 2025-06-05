@@ -23,4 +23,5 @@ protected:
 public:
 	CGreenPiranhaPlant(float x, float y);
 	virtual void SetState(int state) override;
+	virtual void isTailHit();
 };

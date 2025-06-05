@@ -24,6 +24,7 @@
 #define PIRANHA_PLANT_MOVE_SPEED 0.015f
 #define PIRANHA_PLANT_IDLE_OFFSET 20 
 #define PIRANHA_PLANT_DETECTION_RANGE 150
+class Mario;
 
 class CPiranhaPlant : public CGameObject
 {
@@ -42,4 +43,5 @@ protected:
 public:
 	CPiranhaPlant(float x, float y);
 	virtual void SetState(int state);
+	void isTailHit();
 };
