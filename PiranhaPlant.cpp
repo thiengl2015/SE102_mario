@@ -3,11 +3,14 @@
 #include "Animations.h"
 #include "Mario.h"
 #include "PlayScene.h"
+#include "ItemPoint.h"
 
  
 
 CPiranhaPlant::CPiranhaPlant(float x, float y) : CGameObject(x, y)
 {
+	die_start = -1;
+    this->pointSpriteId = pointSpriteId;
     bullet = nullptr; 
     fire_start = 0; 
     initialY = y; 
@@ -87,6 +90,10 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             fireCooldown = 0; // Reset thời gian chờ
         }
     }
+    else if (state == PIRANHA_PLANT_STATE_DIE && GetTickCount64() - die_start > 500)
+    {
+        isDeleted = true; // Xóa cây Piranha sau 0.5s
+    }
 
 
     if (bullet) 
@@ -99,7 +106,7 @@ void CPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CPiranhaPlant::Render()
 {
     int aniId = 0;
-    if (this->x < 300)
+    if (this->x < 1000)
     {
          aniId = ID_ANI_PIRANHA_PLANT_LEFT;
 
@@ -185,6 +192,20 @@ void CPiranhaPlant::SetState(int state)
 
     case PIRANHA_PLANT_STATE_MOVE_DOWN:
         vy = PIRANHA_PLANT_MOVE_SPEED;
+        break;
+	case PIRANHA_PLANT_STATE_DIE:
+		die_start = GetTickCount64();
+        vx = 0;
+        vy = 0;
+
+        if (CGame::GetInstance()->GetCurrentScene() != nullptr)
+        {
+            CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+            if (scene)
+            {
+                scene->AddObject(new CItemPoint(x, y, pointSpriteId, 100));
+            }
+        }
         break;
     }
 }

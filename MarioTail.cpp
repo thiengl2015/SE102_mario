@@ -8,6 +8,8 @@
 #include "Brick.h"
 #include "Texture.h"
 #include "JumpingKoopas.h"
+#include "PiranhaPlant.h"
+#include "GreenPiranhaPlant.h"
 
 CMarioTail::CMarioTail(CMario* mario)
 {
@@ -110,5 +112,23 @@ void CMarioTail::OnCollisionWith(LPCOLLISIONEVENT e)
             DebugOut(L">>> Tail hit JumpingKoopas (walking → shell)\n");
             StartUntouchable();
         }
+    }
+    else if (auto pp = dynamic_cast<CPiranhaPlant*>(e->obj))
+    {
+        if (pp && pp->GetState() != PIRANHA_PLANT_STATE_DIE)
+        {
+            pp->SetState(PIRANHA_PLANT_STATE_DIE);
+            DebugOut(L">>> Tail hit Piranha Plant\n");
+            StartUntouchable();
+        }
+    }
+    else if (auto gp = dynamic_cast<CGreenPiranhaPlant*>(e->obj))
+    {
+		if (gp && gp->GetState() != GREEN_PIRANHA_PLANT_STATE_DIE)
+		{
+			gp->SetState(GREEN_PIRANHA_PLANT_STATE_DIE);
+			DebugOut(L">>> Tail hit Green Piranha Plant\n");
+			StartUntouchable();
+		}
     }
 }

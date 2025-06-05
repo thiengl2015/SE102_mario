@@ -6,15 +6,31 @@
 
 CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y)
 {
-    vx = -0.05f; 
-    vy = 0;
+    ay = 0.0f;
+	vx = 0.0f;
+	vy = 0.0f; 
+	isActivated = false;
+	activationRange = 150.0f; // Distance within which the brick activates
 }
 
 void CDropBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    x += vx * dt;
+    CMario* mario = (CMario*)((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+    if (!mario) return;
+
+    float mx, my;
+    mario->GetPosition(mx, my);
+    if (!isActivated && abs(mx - x) <= activationRange)
+    {
+        isActivated = true;
+    }
+    if (!isActivated)
+        return;
+    vy += ay * dt;
+
+    // Cập nhật vị trí
+    x += -0.05f * dt;
     y += vy * dt;
-    CGameObject::Update(dt, coObjects);
 }
 
 void CDropBrick::Render()

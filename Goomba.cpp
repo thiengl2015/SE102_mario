@@ -43,6 +43,14 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CTurtle*>(e->obj))
+	{
+		CTurtle* turle = dynamic_cast<CTurtle*>(e->obj);
+		if (turle->GetState() == TURTLE_STATE_SHELL_MOVING)
+		{
+			SetState(GOOMBA_STATE_DIE);	
+		}
+	}
 	if (!e->obj->IsBlocking()) return;
 
 	if (e->obj->GetType() == TYPE_BLOCKERWALL)

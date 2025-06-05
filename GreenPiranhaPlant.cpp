@@ -1,6 +1,7 @@
 #include "GreenPiranhaPlant.h"
 #include "PlayScene.h"
 #include "PiranhaPlant.h"
+#include "ItemPoint.h"
 
 CGreenPiranhaPlant::CGreenPiranhaPlant(float x, float y) : CPiranhaPlant(x, y)
 {
@@ -61,6 +62,13 @@ void CGreenPiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
             SetState(GREEN_PIRANHA_PLANT_STATE_MOVE_DOWN);
         }
 	}
+	else if (state == GREEN_PIRANHA_PLANT_STATE_DIE)
+	{
+		if (GetTickCount64() - die_start >= 500)
+		{
+			isDeleted = true;
+		}
+	}
 }
 void CGreenPiranhaPlant::Render()
 {
@@ -75,4 +83,19 @@ void CGreenPiranhaPlant::SetState(int state)
 	{
 		fire_start = GetTickCount();
 	}
+    else if (state == GREEN_PIRANHA_PLANT_STATE_DIE)
+    {
+        die_start = GetTickCount64();
+        vx = 0;
+        vy = 0;
+
+        if (CGame::GetInstance()->GetCurrentScene() != nullptr)
+        {
+            CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+            if (scene)
+            {
+                scene->AddObject(new CItemPoint(x, y, pointSpriteId, 100));
+            }
+        }
+    }
 }

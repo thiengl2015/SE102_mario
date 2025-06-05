@@ -17,8 +17,12 @@ protected:
     void GetBoundingBox(float& l, float& t, float& r, float& b) override;
     int IsBlocking();
     int IsCollidable() override { return 1; }
-    void setVx(float vx) { this->vx = vx; }
+
+    bool isActivated = false;
+    float activationRange = 150.0f;
+    float ay;
 public:
     CDropBrick(float x, float y);
-
+	void setAy(float ay) { this->ay = ay; }
+    void setVx(float vx) { this->vx = vx; }
 };

@@ -19,6 +19,7 @@
 #define PIRANHA_PLANT_STATE_FIRE 200
 #define PIRANHA_PLANT_STATE_MOVE_UP 300
 #define PIRANHA_PLANT_STATE_MOVE_DOWN 400
+#define PIRANHA_PLANT_STATE_DIE 500
 
 #define PIRANHA_PLANT_MOVE_SPEED 0.015f
 #define PIRANHA_PLANT_IDLE_OFFSET 20 
@@ -36,6 +37,8 @@ protected:
 	virtual void Render();
 	virtual int IsCollidable() { return 1; }
 	virtual int IsBlocking() { return 0; }
+	ULONGLONG die_start = 0;
+	int pointSpriteId;
 public:
 	CPiranhaPlant(float x, float y);
 	virtual void SetState(int state);

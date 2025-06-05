@@ -266,7 +266,8 @@ void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 
 	if (e->ny < 0)
 	{
-		dropBrick->SetSpeed(0, 0.3f);
+		dropBrick->setVx(0.0f);
+		dropBrick->setAy(0.0001f);
 	}
 }
 void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)
@@ -529,7 +530,7 @@ void CMario::OnCollisionWithPiranhaPlant(LPCOLLISIONEVENT e)
 {
 	CPiranhaPlant* piranha = dynamic_cast<CPiranhaPlant*>(e->obj);
 
-	if (untouchable == 0 && piranha->GetState() != PIRANHA_PLANT_STATE_IDLE)
+	if (untouchable == 0 && piranha->GetState() != PIRANHA_PLANT_STATE_IDLE && piranha->GetState() != PIRANHA_PLANT_STATE_DIE)
 	{
 		OnAttacked();
 	}
@@ -897,7 +898,7 @@ void CMario::SetState(int state)
 			{
 				isFlying = true;
 				flyStartTime = GetTickCount64();
-				flyingDuration = FLY_MAX_DURATION * powerMeter;
+				flyingDuration = (FLY_MAX_DURATION * powerMeter);
 			}
 
 		}
