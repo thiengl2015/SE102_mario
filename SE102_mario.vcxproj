@@ -178,6 +178,8 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="StretchableBlock.h" />
+    <ClInclude Include="StretchableBlockShadow.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="turle.h" />
@@ -224,6 +226,8 @@
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="StretchableBlock.cpp" />
+    <ClCompile Include="StretchableBlockShadow.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="turtle.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -243,6 +247,7 @@
     <Text Include="redgoomba.txt" />
     <Text Include="scene02.txt" />
     <Text Include="HUD.txt" />
+    <Text Include="standing.txt" />
     <Text Include="turtle.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

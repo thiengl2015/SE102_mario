@@ -272,7 +272,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_ITEMBOX:
 		obj = new CItemBox(x, y);
 		break;
+	case OBJECT_TYPE_STRETCHABLE_BLOCK:
+	{
+		if (tokens.size() < 13) return;
 
+		int cellSize = atoi(tokens[3].c_str());
+		int w = atoi(tokens[4].c_str());
+		int h = atoi(tokens[5].c_str());
+
+		int spriteIds[9];
+		for (int i = 0; i < 9; ++i) {
+			spriteIds[i] = atoi(tokens[6 + i].c_str());
+		}
+
+		obj = new CStretchableBlock(x, y, cellSize, w, h, spriteIds);
+		break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
