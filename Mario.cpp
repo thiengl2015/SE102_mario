@@ -24,6 +24,8 @@
 #include "BoomerangBrother.h"
 #include "HUD.h"
 #include "BlueSwitch.h"
+#include "ItemBox.h"
+#include "ItemBoxEffect.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -186,7 +188,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		vy = 0.012f; 
 	}
-
+	if (isAutoWalking) {
+		vx = MARIO_WALKING_SPEED;
+		ax = 0;
+		ay = MARIO_GRAVITY;
+		SetState(MARIO_STATE_WALKING_RIGHT);
+	}
 }
 
 
@@ -230,6 +237,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		e->obj->OnCollisionWith(e);
 	else if (dynamic_cast<CDropBrick*>(e->obj))
 			OnCollisionWithDropBrick(e);
+	else if (dynamic_cast<CItemBox*>(e->obj))
+		OnCollisionWithItemBox(e);
+
 	else if (dynamic_cast<CBullet*>(e->obj))
 	{
 		if (untouchable == 0)
@@ -327,6 +337,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
+	SetAutoWalking(false); 
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
@@ -1121,4 +1132,25 @@ void CMario::PickOrThrowKoopas()
 		heldKoopas = nullptr;
 		isHolding = false;
 	}
+}
+
+void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
+{
+	CItemBox* box = dynamic_cast<CItemBox*>(e->obj);
+	if (!box || box->IsCollected()) return;
+
+	DebugOut(L"[Mario] Collected ItemBox at x=%.1f\n", box->getX());
+
+	int type = box->GetCurrentItemType(); 
+	box->SetCollected(true);
+
+	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
+
+	box->Delete();
+
+	SetAutoWalking(true);
+	vx = MARIO_WALKING_SPEED;
+	ax = 0;
+
 }

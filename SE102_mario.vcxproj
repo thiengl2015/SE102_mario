@@ -157,6 +157,8 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GreenPiranhaPlant.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="ItemBox.h" />
+    <ClInclude Include="ItemBoxEffect.h" />
     <ClInclude Include="ItemCoin.h" />
     <ClInclude Include="ItemLeaf.h" />
     <ClInclude Include="ItemMushroom.h" />
@@ -202,6 +204,8 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GreenPiranhaPlant.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="ItemBox.cpp" />
+    <ClCompile Include="ItemBoxEffect.cpp" />
     <ClCompile Include="ItemCoin.cpp" />
     <ClCompile Include="ItemLeaf.cpp" />
     <ClCompile Include="ItemMushroom.cpp" />
