@@ -292,9 +292,9 @@ public:
 
 	bool IsAutoWalking() const { return isAutoWalking; }
 	void SetAutoWalking(bool value) { isAutoWalking = value; }
+	int time;
+	ULONGLONG startTime;
 	void SetIsStickToPlatform(CGameObject* obj) { stickingObj = obj; }
 	bool IsStickToPlatform() const { return stickingObj != nullptr; }
 	void SetIsOnPlatform(bool value) { isOnPlatform = value; }
-	int time;
-	ULONGLONG startTime;
 };
