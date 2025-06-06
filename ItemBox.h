@@ -35,5 +35,4 @@ public:
 
 	float getX() { return x; }
 	float getY() { return y; }
-	int GetType() override { return 9999; }
 };

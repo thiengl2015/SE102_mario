@@ -28,6 +28,8 @@
 #include "ItemBoxEffect.h"
 #include "HUD.h"
 
+int CMario::savedLevel = MARIO_LEVEL_SMALL;
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
   DebugOut(L"Mario vx: %f\n", vx);
@@ -400,7 +402,8 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
-	SetAutoWalking(false); 
+	SetAutoWalking(false);
+	CMario::savedLevel = level;
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
