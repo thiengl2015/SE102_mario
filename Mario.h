@@ -212,7 +212,6 @@ protected:
 	ULONGLONG flyingDuration = 0;
 	bool isAutoWalking = false;
 	CGameObject* stickingObj = nullptr; 
-
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
@@ -297,4 +296,5 @@ public:
 	void SetIsStickToPlatform(CGameObject* obj) { stickingObj = obj; }
 	bool IsStickToPlatform() const { return stickingObj != nullptr; }
 	void SetIsOnPlatform(bool value) { isOnPlatform = value; }
+	static int savedLevel;
 };
