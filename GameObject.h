@@ -97,5 +97,5 @@ public:
 {
     return !(r1 < l2 || r2 < l1 || b1 < t2 || b2 < t1);
 }
-
+	float GetVy() { return vy; }
 };

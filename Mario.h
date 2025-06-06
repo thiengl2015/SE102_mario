@@ -211,6 +211,7 @@ protected:
 	float powerMeter = 0.0f;
 	ULONGLONG flyingDuration = 0;
 	bool isAutoWalking = false;
+	CGameObject* stickingObj = nullptr; 
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -291,6 +292,9 @@ public:
 
 	bool IsAutoWalking() const { return isAutoWalking; }
 	void SetAutoWalking(bool value) { isAutoWalking = value; }
+	void SetIsStickToPlatform(CGameObject* obj) { stickingObj = obj; }
+	bool IsStickToPlatform() const { return stickingObj != nullptr; }
+	void SetIsOnPlatform(bool value) { isOnPlatform = value; }
 	int time;
 	ULONGLONG startTime;
 };
