@@ -1,62 +1,67 @@
 ﻿#include "DropBrick.h"
-#include "Game.h"
 #include "PlayScene.h"
+#include "Game.h"
 #include "Mario.h"
-#include "Sprites.h"
+#include "Collision.h"
+#include "Animations.h"
 
-CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y)
+#define MARGIN_X 25.0f
+#define MARGIN_Y 25.0f
+
+CDropBrick::CDropBrick(float x, float y) : CGameObject(x, y) {}
+
+
+void CDropBrick::SetMario()
 {
-    ay = 0.0f;
-	vx = 0.0f;
-	vy = 0.0f; 
-	isActivated = false;
-	isFalling = false;
-	activationRange = 150.0f; // Distance within which the brick activates
+    CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+    if (scene)
+        mario = dynamic_cast<CMario*>(scene->GetPlayer());
 }
 
 void CDropBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    CMario* mario = (CMario*)((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-    if (!mario) return;
+    if (!mario) SetMario();
+    if (!mario || mario->IsDeleted()) return;
 
     float mx, my;
     mario->GetPosition(mx, my);
 
-    // Khi Mario đến gần => bắt đầu di chuyển ngang
-    if (!isActivated && abs(mx - x) <= activationRange)
-    {
+    if (!isActivated && abs(mx - x) <= activationRange) {
         isActivated = true;
-        vx = -0.05f; // Bắt đầu đi qua trái
+        vx = DROPBRICK_MOVE_VX;
     }
 
-    // Nếu đã kích hoạt và Mario đứng lên => bắt đầu rơi
-    if (isActivated && !isFalling)
-    {
-        float ml, mt, mr, mb;
-        mario->GetBoundingBox(ml, mt, mr, mb);
-        float bl, bt, br, bb;
-        this->GetBoundingBox(bl, bt, br, bb);
-
-        bool isOnTop = mr > bl && ml < br && abs(mb - bt) <= 1.0f && mario->IsOnPlatform();
-        if (isOnTop)
-        {
-            isFalling = true;
-            ay = 0.00025f;
-            vx = 0.0f; // Dừng đi ngang
-        }
+    if (isFalling) {
+        vy += DROPBRICK_GRAVITY * dt;
+        if (hasMario)
+            mario->SetIsStickToPlatform(this);
     }
-
-    // Cập nhật vận tốc và vị trí
-    if (isFalling)
-        vy += ay * dt;
 
     x += vx * dt;
     y += vy * dt;
+
+    CCollision::GetInstance()->Process(this, dt, coObjects);
+
+    float pl_left, pl_top, pl_right, pl_bottom;
+    GetBoundingBox(pl_left, pl_top, pl_right, pl_bottom);
+
+    bool outOfBounds =
+        mx < pl_left - MARGIN_X ||
+        mx > pl_right + MARGIN_X ||
+        my < pl_top - MARGIN_Y ||
+        my > pl_bottom + MARGIN_Y;
+
+    if (outOfBounds && hasMario) {
+        if (mario->IsStickToPlatform())
+            mario->SetIsStickToPlatform(nullptr);
+        hasMario = false;
+    }
 }
 
 void CDropBrick::Render()
 {
-	CAnimations::GetInstance()->Get(ANIMATION_DROPBRICK)->Render(x, y);
+    CAnimations::GetInstance()->Get(ANIMATION_DROPBRICK)->Render(x, y);
+    //RenderBoundingBox();
 }
 
 void CDropBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -66,10 +71,25 @@ void CDropBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
     r = l + DROPBRICK_BBOX_WIDTH;
     b = t + DROPBRICK_BBOX_HEIGHT;
 }
-int CDropBrick::IsBlocking()
+void CDropBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-    LPGAMEOBJECT mario = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-    if (dynamic_cast<CMario*>(mario))
-        return 1;
-    return 0;
+    if (dynamic_cast<CMario*>(e->obj)) {
+        OnCollisionWithMario(e);
+    }
 }
+
+void CDropBrick::OnCollisionWithMario(LPCOLLISIONEVENT e)
+{
+    if (!mario) SetMario();
+    if (!mario || mario->IsDeleted()) return;
+
+    if (e->ny > 0 && !isFalling) 
+    {
+        isFalling = true;
+        hasMario = true;
+        vx = 0;
+        vy = DROPBRICK_FALL_VY;
+        mario->SetIsStickToPlatform(this);
+    }
+}
+

@@ -194,6 +194,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		ay = MARIO_GRAVITY;
 		SetState(MARIO_STATE_WALKING_RIGHT);
 	}
+	if (stickingObj)
+	{
+		y += stickingObj->GetVy() * dt;
+
+		float ml, mt, mr, mb, bl, bt, br, bb;
+		GetBoundingBox(ml, mt, mr, mb);
+		stickingObj->GetBoundingBox(bl, bt, br, bb);
+
+		bool outOfBounds = mr < bl || ml > br || abs(mb - bt) > 1.0f;
+
+		if (outOfBounds)
+		{
+			stickingObj = nullptr;
+		}
+		else
+		{
+			isOnPlatform = true;
+		}
+	}
+
+
 }
 
 
@@ -272,7 +293,21 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithDropBrick(LPCOLLISIONEVENT e)
 {
+	if (e->ny > 0) {
+		CDropBrick* brick = dynamic_cast<CDropBrick*>(e->obj);
+		if (brick) {
+			brick->SetMario();
+			if (!brick->isFalling) {
+				brick->isFalling = true;
+				brick->hasMario = true;
+				vx = 0;
+				vy = DROPBRICK_FALL_VY;
+				SetIsStickToPlatform(brick);
+			}
+		}
+	}
 }
+
 void CMario::OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e)
 {
 	CBoomerangBrother* bb = dynamic_cast<CBoomerangBrother*>(e->obj);
