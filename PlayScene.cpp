@@ -412,18 +412,28 @@ void CPlayScene::Update(DWORD dt)
 	float screenHeight = game->GetBackBufferHeight();
 
 	// ======= SCENE 2: Intro camera scroll =========
-	if (id == 3 && !isFollowingMario)
+	if (id == 2 && !isFollowingMario)
 	{
-		camIntroX += 0.05f * dt;
+		camIntroX += 0.5f * dt;
 
-		if (camIntroX >= 1700.0f)
+		if (camIntroX >= 1685.0f)
 		{
-			isFollowingMario = true;
-			camIntroX = px - screenWidth / 2.0f;
+			camIntroX = 1685.0f;
 		}
 
 		game->SetCamPos(camIntroX, 0.0f);
+
+		float marioX, marioY;
+		player->GetPosition(marioX, marioY);
+
+		if (camIntroX >= 1685.0f && marioX >= 2000.0f)
+		{
+			isFollowingMario = true;
+		}
 	}
+
+
+
 	else
 	{
 		cx = px - screenWidth / 2.0f;
@@ -436,6 +446,7 @@ void CPlayScene::Update(DWORD dt)
 		if (((CMario*)player)->IsEnteringPipe())
 		{
 			cy = current_cy;
+			cx = current_cx;
 		}
 		else
 		{

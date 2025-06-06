@@ -29,6 +29,7 @@ protected:
 
 	ULONGLONG shake_start = 0;
 	bool isShaking = false;
+	bool shouldStartFollow = false;  
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 
