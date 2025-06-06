@@ -48,5 +48,5 @@ void CStretchableBlock::GetBoundingBox(float& l, float& t, float& r, float& b) {
     l = x - cellSize / 2.0f;
     t = y - cellSize / 2.0f - (nHeight - 1) * cellSize;
     r = l + nWidth * cellSize;
-    b = t + nHeight * cellSize;
+    b = t + nHeight /5;
 }
