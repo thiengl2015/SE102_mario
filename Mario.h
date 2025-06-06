@@ -197,6 +197,7 @@ protected:
 	void OnCollisionWithFlyingKoopas(LPCOLLISIONEVENT e);
 	void OnCollisionWithDropBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithBoomerangBrother(LPCOLLISIONEVENT e);
+	void OnCollisionWithItemBox(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -209,6 +210,7 @@ protected:
 	ULONGLONG lastFlapTime = 0;
 	float powerMeter = 0.0f;
 	ULONGLONG flyingDuration = 0;
+	bool isAutoWalking = false;
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -284,4 +286,7 @@ public:
 	ULONGLONG tail_attack_start = 0;
 	bool isTailAttacking = false;
 	CMarioTail* tailAttack = nullptr;
+
+	bool IsAutoWalking() const { return isAutoWalking; }
+	void SetAutoWalking(bool value) { isAutoWalking = value; }
 };

@@ -124,6 +124,12 @@
     <ClCompile Include="BlueSwitch.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="ItemBox.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBoxEffect.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -268,6 +274,12 @@
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="BounceEffect.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBox.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBoxEffect.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
   </ItemGroup>

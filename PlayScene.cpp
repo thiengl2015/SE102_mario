@@ -25,6 +25,7 @@
 #include "BoomerangBrother.h"
 #include "HUD.h"
 #include "SampleKeyEventHandler.h"
+#include "ItemBox.h"
 #define MAX_CAM_X 2610
 #define MAX_CAM_Y -2
 
@@ -210,6 +211,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
+		break;
 	}
 	case OBJECT_TYPE_HALF_SOLID_BLOCK:
 	{
@@ -267,6 +269,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CFlyingKoopas(x, y, pointFly, pointWalk, pointKick);
 		break;
 	}
+	case OBJECT_TYPE_ITEMBOX:
+		obj = new CItemBox(x, y);
+		break;
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
