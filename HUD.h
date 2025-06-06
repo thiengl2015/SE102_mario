@@ -65,4 +65,5 @@ public:
 		this->marioVx = marioVx;
 	}
 	float marioVx;
+	int GetItemBox(int i) { return itemBox[i]; }
 };

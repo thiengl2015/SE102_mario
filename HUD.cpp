@@ -48,9 +48,9 @@ void CHud::Render()
     float itemBoxY = hudY + 10;
     for (int i = 0; i < 3; i++)
     {
-        int itemSpriteId = ID_SPRITE_ITEM_BOX_4; 
-        if (itemBox[i] == 1) itemSpriteId = ID_SPRITE_ITEM_BOX_1; 
-        else if (itemBox[i] == 2) itemSpriteId = ID_SPRITE_ITEM_BOX_2; 
+        int itemSpriteId = ID_SPRITE_ITEM_BOX_1; 
+        if (itemBox[i] == 1) itemSpriteId = ID_SPRITE_ITEM_BOX_2; 
+        else if (itemBox[i] == 2) itemSpriteId = ID_SPRITE_ITEM_BOX_4; 
         else if (itemBox[i] == 3) itemSpriteId = ID_SPRITE_ITEM_BOX_3; 
 
         CSprites::GetInstance()->Get(itemSpriteId)->DrawStatic(itemBoxX - 50 + (i * 25), itemBoxY - 15);

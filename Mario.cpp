@@ -1209,7 +1209,14 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 	box->SetCollected(true);
 
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	for (auto obj : scene->GetObjects()) {
+		CHud* hud = dynamic_cast<CHud*>(obj);
+		if (hud) {
+			hud->SetItemBox(0, type); 
+		}
+	}
 	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
+
 
 	box->Delete();
 
