@@ -808,7 +808,36 @@ void CMario::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
+	if (isEnd)
+	{
+		CSprites::GetInstance()->Get(ID_SPRITE_COURSE)->DrawStatic(100, 40);
+		CSprites::GetInstance()->Get(ID_SPRITE_CLEAR)->DrawStatic(160, 40);
+		CSprites::GetInstance()->Get(ID_SPRITE_YOU)->DrawStatic(70, 55);
+		CSprites::GetInstance()->Get(ID_SPRITE_GOT)->DrawStatic(105, 55);
+		CSprites::GetInstance()->Get(ID_SPRITE_A)->DrawStatic(130, 55);
+		CSprites::GetInstance()->Get(ID_SPRITE_CARD)->DrawStatic(160, 55);
+		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+		
+		for (auto obj : scene->GetObjects())
+		{
+			CHud* hud = dynamic_cast<CHud*>(obj);
+			if (hud)
+			{
+				// Lấy vật phẩm từ ItemBox[1] của HUD
+				int type = hud->GetItemBox(1);
 
+				// Hiển thị sprite tương ứng với loại vật phẩm
+				int spriteId = (type == ITEM_TYPE_MUSHROOM) ? ID_SPRITE_ITEM_BOX_2:
+					(type == ITEM_TYPE_FLOWER) ? ID_SPRITE_ITEM_BOX_3 :
+					(type == ITEM_TYPE_STAR) ? ID_SPRITE_ITEM_BOX_1 :
+					ID_SPRITE_ITEM_BOX_4; 
+
+				CSprites::GetInstance()->Get(spriteId)->DrawStatic(200, 60);
+			}
+		}
+	}
+
+		
 	if (isEnteringPipe || isExitingPipe)
 		aniId = ID_ANI_MARIO_ENTER_PIPE;
 	else if (state == MARIO_STATE_DIE)
@@ -1215,6 +1244,7 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 			hud->SetItemBox(0, type); 
 		}
 	}
+	isEnd = true;
 	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
 
 
@@ -1223,5 +1253,6 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 	SetAutoWalking(true);
 	vx = MARIO_WALKING_SPEED;
 	ax = 0;
+	
 
 }

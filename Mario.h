@@ -297,4 +297,5 @@ public:
 	bool IsStickToPlatform() const { return stickingObj != nullptr; }
 	void SetIsOnPlatform(bool value) { isOnPlatform = value; }
 	static int savedLevel;
+	bool isEnd = false;
 };
