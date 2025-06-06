@@ -17,7 +17,7 @@ class CDropBrick : public CGameObject
 protected:
     CMario* mario = nullptr;
 
-    float activationRange = 150.0f;
+    float activationRange = 200.0f;
 
     float vx = 0, vy = 0;
 public:
