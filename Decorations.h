@@ -8,7 +8,7 @@ public:
         this->spriteId = spriteId;
     }
 
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override {} // không làm gì cả
+    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) override {}
 
     void Render() override {
         CSprites::GetInstance()->Get(spriteId)->Draw(x, y);

@@ -130,6 +130,12 @@
     <ClCompile Include="ItemBoxEffect.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="StretchableBlock.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="StretchableBlockShadow.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -282,6 +288,12 @@
     <ClInclude Include="ItemBoxEffect.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
+    <ClInclude Include="StretchableBlock.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="StretchableBlockShadow.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="1-1.txt">
@@ -327,6 +339,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="turtle.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="standing.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
