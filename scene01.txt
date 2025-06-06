@@ -1,10 +1,20 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-brick.txt
 coin.txt
+land1.txt
+brick.txt
 goomba.txt
-cloud.txt
+redgoomba.txt
+decorations.txt
+turtle.txt 
+standing.txt
+fullblock.txt
+piranhaplant.txt
+bulllet.txt
+point.txt
+dropbrick.txt
+HUD.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -52,5 +62,7 @@ cloud.txt
 
 #Platform
 5	120	90	16	16	0	20001	20001	20001	5
+5 	8	180	16	18	1000	51000	52000	53000	6
+19	100000	100000
 
 

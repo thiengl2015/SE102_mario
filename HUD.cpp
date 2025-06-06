@@ -4,22 +4,17 @@
 #include "Mario.h"
 #include "Sprites.h"
 
-CHud::CHud(float x, float y) : CGameObject(x, y), coin(0), score(0), time(300) // Thời gian mặc định là 300 giây
+CHud::CHud(float x, float y) : CGameObject(x, y), coin(0), score(0) // Thời gian mặc định là 300 giây
 {
     for (int i = 0; i < 3; i++) itemBox[i] = 0;
+    time = 300;
+    marioVx = 0;
 }
 
 void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    ULONGLONG now = GetTickCount64();
-    int elapsed = (int)((now - startTime) / 1000);
-    LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
-    CMario* mario = (CMario*)scene->GetPlayer();
-
-        time = max(0, 300 - elapsed);  // Cập nhật thời gian còn lại
-        itemBox[0] = 1;
-        itemBox[1] = 1;
-        itemBox[2] = 1;
+    CGameObject::Update(dt, coObjects);
+    CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CHud::Render()
@@ -61,5 +56,26 @@ void CHud::Render()
         CSprites::GetInstance()->Get(itemSpriteId)->DrawStatic(itemBoxX - 50 + (i * 25), itemBoxY - 15);
     }
 
-
+    for (int i = 0; i < 6; i++) 
+    {
+        if (marioVx == 0) 
+        {
+            CSprites::GetInstance()->Get(ID_SPRITE_ARRAW_BLACK)->DrawStatic(hudX - 20 + (i * 8.5), hudY - 10);
+        }
+        else if (abs(marioVx) >= ((i + 1) * 0.05f)) 
+        {
+            CSprites::GetInstance()->Get(ID_SPRITE_ARRAW_WHITE)->DrawStatic(hudX - 20 + (i * 8.5), hudY - 10);
+        }
+        else 
+        {
+            CSprites::GetInstance()->Get(ID_SPRITE_ARRAW_BLACK)->DrawStatic(hudX - 20 + (i * 8.5), hudY - 10);
+        }
+    }
+    if (marioVx == 0.3f)
+    {
+        CSprites::GetInstance()->Get(ID_SPRITE_POWER_WHITE)->DrawStatic(hudX - 20 + 7 * 8.1, hudY - 9.80);
+    }
+    else
+        CSprites::GetInstance()->Get(ID_SPRITE_POWER_BLACK)->DrawStatic(hudX - 20 + 7 * 8.1, hudY - 9.80);
 }
+

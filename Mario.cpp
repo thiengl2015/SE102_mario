@@ -26,9 +26,29 @@
 #include "BlueSwitch.h"
 #include "ItemBox.h"
 #include "ItemBoxEffect.h"
+#include "HUD.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+  DebugOut(L"Mario vx: %f\n", vx);
+	ULONGLONG now = GetTickCount64();
+	int elapsed = (int)((now - startTime) / 1000);
+	time = max(0, 300 - elapsed);
+	CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+	if (scene)
+	{
+		for (auto obj : scene->GetObjects())
+		{
+			CHud* hud = dynamic_cast<CHud*>(obj);
+			if (hud)
+			{
+				hud->SetTime(time);
+				hud->SetMarioVx(vx);
+			}
+		}
+	}
+
+
 	if (isTailAttacking)
 	{
 		if (isSitting && level == MARIO_LEVEL_RACCOON)
@@ -49,9 +69,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isTailAttacking = false;
 		}
 	}
-
+	if (state == MARIO_STATE_RUNNING_LEFT)
+	{
+		maxVx = vx + ax * dt / 5;
+	}
+	else if (state == MARIO_STATE_RUNNING_RIGHT)
+	{
+		maxVx = vx + ax * dt / 5;
+	}
 	vy += ay * dt;
 	vx += ax * dt;
+	if (abs(vx) > 0.3f) vx = nx * 0.3f;
 
 	if (level == MARIO_LEVEL_RACCOON)
 	{
@@ -864,13 +892,11 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
-		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
-		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
 		break;

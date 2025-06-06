@@ -25,7 +25,7 @@
 #define ID_SPRITE_ITEM_BOX_4 1000000015 
 
 #define ID_SPRITE_ARRAW_BLACK 1000000016
-#define ID_SPRITE_ARRAW_WHITE 1000000017
+#define ID_SPRITE_ARRAW_WHITE 1499999999
 
 #define ID_SPRITE_POWER_BLACK 1000000018
 #define ID_SPRITE_POWER_WHITE 1000000019
@@ -35,12 +35,13 @@
 class CHud : public CGameObject
 {
 protected:
+
 	int coin;
 	int	score;
 	int itemBox[3]; // 0: empty, 1: mushroom, 2: flower, 3: star
 	int type; // 0: HUD, 1: NUMBER, 2: ITEM_BOX, 3: BLACK
 	int time;
-	ULONGLONG startTime = GetTickCount64(); 
+	ULONGLONG startTime = GetTickCount64();
 public:
 	CHud(float x, float y);
 
@@ -59,4 +60,9 @@ public:
 	}
 	void AddScore(int s) { score += s; }
 	int GetCoin() const { return coin; }
+	void SetTime(int time) { this->time = time; }
+	void SetMarioVx(float marioVx) {
+		this->marioVx = marioVx;
+	}
+	float marioVx;
 };
