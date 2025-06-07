@@ -66,9 +66,15 @@ void CSwitchBlock::Activate() {
     isActivated = true;
 
     CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-    auto& objects = scene->GetObjects();
+    auto objectsCopy = scene->GetObjects();  // 🔁 tạo bản sao an toàn để duyệt
 
-    for (auto obj : objects) {
+    vector<CBrick*> bricksToDelete;
+
+    for (auto obj : objectsCopy) {
+        if (!obj) continue;
+        if ((uintptr_t)obj < 0x1000) continue;  // đề phòng địa chỉ sai
+        if (obj->IsDeleted()) continue;
+
         CBrick* brick = dynamic_cast<CBrick*>(obj);
         if (brick && brick->GetBrickType() == 0) {
             float bx, by;
@@ -78,9 +84,16 @@ void CSwitchBlock::Activate() {
 
             if (dx <= SWITCH_AOE_RANGE && dy <= SWITCH_AOE_RANGE) {
                 scene->AddObject(new CCoin(bx, by));
-                brick->Delete();
+                bricksToDelete.push_back(brick); // 💣 ghi nhận lại để xóa sau
             }
         }
     }
+
+    // ❌ KHÔNG xóa trong lúc duyệt vòng lặp gốc — xóa sau khi duyệt xong
+    for (auto brick : bricksToDelete) {
+        brick->Delete();
+    }
+
     scene->StartCameraShake();
 }
+

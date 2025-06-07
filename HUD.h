@@ -42,7 +42,7 @@ class CHud : public CGameObject
 protected:
 
 	int coin;
-	int	score;
+	static int score;
 	int itemBox[3]; // 0: empty, 1: mushroom, 2: flower, 3: star
 	int type; // 0: HUD, 1: NUMBER, 2: ITEM_BOX, 3: BLACK
 	int time;
@@ -55,6 +55,7 @@ public:
 
 	void SetCoin(int c) { coin = c; }
 	void SetScore(int s) { score = s; }
+	static int GetScoreStatic() { return score; } 
 	void SetItemBox(int index, int itemType) {
 		if (index >= 0 && index < 3) {
 			itemBox[index] = itemType;
