@@ -849,23 +849,47 @@ void CMario::Render()
 		CSprites::GetInstance()->Get(ID_SPRITE_CARD)->DrawStatic(160, 55);
 		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 		
-		for (auto obj : scene->GetObjects())
+		if (scene->GetId() == 5)
 		{
-			CHud* hud = dynamic_cast<CHud*>(obj);
-			if (hud)
+			for (auto obj : scene->GetObjects())
 			{
-				// Lấy vật phẩm từ ItemBox[1] của HUD
-				int type = hud->GetItemBox(1);
+				CHud* hud = dynamic_cast<CHud*>(obj);
+				if (hud)
+				{
+					// Lấy vật phẩm từ ItemBox[1] của HUD
+					int type = hud->GetItemBox(0);
 
-				// Hiển thị sprite tương ứng với loại vật phẩm
-				int spriteId = (type == ITEM_TYPE_MUSHROOM) ? ID_SPRITE_ITEM_BOX_2:
-					(type == ITEM_TYPE_FLOWER) ? ID_SPRITE_ITEM_BOX_3 :
-					(type == ITEM_TYPE_STAR) ? ID_SPRITE_ITEM_BOX_1 :
-					ID_SPRITE_ITEM_BOX_4; 
+					// Hiển thị sprite tương ứng với loại vật phẩm
+					int spriteId = (type == ITEM_TYPE_MUSHROOM) ? ID_SPRITE_ITEM_BOX_2 :
+						(type == ITEM_TYPE_FLOWER) ? ID_SPRITE_ITEM_BOX_3 :
+						(type == ITEM_TYPE_STAR) ? ID_SPRITE_ITEM_BOX_4 :
+						ID_SPRITE_ITEM_BOX_1;
 
-				CSprites::GetInstance()->Get(spriteId)->DrawStatic(200, 60);
+					CSprites::GetInstance()->Get(spriteId)->DrawStatic(200, 60);
+				}
 			}
 		}
+		if (scene->GetId() == 2)
+		{
+			for (auto obj : scene->GetObjects())
+			{
+				CHud* hud = dynamic_cast<CHud*>(obj);
+				if (hud)
+				{
+					// Lấy vật phẩm từ ItemBox[1] của HUD
+					int type = hud->GetItemBox(1);
+
+					// Hiển thị sprite tương ứng với loại vật phẩm
+					int spriteId = (type == ITEM_TYPE_MUSHROOM) ? ID_SPRITE_ITEM_BOX_2 :
+						(type == ITEM_TYPE_FLOWER) ? ID_SPRITE_ITEM_BOX_3 :
+						(type == ITEM_TYPE_STAR) ? ID_SPRITE_ITEM_BOX_4 :
+						ID_SPRITE_ITEM_BOX_1;
+
+					CSprites::GetInstance()->Get(spriteId)->DrawStatic(200, 60);
+				}
+			}
+		}
+
 	}
 
 		
@@ -1271,7 +1295,14 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 	for (auto obj : scene->GetObjects()) {
 		CHud* hud = dynamic_cast<CHud*>(obj);
 		if (hud) {
-			hud->SetItemBox(0, type); 
+			if (scene->GetId() == 5)
+			{
+				hud->SetItemBox(0, type);
+			}
+			if (scene->GetId() == 2)
+			{
+				hud->SetItemBox(1, type);
+			}
 			hud->setMarioLives(marioLives);
 			int bonusPoints = time * 50;
 			hud->AddScore(bonusPoints);

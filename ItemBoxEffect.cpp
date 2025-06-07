@@ -21,9 +21,9 @@ void CItemBoxEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 void CItemBoxEffect::Render() {
 	DebugOut(L"[ItemBoxEffect] Rendering type %d at x=%.1f y=%.1f\n", type, x, y);
 
-	int aniId = (type == ITEM_TYPE_MUSHROOM) ? 210010 :
+	int aniId = (type == ITEM_TYPE_MUSHROOM) ? 210008 :
 		(type == ITEM_TYPE_FLOWER) ? 210009 :
-		(type == ITEM_TYPE_STAR) ? 210008 : -1;
+		(type == ITEM_TYPE_STAR) ? 210010 : -1;
 
 	if (aniId != -1)
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
