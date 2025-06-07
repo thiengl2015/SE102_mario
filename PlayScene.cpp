@@ -26,6 +26,7 @@
 #include "HUD.h"
 #include "SampleKeyEventHandler.h"
 #include "ItemBox.h"
+#include "BrickN.h"
 #define MAX_CAM_X 2610
 #define MAX_CAM_Y -2
 
@@ -288,6 +289,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CStretchableBlock(x, y, cellSize, w, h, spriteIds);
 		break;
 	}
+	case OBJECT_TYPE_BRICKN:
+	{
+		if (tokens.size() < 5) {
+			return;
+		}
+
+		float w = (float)atof(tokens[3].c_str());
+		float h = (float)atof(tokens[4].c_str());
+
+		obj = new CBrickN(x, y, w, h);
+		break;
+	}
+
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -434,7 +448,7 @@ void CPlayScene::Update(DWORD dt)
 	// ======= SCENE 2: Intro camera scroll =========
 	if (id == 2 && !isFollowingMario)
 	{
-		camIntroX += 0.05f * dt;
+		camIntroX += 0.04f * dt;
 
 		if (camIntroX >= 1685.0f)
 		{

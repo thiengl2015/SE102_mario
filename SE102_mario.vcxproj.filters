@@ -136,6 +136,9 @@
     <ClCompile Include="StretchableBlockShadow.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="BrickN.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -292,6 +295,9 @@
       <Filter>Object\Background</Filter>
     </ClInclude>
     <ClInclude Include="StretchableBlockShadow.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickN.h">
       <Filter>Object\Background</Filter>
     </ClInclude>
   </ItemGroup>

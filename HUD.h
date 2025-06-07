@@ -55,7 +55,12 @@ public:
 
 	void SetCoin(int c) { coin = c; }
 	void SetScore(int s) { score = s; }
-	void SetItemBox(int index, int itemType) { if (index >= 0 && index < 3) itemBox[index] = itemType; }
+	void SetItemBox(int index, int itemType) {
+		if (index >= 0 && index < 3) {
+			itemBox[index] = itemType;
+			globalItemBox[index] = itemType;
+		}
+	}
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom) override
 	{
 		left = x;
@@ -71,4 +76,5 @@ public:
 	}
 	float marioVx;
 	int GetItemBox(int i) { return itemBox[i]; }
+	static int globalItemBox[3];
 };
