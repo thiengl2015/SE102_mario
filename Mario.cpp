@@ -27,6 +27,7 @@
 #include "ItemBox.h"
 #include "ItemBoxEffect.h"
 #include "HUD.h"
+#include "BrickN.h"
 
 int CMario::savedLevel = MARIO_LEVEL_SMALL;
 
@@ -86,9 +87,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (level == MARIO_LEVEL_RACCOON)
 	{
 		if (abs(vx) >= MARIO_RUNNING_SPEED * 0.9f && isOnPlatform)
+		{
 			powerMeter = min(powerMeter + POWERMETER_INCREASE * dt, POWERMETER_MAX);
+		}
 		else if (!isFlying)
-			powerMeter = max(powerMeter - POWERMETER_DECREASE * dt, 0.0f);
+		{
+			if (GetTickCount64() - lastPressATime > 300)
+				powerMeter = max(powerMeter - POWERMETER_DECREASE * dt, 0.0f);
+		}
+
 	}
 
 	if (isFlying && GetTickCount64() - flyStartTime > flyingDuration)
@@ -232,7 +239,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		GetBoundingBox(ml, mt, mr, mb);
 		stickingObj->GetBoundingBox(bl, bt, br, bb);
 
-		bool outOfBounds = mr < bl || ml > br || abs(mb - bt) > 1.0f;
+		bool outOfBounds = mr < bl || ml > br || abs(mb - bt) > 7.0f;
 
 		if (outOfBounds)
 		{
@@ -312,6 +319,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 	else if (dynamic_cast<CBrick*>(e->obj))
+		e->obj->OnCollisionWith(e);
+	else if (dynamic_cast<CBrickN*>(e->obj))
 		e->obj->OnCollisionWith(e);
 	else if (dynamic_cast<CItemMushroom*>(e->obj))
 	{
@@ -998,27 +1007,25 @@ void CMario::SetState(int state)
 
 		if (isOnPlatform)
 		{
-			if (abs(vx) == MARIO_RUNNING_SPEED)
-				vy = -MARIO_JUMP_RUN_SPEED_Y;
-			else
-				vy = -MARIO_JUMP_SPEED_Y;
+			float jumpSpeed = -MARIO_JUMP_SPEED_Y - (MARIO_JUMP_RUN_SPEED_Y - MARIO_JUMP_SPEED_Y) * powerMeter;
+			vy = jumpSpeed;
 
 			isOnPlatform = false;
 
-			if (level == MARIO_LEVEL_RACCOON && powerMeter > 0.1f)
+			if (level == MARIO_LEVEL_RACCOON && powerMeter > 0.05f)
 			{
 				isFlying = true;
 				flyStartTime = GetTickCount64();
 				flyingDuration = (FLY_MAX_DURATION * powerMeter);
 			}
-
 		}
 		else if (isFlying)
 		{
-			vy = FLAP_IMPULSE;                     
-			lastFlapTime = GetTickCount64();        
+			vy = FLAP_IMPULSE;
+			lastFlapTime = GetTickCount64();
 		}
 		break;
+
 	case MARIO_STATE_RELEASE_JUMP:
 		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
 		break;

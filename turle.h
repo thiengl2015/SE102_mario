@@ -23,7 +23,7 @@
 #define TURTLE_STATE_REVIVING 600 // Trạng thái rùa hồi sinh
 #define TURTLE_STATE_DIE_FALL 700
 
-#define TURTLE_REVIVE_TIMEOUT 5000 // Thời gian hồi sinh sau khi ở trạng thái vỏ
+#define TURTLE_REVIVE_TIMEOUT 10000 // Thời gian hồi sinh sau khi ở trạng thái vỏ
 #define TURTLE_SHELL_SLIDE_SPEED 0.2f
 class CMario; 
 class CTurtle : public CGameObject {
@@ -33,7 +33,6 @@ protected:
     bool isBeingHeld; // Kiểm tra xem rùa có bị Mario giữ hay không
     ULONGLONG shell_start; // Thời điểm bắt đầu trạng thái vỏ
 
-    virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom); // Xác định hitbox
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObject); // Cập nhật trạng thái mỗi frame
     virtual void Render(); // Vẽ rùa lên màn hình
     virtual int IsCollidable() { return 1; } // Kiểm tra có thể va chạm không
@@ -67,4 +66,7 @@ public:
     void SetVy(float vy) { this->vy = vy; }
 	void SetAy(float ay) { this->ay = ay; }
     void SetWalkingDirection(int dir) { walkingDirection = dir; }
+    virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom); // Xác định hitbox
+    bool isKnockbacked = false;
+    ULONGLONG knockback_start = 0;
 };

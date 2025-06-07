@@ -300,4 +300,5 @@ public:
 	bool isEnd = false;
 	ULONGLONG itemEffectStartTime = 0;
 	bool isWaitingItemEffect = false;
+	ULONGLONG lastPressATime = 0;
 };

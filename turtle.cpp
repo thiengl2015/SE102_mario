@@ -141,6 +141,11 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
         }
     }
 
+    if (isKnockbacked && GetTickCount64() - knockback_start > 500) {
+        vx = 0;
+        isKnockbacked = false;
+    }
+
     CGameObject::Update(dt, coObjects);
 
 

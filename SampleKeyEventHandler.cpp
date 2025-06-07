@@ -41,7 +41,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		{
 			mario->isTailAttacking = true;
 			mario->tail_attack_start = GetTickCount64();
-
+			mario->lastPressATime = GetTickCount64();
 			mario->tailAttack = new CMarioTail(mario);
 
 			CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
