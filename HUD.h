@@ -47,6 +47,7 @@ protected:
 	int type; // 0: HUD, 1: NUMBER, 2: ITEM_BOX, 3: BLACK
 	int time;
 	ULONGLONG startTime = GetTickCount64();
+	int marioLive =0;
 public:
 	CHud(float x, float y);
 
@@ -77,4 +78,5 @@ public:
 	float marioVx;
 	int GetItemBox(int i) { return itemBox[i]; }
 	static int globalItemBox[3];
+	void setMarioLives(int x) { marioLive = x; }
 };

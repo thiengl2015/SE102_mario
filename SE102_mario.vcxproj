@@ -154,6 +154,7 @@
     <ClInclude Include="FlyingKoopas.h" />
     <ClInclude Include="FullBlock.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GreenPiranhaPlant.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="FullBlock.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GaneData.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GreenPiranhaPlant.cpp" />
     <ClCompile Include="HUD.cpp" />

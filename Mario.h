@@ -176,6 +176,7 @@ protected:
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	int marioLives = 4;
 	int level;
 	int untouchable;
 	ULONGLONG untouchable_start;

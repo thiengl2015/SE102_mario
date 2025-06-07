@@ -139,6 +139,9 @@
     <ClCompile Include="BrickN.cpp">
       <Filter>Object\Background</Filter>
     </ClCompile>
+    <ClCompile Include="GaneData.cpp">
+      <Filter>Core\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -299,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="BrickN.h">
       <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Core\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

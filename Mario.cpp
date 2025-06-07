@@ -28,6 +28,7 @@
 #include "ItemBoxEffect.h"
 #include "HUD.h"
 #include "BrickN.h"
+#include "GameData.h"
 
 int CMario::savedLevel = MARIO_LEVEL_SMALL;
 
@@ -204,7 +205,29 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (y > 230 && x < 2013)
 	{
-		SetState(MARIO_STATE_DIE);
+		marioLives--; // Giảm số mạng
+
+		int currentSceneId = scene->GetId();
+
+		if (marioLives > 0) {
+			if (currentSceneId == 2) {
+				// Nếu không phải màn có camera tự động, chỉ reset vị trí Mario
+				this->SetPosition(50.0, 10.0);
+
+			}
+			else {
+				// Nếu hết mạng, reset về màn đầu tiên
+				marioLives = 4;
+				CGame::GetInstance()->InitiateSwitchScene(5);
+			}
+		}
+	}
+
+	for (auto obj : scene->GetObjects()) {
+		CHud* hud = dynamic_cast<CHud*>(obj);
+		if (hud) {
+			hud->setMarioLives(marioLives);
+		}
 	}
 
 	if (heldTurtle)
@@ -1063,6 +1086,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
+
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
@@ -1216,7 +1240,22 @@ void CMario::OnAttacked()
 	else
 	{
 		DebugOut(L">>> Mario DIE >>> \n");
-		SetState(MARIO_STATE_DIE);
+		marioLives--; // Giảm số mạng
+
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		int currentSceneId = scene->GetId();
+
+		if (marioLives > 0) {
+				// Nếu không phải màn có camera tự động, chỉ reset vị trí Mario
+				this->SetPosition(50.0, 10.0);
+			
+		}
+		else {
+			// Nếu hết mạng, reset về màn đầu tiên
+			marioLives = 4;
+			CGame::GetInstance()->InitiateSwitchScene(5);
+		}
+
 	}
 
 	StartUntouchable();
@@ -1263,12 +1302,16 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 		CHud* hud = dynamic_cast<CHud*>(obj);
 		if (hud) {
 			hud->SetItemBox(0, type); 
+			hud->setMarioLives(marioLives);
+			while (time > 0) {
+				hud->AddScore(50); // Mỗi giây giảm đi, tăng 50 điểm
+				time--; // Giảm thời gian
+			}
 		}
 	}
 	itemEffectStartTime = GetTickCount64();
 	isWaitingItemEffect = true;
 	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
-
 
 	box->Delete();
 

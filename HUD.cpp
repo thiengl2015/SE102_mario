@@ -80,5 +80,6 @@ void CHud::Render()
     }
     else
         CSprites::GetInstance()->Get(ID_SPRITE_POWER_BLACK)->DrawStatic(hudX - 20 + 7 * 8.1, hudY - 9.80);
+    CSprites::GetInstance()->Get(ID_SPRITE_NUMBER_0 + marioLive)->DrawStatic(hudX -43, hudY -1);
 }
 
