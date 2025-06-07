@@ -4,11 +4,14 @@
 #include "Mario.h"
 #include "Sprites.h"
 
+int CHud::globalItemBox[3] = { 0, 0, 0 };
+
 CHud::CHud(float x, float y) : CGameObject(x, y), coin(0), score(0) // Thời gian mặc định là 300 giây
 {
     for (int i = 0; i < 3; i++) itemBox[i] = 0;
     time = 300;
     marioVx = 0;
+    for (int i = 0; i < 3; i++) itemBox[i] = globalItemBox[i];
 }
 
 void CHud::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
