@@ -243,8 +243,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isOnPlatform = true;
 		}
 	}
-
-
+	if (isWaitingItemEffect && GetTickCount64() - itemEffectStartTime > 1000) {
+		isWaitingItemEffect = false;
+		isEnd = true;
+	}
+	scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+	if (scene && scene->GetId() == 2 && !scene->IsFollowingMario())
+	{
+		float camX, camY;
+		CGame::GetInstance()->GetCamPos(camX, camY);
+		float minX = camX + MARIO_BIG_BBOX_WIDTH / 2.0f;
+		if (x < minX)
+		{
+			x = minX;
+			vx = 0;
+		}
+	}
 }
 
 
@@ -1244,7 +1258,8 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 			hud->SetItemBox(0, type); 
 		}
 	}
-	isEnd = true;
+	itemEffectStartTime = GetTickCount64();
+	isWaitingItemEffect = true;
 	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
 
 

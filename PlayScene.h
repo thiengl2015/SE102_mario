@@ -51,6 +51,8 @@ public:
 		shake_start = GetTickCount64();
 		isShaking = true;
 	}
+	int GetId() { return this->id; }
+	bool IsFollowingMario() const { return isFollowingMario; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;
