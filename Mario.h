@@ -298,4 +298,6 @@ public:
 	void SetIsOnPlatform(bool value) { isOnPlatform = value; }
 	static int savedLevel;
 	bool isEnd = false;
+	ULONGLONG itemEffectStartTime = 0;
+	bool isWaitingItemEffect = false;
 };
