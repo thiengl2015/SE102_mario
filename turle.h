@@ -5,7 +5,7 @@
 
 // Định nghĩa các hằng số liên quan đến trạng thái và thuộc tính của rùa
 #define TURTLE_GRAVITY 0.002f // Gia tốc trọng lực tác dụng lên rùa
-#define TURTLE_WALKING_SPEED 0.05f // Tốc độ di chuyển khi rùa đi bộ
+#define TURTLE_WALKING_SPEED 0.03f // Tốc độ di chuyển khi rùa đi bộ
 
 #define TURTLE_BBOX_WIDTH 16 // Chiều rộng hitbox của rùa
 #define TURTLE_BBOX_HEIGHT 14 // Chiều cao hitbox của rùa khi đang đi bộ

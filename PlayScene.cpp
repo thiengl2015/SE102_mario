@@ -448,7 +448,7 @@ void CPlayScene::Update(DWORD dt)
 	// ======= SCENE 2: Intro camera scroll =========
 	if (id == 2 && !isFollowingMario)
 	{
-		camIntroX += 0.9f * dt;
+		camIntroX += 0.04f * dt;
 
 		if (camIntroX >= 1685.0f)
 		{
