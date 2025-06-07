@@ -205,22 +205,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (y > 230 && x < 2013)
 	{
-		marioLives--; // Giảm số mạng
-
-		int currentSceneId = scene->GetId();
-
-		if (marioLives > 0) {
-			if (currentSceneId == 2) {
-				// Nếu không phải màn có camera tự động, chỉ reset vị trí Mario
-				this->SetPosition(50.0, 10.0);
-
-			}
-			else {
-				// Nếu hết mạng, reset về màn đầu tiên
-				marioLives = 4;
-				CGame::GetInstance()->InitiateSwitchScene(5);
-			}
-		}
+		SetState(MARIO_STATE_DIE);
 	}
 
 	for (auto obj : scene->GetObjects()) {
@@ -1240,22 +1225,7 @@ void CMario::OnAttacked()
 	else
 	{
 		DebugOut(L">>> Mario DIE >>> \n");
-		marioLives--; // Giảm số mạng
-
-		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-		int currentSceneId = scene->GetId();
-
-		if (marioLives > 0) {
-				// Nếu không phải màn có camera tự động, chỉ reset vị trí Mario
-				this->SetPosition(50.0, 10.0);
-			
-		}
-		else {
-			// Nếu hết mạng, reset về màn đầu tiên
-			marioLives = 4;
-			CGame::GetInstance()->InitiateSwitchScene(5);
-		}
-
+		SetState(MARIO_STATE_DIE);
 	}
 
 	StartUntouchable();
@@ -1303,12 +1273,16 @@ void CMario::OnCollisionWithItemBox(LPCOLLISIONEVENT e)
 		if (hud) {
 			hud->SetItemBox(0, type); 
 			hud->setMarioLives(marioLives);
-			while (time > 0) {
-				hud->AddScore(50); // Mỗi giây giảm đi, tăng 50 điểm
-				time--; // Giảm thời gian
-			}
+			int bonusPoints = time * 50;
+			hud->AddScore(bonusPoints);
+
+			// Đặt thời gian về 0
+			time = 0;
+			hud->SetTime(0);
+
 		}
 	}
+	
 	itemEffectStartTime = GetTickCount64();
 	isWaitingItemEffect = true;
 	scene->AddObject(new CItemBoxEffect(box->getX(), box->getY(), type));
